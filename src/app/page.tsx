@@ -41,15 +41,6 @@ export default function LandingPage() {
     },
   ]
 
-  const benefits = [
-    'Personalized AI-generated study plans',
-    'Track completion across all subjects',
-    'Daily email reminders',
-    'Analytics dashboard with charts',
-    'Smart scheduling based on difficulty',
-    'Exam countdown timers',
-  ]
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-yellow-50/30 text-slate-900">
       <header className="border-b border-slate-200/50 px-6 py-4 bg-white/80 backdrop-blur-xl sticky top-0 z-50">
@@ -167,7 +158,7 @@ export default function LandingPage() {
               { icon: BarChart2, title: 'Visual Analytics', desc: 'Beautiful charts to track your journey' },
               { icon: Bell, title: 'Never Miss', desc: 'Daily email reminders for your tasks' },
               { icon: Sparkles, title: 'AI Powered', desc: 'GPT-4o powered intelligent planning' },
-            ].map((feature, index) => {
+            ].map((feature) => {
               const Icon = feature.icon
               return (
                 <div 
