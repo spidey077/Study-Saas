@@ -7,7 +7,7 @@ import { differenceInDays, parseISO, format } from 'date-fns'
 import Card from '@/components/ui/Card'
 import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
-import { Subject, Difficulty } from '@/types'
+import { Subject, Difficulty, ExamType } from '@/types'
 import { cn } from '@/lib/utils'
 
 interface SubjectCardProps {
@@ -29,6 +29,11 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
     easy: 'easy',
     medium: 'medium',
     hard: 'hard',
+  }
+
+  const examTypeConfig: Record<ExamType, { label: string; icon: string }> = {
+    pakistani: { label: '🇵🇰 Pakistani', icon: '🇵🇰' },
+    international: { label: '🌍 International', icon: '🌍' },
   }
 
   async function handleGeneratePlan() {
@@ -62,7 +67,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
   }
 
   async function handleDelete() {
-    if (!confirm(`Delete "${subject.name}"? This will also remove its study plan.`)) return
+    if (!window.confirm('Delete this subject?')) return
     setDeleting(true)
     try {
       const res = await fetch(`/api/subjects?id=${subject.id}`, { method: 'DELETE' })
@@ -94,11 +99,16 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
           </div>
           <div>
             <h3 className="font-bold text-slate-900 text-lg">{subject.name}</h3>
-            <div className="flex items-center gap-2 mt-1">
+            <div className="flex items-center gap-2 mt-1 flex-wrap">
               <Badge variant={difficultyVariant[subject.difficulty]}>
                 {subject.difficulty}
               </Badge>
               <span className="text-xs text-slate-500 font-medium">{subject.total_topics} topics</span>
+              {subject.exam_type && (
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                  {examTypeConfig[subject.exam_type]?.icon} {examTypeConfig[subject.exam_type]?.label}
+                </span>
+              )}
             </div>
           </div>
         </div>

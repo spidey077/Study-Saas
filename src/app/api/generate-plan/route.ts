@@ -18,6 +18,15 @@ export async function POST(request: Request) {
   }
 
   try {
+    // Get user's language preference
+    const { data: userData } = await supabaseAdmin
+      .from('users')
+      .select('language')
+      .eq('clerk_id', userId)
+      .single()
+    
+    const language = userData?.language || 'english'
+
     // Delete existing plan for this subject
     await supabaseAdmin
       .from('study_plans')
@@ -27,7 +36,7 @@ export async function POST(request: Request) {
 
     // Generate new plan from AI
     const plan = await generateStudyPlan(
-      subjectName, examDate, totalTopics, difficulty, hoursPerDay, daysUntilExam
+      subjectName, examDate, totalTopics, difficulty, hoursPerDay, daysUntilExam, language
     )
 
     // Save each day to Supabase

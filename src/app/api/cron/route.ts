@@ -132,8 +132,7 @@ export async function GET(request: Request) {
         await sendDailyReminder(user.email, user.name || 'Student', taskList)
         sentCount++
       }
-    } catch (err) {
-      console.error(`Failed to send email to ${user.email}:`, err)
+    } catch {
     }
   }
 

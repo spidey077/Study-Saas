@@ -4,7 +4,8 @@ import { useState } from 'react'
 import { toast } from 'sonner'
 import { Input, Select } from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
-import { Difficulty, Subject } from '@/types'
+import { Difficulty, Subject, ExamType, SpecificExam } from '@/types'
+import { isValidSubjectForExam, getSubjectsForExam, getExamsByType } from '@/lib/examConfig'
 
 const PRESET_COLORS = [
   '#6366f1', '#8b5cf6', '#ec4899', '#f43f5e',
@@ -24,6 +25,8 @@ export default function SubjectForm({ onSuccess, onCancel }: SubjectFormProps) {
     exam_date: '',
     total_topics: 10,
     difficulty: 'medium' as Difficulty,
+    exam_type: 'pakistani' as ExamType,
+    specific_exam: '' as SpecificExam | '',
     hours_per_day: 2,
   })
 
@@ -41,6 +44,16 @@ export default function SubjectForm({ onSuccess, onCancel }: SubjectFormProps) {
       toast.error('Please fill in all required fields')
       return
     }
+
+    // Validate subject name against specific exam
+    if (form.specific_exam && !isValidSubjectForExam(form.name, form.specific_exam)) {
+      const validSubjects = getSubjectsForExam(form.specific_exam)
+      toast.error(
+        `"${form.name}" is not a valid subject for this exam. Valid subjects: ${validSubjects.join(', ')}`
+      )
+      return
+    }
+
     setLoading(true)
     try {
       const res = await fetch('/api/subjects', {
@@ -51,6 +64,8 @@ export default function SubjectForm({ onSuccess, onCancel }: SubjectFormProps) {
           exam_date: form.exam_date,
           total_topics: form.total_topics,
           difficulty: form.difficulty,
+          exam_type: form.exam_type,
+          specific_exam: form.specific_exam || null,
           color: selectedColor,
         }),
       })
@@ -76,15 +91,43 @@ export default function SubjectForm({ onSuccess, onCancel }: SubjectFormProps) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <Input
-        id="name"
-        name="name"
-        label="Subject Name *"
-        placeholder="e.g. Mathematics, Physics..."
-        value={form.name}
-        onChange={handleChange}
-        required
-      />
+      {form.specific_exam ? (
+        <>
+          <Select
+            id="name"
+            name="name"
+            label="Subject Name *"
+            value={form.name}
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select a subject...</option>
+            {getSubjectsForExam(form.specific_exam).map((subject) => (
+              <option key={subject} value={subject}>
+                {subject}
+              </option>
+            ))}
+          </Select>
+          <p className="text-xs text-slate-500 mt-1">
+            Valid subjects for this exam: {getSubjectsForExam(form.specific_exam).join(', ')}
+          </p>
+        </>
+      ) : (
+        <Input
+          id="name"
+          name="name"
+          label="Subject Name *"
+          placeholder={form.exam_type === 'pakistani' ? 'e.g. Mathematics, Physics, Chemistry...' : 'e.g. Math, Reading, Writing...'}
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+      )}
+      {!form.specific_exam && form.exam_type && (
+        <p className="text-xs text-slate-500">
+          Select a specific exam to choose only the approved subjects for that test.
+        </p>
+      )}
 
       <Input
         id="exam_date"
@@ -132,6 +175,40 @@ export default function SubjectForm({ onSuccess, onCancel }: SubjectFormProps) {
         <option value="medium">Medium</option>
         <option value="hard">Hard</option>
       </Select>
+
+      <Select
+        id="exam_type"
+        name="exam_type"
+        label="Exam Type"
+        value={form.exam_type}
+        onChange={(e) => {
+          handleChange(e)
+          setForm(prev => ({ ...prev, specific_exam: '', name: '' }))
+        }}
+      >
+        <option value="pakistani">🇵🇰 Pakistani Exams</option>
+        <option value="international">🌍 International Exams</option>
+      </Select>
+
+      {form.exam_type && (
+        <Select
+          id="specific_exam"
+          name="specific_exam"
+          label="Specific Exam"
+          value={form.specific_exam}
+          onChange={(e) => {
+            const nextExam = e.target.value as SpecificExam | ''
+            setForm(prev => ({ ...prev, specific_exam: nextExam, name: '' }))
+          }}
+        >
+          <option value="">Select your exam...</option>
+          {getExamsByType(form.exam_type).map(exam => (
+            <option key={exam.id} value={exam.id}>
+              {exam.name}
+            </option>
+          ))}
+        </Select>
+      )}
 
       <div>
         <label className="block text-sm font-medium text-gray-700 mb-2">Color</label>

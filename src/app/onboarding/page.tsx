@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { toast } from 'sonner'
-import { BookOpen, Bell, Clock } from 'lucide-react'
+import { BookOpen, Bell, Clock, Globe } from 'lucide-react'
 import { Input, Select } from '@/components/ui/Input'
 import Button from '@/components/ui/Button'
+import { Language } from '@/types'
 
 export default function OnboardingPage() {
   const { user } = useUser()
@@ -17,6 +18,7 @@ export default function OnboardingPage() {
     reminder_time: '08:00',
     reminder_enabled: true,
     summary_enabled: false,
+    language: 'english' as Language,
   })
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) {
@@ -44,6 +46,7 @@ export default function OnboardingPage() {
           reminder_enabled: form.reminder_enabled,
           reminder_time: form.reminder_time,
           summary_enabled: form.summary_enabled,
+          language: form.language,
         }),
       })
       if (!res.ok) {
@@ -81,6 +84,51 @@ export default function OnboardingPage() {
             onChange={handleChange}
             required
           />
+
+          <div className="rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-5">
+            <div className="flex items-center gap-3 text-sm font-bold text-slate-900 mb-4">
+              <Globe className="h-4 w-4 text-amber-600" />
+              Language / زبان
+            </div>
+            <label className="flex items-center gap-3 rounded-2xl border-2 border-slate-200/60 bg-white p-4 transition hover:border-amber-300/60 cursor-pointer">
+              <div className="relative">
+                <input
+                  type="radio"
+                  name="language"
+                  value="english"
+                  checked={form.language === 'english'}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <div className={`h-6 w-6 rounded-full border-2 transition-all duration-300 ${form.language === 'english' ? 'border-amber-500 bg-amber-500' : 'border-slate-300'}`}>
+                  {form.language === 'english' && <div className="absolute inset-1 bg-white rounded-full" />}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-slate-900">English</p>
+                <p className="text-xs text-slate-500">Study plans in English</p>
+              </div>
+            </label>
+            <label className="flex items-center gap-3 rounded-2xl border-2 border-slate-200/60 bg-white p-4 transition hover:border-amber-300/60 cursor-pointer mt-3">
+              <div className="relative">
+                <input
+                  type="radio"
+                  name="language"
+                  value="urdu"
+                  checked={form.language === 'urdu'}
+                  onChange={handleChange}
+                  className="sr-only"
+                />
+                <div className={`h-6 w-6 rounded-full border-2 transition-all duration-300 ${form.language === 'urdu' ? 'border-amber-500 bg-amber-500' : 'border-slate-300'}`}>
+                  {form.language === 'urdu' && <div className="absolute inset-1 bg-white rounded-full" />}
+                </div>
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-slate-900">اردو (Urdu)</p>
+                <p className="text-xs text-slate-500">AI study plans in Urdu</p>
+              </div>
+            </label>
+          </div>
 
           <div className="rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-5">
             <div className="flex items-center gap-3 text-sm font-bold text-slate-900 mb-4">

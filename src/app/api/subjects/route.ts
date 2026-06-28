@@ -1,6 +1,8 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
+import { isValidSubjectForExam, isValidSubjectForExamType } from '@/lib/examConfig'
 import { supabaseAdmin } from '@/lib/supabase'
+import { SpecificExam } from '@/types'
 
 // GET — fetch all subjects for logged in user
 export async function GET() {
@@ -23,15 +25,68 @@ export async function POST(request: Request) {
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { name, exam_date, total_topics, difficulty, color } = body
+  const { name, exam_date, total_topics, difficulty, exam_type, specific_exam, color } = body
+  const normalizedName = typeof name === 'string' ? name.trim() : ''
+  const normalizedSpecificExam = typeof specific_exam === 'string' && specific_exam.trim() ? specific_exam.trim() : null
 
-  if (!name || !exam_date || !total_topics) {
+  if (!normalizedName || !exam_date || !total_topics) {
     return NextResponse.json({ error: 'Missing required fields' }, { status: 400 })
+  }
+
+  if (normalizedSpecificExam) {
+    const isValid = isValidSubjectForExam(normalizedName, normalizedSpecificExam as SpecificExam)
+    if (!isValid) {
+      return NextResponse.json(
+        { error: 'This subject is not approved for the selected exam.' },
+        { status: 400 }
+      )
+    }
+  } else if (exam_type) {
+    const isValid = isValidSubjectForExamType(normalizedName, exam_type)
+    if (!isValid) {
+      return NextResponse.json(
+        { error: 'This subject is not approved for the selected exam type.' },
+        { status: 400 }
+      )
+    }
+  }
+
+  // Check user's subscription tier and subject limit
+  const { data: userData } = await supabaseAdmin
+    .from('users')
+    .select('subscription_tier')
+    .eq('clerk_id', userId)
+    .single()
+
+  const subscriptionTier = userData?.subscription_tier || 'free'
+
+  if (subscriptionTier === 'free') {
+    // Count existing subjects
+    const { count } = await supabaseAdmin
+      .from('subjects')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId)
+
+    if (count && count >= 2) {
+      return NextResponse.json(
+        { error: 'Free users can only add up to 2 subjects. Upgrade to Premium for unlimited subjects.' },
+        { status: 403 }
+      )
+    }
   }
 
   const { data, error } = await supabaseAdmin
     .from('subjects')
-    .insert({ user_id: userId, name, exam_date, total_topics, difficulty, color })
+    .insert({
+      user_id: userId,
+      name: normalizedName,
+      exam_date,
+      total_topics,
+      difficulty,
+      exam_type,
+      specific_exam: normalizedSpecificExam,
+      color,
+    })
     .select()
     .single()
 

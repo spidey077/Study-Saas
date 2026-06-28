@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { name, email, reminder_enabled, reminder_time } = body
+  const { name, email, reminder_enabled, reminder_time, language } = body
 
   // Upsert user record (create or update)
   const { data, error } = await supabaseAdmin
@@ -19,6 +19,8 @@ export async function POST(request: Request) {
         name,
         reminder_enabled: reminder_enabled ?? true,
         reminder_time: reminder_time ?? '08:00',
+        language: language ?? 'english',
+        subscription_tier: 'free',
       },
       { onConflict: 'clerk_id' }
     )

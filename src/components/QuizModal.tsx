@@ -55,7 +55,6 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
         setSelectedAnswers(Array(data.length).fill(-1))
       })
       .catch((err) => {
-        console.error(err)
         setError(err.message || 'Unable to generate quiz')
         toast.error(err.message || 'Unable to generate quiz')
       })

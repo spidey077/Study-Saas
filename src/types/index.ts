@@ -1,4 +1,27 @@
 export type Difficulty = 'easy' | 'medium' | 'hard'
+export type Language = 'english' | 'urdu'
+export type ExamType = 'pakistani' | 'international'
+export type SubscriptionTier = 'free' | 'tier1' | 'tier2'
+
+export type SpecificExam = 
+  // Pakistani Exams
+  | 'nust_net_engineering'
+  | 'nust_net_cs'
+  | 'fast_nu'
+  | 'nts_nat_arts'
+  | 'nts_nat_science'
+  | 'nts_nat_engineering'
+  | 'nts_gat_general'
+  | 'mdcat'
+  | 'ecat'
+  | 'uet_ecat'
+  // International Exams
+  | 'ielts_academic'
+  | 'ielts_general'
+  | 'sat'
+  | 'digital_sat'
+  | 'gre'
+  | 'gmat'
 
 export interface User {
   id: string
@@ -8,6 +31,8 @@ export interface User {
   reminder_enabled: boolean
   reminder_time: string
   summary_enabled: boolean
+  language: Language
+  subscription_tier: SubscriptionTier
   created_at: string
 }
 
@@ -18,6 +43,8 @@ export interface Subject {
   exam_date: string
   total_topics: number
   difficulty: Difficulty
+  exam_type: ExamType
+  specific_exam?: SpecificExam
   color: string
   created_at: string
 }

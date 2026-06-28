@@ -32,8 +32,7 @@ export default function DashboardPage() {
       const [plans, subs] = await Promise.all([plansRes.json(), subjectsRes.json()])
       setAllPlans(Array.isArray(plans) ? plans : [])
       setSubjects(Array.isArray(subs) ? subs : [])
-    } catch (err) {
-      console.error('Failed to fetch dashboard data', err)
+    } catch {
     } finally {
       setLoading(false)
     }

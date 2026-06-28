@@ -56,6 +56,12 @@ export default function LandingPage() {
           </Link>
           <div className="flex items-center gap-3">
             <Link
+              href="/pricing"
+              className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-4 py-2"
+            >
+              Pricing
+            </Link>
+            <Link
               href="/sign-in"
               className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors px-4 py-2"
             >
@@ -90,7 +96,7 @@ export default function LandingPage() {
                   </span>
                 </h1>
                 <p className="max-w-2xl text-xl leading-relaxed text-slate-600">
-                  Stop guessing what to study. Let AI build your personalized day-by-day study plan, track progress, and keep you focused with a sleek study dashboard.
+                  Stop guessing what to study. Let AI build your personalized day-by-day study plan in English or Urdu. Perfect for Pakistani (NTS, NET, FAST, ECAT) and International (SAT, GRE, IELTS, GMAT) exams.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-4">
@@ -173,6 +179,32 @@ export default function LandingPage() {
                 </div>
               )
             })}
+          </section>
+
+          {/* Premium Beta Section */}
+          <section className="rounded-[40px] border-2 border-amber-300/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-12 lg:p-16 shadow-xl">
+            <div className="max-w-3xl mx-auto space-y-6 text-center">
+              <div className="inline-flex items-center gap-2 rounded-full bg-amber-200/80 px-4 py-2 text-sm font-bold text-amber-800">
+                <Sparkles className="h-4 w-4" />
+                <span>BETA - FREE TO USE</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-slate-900 tracking-tight">
+                Premium Features in Beta
+              </h2>
+              <p className="text-lg leading-7 text-slate-600">
+                Our premium features (unlimited subjects, advanced AI, Urdu support) are currently in beta. 
+                Enjoy them for free until we fully launch! Limited to 2 subjects for free users.
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4 pt-4">
+                <Link
+                  href="/pricing"
+                  className="inline-flex items-center gap-2 rounded-2xl border-2 border-amber-400 bg-white px-6 py-3 text-base font-semibold text-slate-900 hover:bg-amber-50 transition-all duration-300"
+                >
+                  View Pricing
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
           </section>
 
           {/* CTA Section */}
