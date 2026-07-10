@@ -29,6 +29,30 @@
     --text-soft: #cbd5e1;
   }
 
+  .dark * {
+    color: #f8fafc !important;
+  }
+
+  .dark [class*="bg-"] {
+    background-color: #111827 !important;
+    background-image: none !important;
+  }
+
+  .dark [class*="border-"] {
+    border-color: rgba(148, 163, 184, 0.2) !important;
+  }
+
+  .dark svg path,
+  .dark svg rect,
+  .dark svg circle,
+  .dark svg ellipse,
+  .dark svg polygon,
+  .dark svg polyline,
+  .dark svg line {
+    fill: #f8fafc !important;
+    stroke: #f8fafc !important;
+  }
+
   * {
     box-sizing: border-box;
   }
