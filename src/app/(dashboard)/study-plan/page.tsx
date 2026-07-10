@@ -66,8 +66,8 @@ export default function StudyPlanPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-950">Study Plan</h1>
-          <p className="text-slate-600 mt-1">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-950">Study Plan</h1>
+          <p className="text-slate-600 mt-2 text-base leading-7">
             {totalPlans > 0
               ? `${totalCompleted}/${totalPlans} topics completed (${pct}%)`
               : 'No study plan yet. Add subjects and generate a plan.'}

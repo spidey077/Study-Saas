@@ -7,6 +7,8 @@ import { BookOpen, CheckSquare, TrendingUp, Calendar } from 'lucide-react'
 import StatsCard from '@/components/dashboard/StatsCard'
 import ProgressChart from '@/components/dashboard/ProgressChart'
 import TodayPlan from '@/components/dashboard/TodayPlan'
+import TopicsPerSubjectChart from '@/components/dashboard/TopicsPerSubjectChart'
+import CompletedVsRemainingChart from '@/components/dashboard/CompletedVsRemainingChart'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import { StudyPlan, Subject } from '@/types'
@@ -24,6 +26,7 @@ export default function DashboardPage() {
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
 
   const fetchData = useCallback(async () => {
+    setLoading(true)
     try {
       const [plansRes, subjectsRes] = await Promise.all([
         fetch('/api/progress'),
@@ -44,6 +47,7 @@ export default function DashboardPage() {
 
   // Stats
   const todayTasks = allPlans.filter((p) => p.plan_date === today)
+  const upcomingTasks = allPlans.filter((p) => p.plan_date > today).slice(0, 5)
   const completedTopics = allPlans.filter((p) => p.is_completed).length
   const totalTopics = allPlans.length
   const completionPct = totalTopics > 0 ? Math.round((completedTopics / totalTopics) * 100) : 0
@@ -75,7 +79,7 @@ export default function DashboardPage() {
       <div className="flex items-center justify-center h-64">
         <div className="flex flex-col items-center gap-3">
           <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-slate-600">Loading your dashboard...</p>
+          <p className="text-sm text-slate-600 dark:text-slate-400">Loading your dashboard...</p>
         </div>
       </div>
     )
@@ -85,22 +89,22 @@ export default function DashboardPage() {
     <div className="space-y-8 animate-fade-in">
       {/* Welcome Header */}
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold text-slate-900 tracking-tight">
+        <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
           {greeting}, {user?.firstName || 'Student'}!
         </h1>
-        <p className="text-slate-500 text-lg">
+        <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-7">
           {format(new Date(), 'EEEE, MMMM d, yyyy')}
         </p>
       </div>
 
       {/* Empty State */}
       {subjects.length === 0 && (
-        <Card className="text-center py-16 border-2 border-dashed border-slate-200 bg-gradient-to-br from-slate-50 to-white">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-100 to-amber-100 text-amber-600 mb-6 shadow-lg">
+        <Card className="text-center py-16 border-2 border-dashed border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800">
+          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 text-amber-600 dark:text-amber-400 mb-6 shadow-lg">
             <BookOpen className="w-8 h-8" />
           </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-3">No subjects yet</h3>
-          <p className="text-slate-600 mb-8 max-w-sm mx-auto text-lg">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No subjects yet</h3>
+          <p className="text-slate-600 dark:text-slate-300 mb-8 max-w-sm mx-auto text-base sm:text-lg leading-8">
             Add your first subject and let AI generate a personalized study plan for you.
           </p>
           <Link href="/subjects">
@@ -149,12 +153,12 @@ export default function DashboardPage() {
           <div className="grid lg:grid-cols-3 gap-6 animate-slide-up stagger-2">
             {/* Today's Plan (wider) */}
             <div className="lg:col-span-2 space-y-6">
-              <TodayPlan tasks={todayTasks} onTaskToggle={handleTaskToggle} />
+              <TodayPlan tasks={todayTasks} upcomingTasks={upcomingTasks} onTaskToggle={handleTaskToggle} />
             </div>
 
             {/* Upcoming Exams */}
             <div>
-              <Card className="border-2 border-slate-200/60">
+              <Card className="border-2 border-slate-200/60 dark:border-slate-700/60">
                 <CardHeader>
                   <CardTitle>Upcoming Exams</CardTitle>
                 </CardHeader>
@@ -162,14 +166,14 @@ export default function DashboardPage() {
                   {upcomingExams.slice(0, 5).map((subject) => {
                     const days = differenceInDays(parseISO(subject.exam_date), new Date())
                     return (
-                      <div key={subject.id} className="group flex items-center gap-3 p-4 rounded-xl border border-slate-200/60 bg-gradient-to-br from-slate-50 to-white hover:border-amber-300/60 hover:shadow-md hover:shadow-amber-500/10 transition-all duration-300">
+                      <div key={subject.id} className="group flex items-center gap-3 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800 hover:border-amber-300/60 hover:shadow-md hover:shadow-amber-500/10 transition-all duration-300">
                         <div
                           className="w-4 h-4 rounded-full flex-shrink-0 shadow-sm"
                           style={{ backgroundColor: subject.color }}
                         />
                         <div className="flex-1 min-w-0">
-                          <p className="text-sm font-semibold text-slate-900 truncate">{subject.name}</p>
-                          <p className="text-xs text-slate-500">{format(parseISO(subject.exam_date), 'MMM d, yyyy')}</p>
+                          <p className="text-sm font-semibold text-slate-900 dark:text-white truncate">{subject.name}</p>
+                          <p className="text-xs text-slate-500 dark:text-slate-400">{format(parseISO(subject.exam_date), 'MMM d, yyyy')}</p>
                         </div>
                         <Badge
                           variant={days <= 7 ? 'danger' : days <= 14 ? 'warning' : 'success'}
@@ -180,7 +184,7 @@ export default function DashboardPage() {
                     )
                   })}
                   {upcomingExams.length === 0 && (
-                    <p className="text-sm text-slate-500 text-center py-8">No upcoming exams</p>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 text-center py-8">No upcoming exams</p>
                   )}
                 </div>
               </Card>
@@ -190,6 +194,12 @@ export default function DashboardPage() {
           {/* Progress Chart */}
           <div className="animate-slide-up stagger-3">
             <ProgressChart data={chartData} />
+          </div>
+
+          {/* Additional Charts */}
+          <div className="grid lg:grid-cols-2 gap-6 animate-slide-up stagger-4">
+            <TopicsPerSubjectChart subjects={subjects} plans={allPlans} />
+            <CompletedVsRemainingChart subjects={subjects} plans={allPlans} />
           </div>
         </>
       )}

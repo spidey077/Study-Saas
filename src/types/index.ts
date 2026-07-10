@@ -2,6 +2,7 @@ export type Difficulty = 'easy' | 'medium' | 'hard'
 export type Language = 'english' | 'urdu'
 export type ExamType = 'pakistani' | 'international'
 export type SubscriptionTier = 'free' | 'tier1' | 'tier2'
+export type UserRole = 'user' | 'admin'
 
 export type SpecificExam = 
   // Pakistani Exams
@@ -33,6 +34,7 @@ export interface User {
   summary_enabled: boolean
   language: Language
   subscription_tier: SubscriptionTier
+  role: UserRole
   created_at: string
 }
 

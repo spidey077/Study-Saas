@@ -67,8 +67,8 @@ export default function SubjectsPage() {
     <div className="space-y-8 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Subjects</h1>
-          <p className="text-slate-500 mt-1 text-lg">Manage your subjects and generate AI study plans</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Subjects</h1>
+          <p className="text-slate-500 mt-2 text-base sm:text-lg leading-8">Manage your subjects and generate AI study plans</p>
         </div>
         <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
           <Plus className="w-4 h-4" />
@@ -104,7 +104,7 @@ export default function SubjectsPage() {
             <BookOpen className="w-8 h-8" />
           </div>
           <h3 className="text-2xl font-bold text-slate-900 mb-3">No subjects yet</h3>
-          <p className="text-slate-600 mb-8 max-w-sm mx-auto text-lg">
+          <p className="text-slate-600 mb-8 max-w-sm mx-auto text-base sm:text-lg leading-8">
             Add a subject to get started. AI will build your personalized study plan.
           </p>
           <Button onClick={() => setShowForm(true)} size="lg">

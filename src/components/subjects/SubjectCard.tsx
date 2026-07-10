@@ -67,7 +67,6 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
   }
 
   async function handleDelete() {
-    if (!window.confirm('Delete this subject?')) return
     setDeleting(true)
     try {
       const res = await fetch(`/api/subjects?id=${subject.id}`, { method: 'DELETE' })

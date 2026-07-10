@@ -22,12 +22,12 @@ export default function StatsCard({
   trend,
 }: StatsCardProps) {
   return (
-    <Card className="relative overflow-hidden border-2 border-slate-200/60 bg-gradient-to-br from-white to-slate-50 hover:border-amber-300/60 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 group">
+    <Card className="relative overflow-hidden border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 hover:border-amber-300/60 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 group">
       <div className="flex items-start justify-between">
         <div className="flex-1">
-          <p className="text-sm font-semibold text-slate-600 uppercase tracking-wider">{title}</p>
-          <p className="mt-2 text-3xl font-bold text-slate-900 tracking-tight">{value}</p>
-          {subtitle && <p className="mt-1 text-sm text-slate-500">{subtitle}</p>}
+          <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{title}</p>
+          <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white tracking-tight">{value}</p>
+          {subtitle && <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">{subtitle}</p>}
           {trend && (
             <p className={cn('mt-2 text-sm font-semibold', trend.value >= 0 ? 'text-green-600' : 'text-red-600')}>
               {trend.value >= 0 ? '↑' : '↓'} {Math.abs(trend.value)}% {trend.label}

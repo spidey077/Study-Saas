@@ -13,7 +13,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={id} className="block text-sm font-medium text-slate-900 mb-1">
+          <label htmlFor={id} className="block text-sm font-medium text-slate-900 dark:text-white mb-1">
             {label}
           </label>
         )}
@@ -21,8 +21,8 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={id}
           className={cn(
-            'border border-[#f7e6a4] rounded-2xl px-3 py-2 w-full text-sm text-slate-950 bg-[#fffbe3] placeholder-[#6b7280]',
-            'focus:outline-none focus:ring-2 focus:ring-[#f7d46a]/70 focus:border-transparent',
+            'border border-[#f7e6a4] dark:border-slate-600 rounded-2xl px-3 py-2 w-full text-sm text-slate-950 dark:text-white bg-[#fffbe3] dark:bg-slate-700 placeholder-[#6b7280] dark:placeholder-slate-400',
+            'focus:outline-none focus:ring-2 focus:ring-[#f7d46a]/70 dark:focus:ring-blue-500/50 focus:border-transparent',
             'transition-colors duration-200',
             error && 'border-rose-500 focus:ring-rose-500',
             className
@@ -47,7 +47,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
     return (
       <div className="w-full">
         {label && (
-          <label htmlFor={id} className="block text-sm font-medium text-slate-900 mb-1">
+          <label htmlFor={id} className="block text-sm font-medium text-slate-900 dark:text-white mb-1">
             {label}
           </label>
         )}
@@ -55,8 +55,8 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           id={id}
           className={cn(
-            'border border-[#f7e6a4] rounded-2xl px-3 py-2 w-full text-sm text-slate-950 bg-[#fffbe3]',
-            'focus:outline-none focus:ring-2 focus:ring-[#f7d46a]/70 focus:border-transparent',
+            'border border-[#f7e6a4] dark:border-slate-600 rounded-2xl px-3 py-2 w-full text-sm text-slate-950 dark:text-white bg-[#fffbe3] dark:bg-slate-700',
+            'focus:outline-none focus:ring-2 focus:ring-[#f7d46a]/70 dark:focus:ring-blue-500/50 focus:border-transparent',
             'transition-colors duration-200',
             error && 'border-rose-500',
             className

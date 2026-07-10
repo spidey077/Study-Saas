@@ -86,8 +86,8 @@ export default function AnalyticsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-slate-900">Analytics</h1>
-        <p className="text-slate-600 mt-1">Track your study progress and performance</p>
+        <h1 className="text-2xl sm:text-3xl font-bold text-slate-900">Analytics</h1>
+        <p className="text-slate-600 mt-2 text-base leading-7">Track your study progress and performance</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
