@@ -24,16 +24,22 @@ export async function GET() {
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
     
-    const { count: activeUsersCount } = await supabaseAdmin
+    const { data: activeUsers, error: activeUsersError } = await supabaseAdmin
       .from('study_plans')
-      .select('user_id', { count: 'exact', head: true })
+      .select('user_id')
       .gte('plan_date', thirtyDaysAgo.toISOString())
 
+    if (activeUsersError) {
+      throw activeUsersError
+    }
+
+    const activeUsersCount = new Set((activeUsers || []).map((item) => item.user_id)).size
+
     const stats = {
-      totalUsers: adminUsers.length || usersCount.count || 0,
+      totalUsers: usersCount.count || adminUsers.length || 0,
       totalSubjects: subjectsCount.count || 0,
       totalPlans: plansCount.count || 0,
-      activeUsers: activeUsersCount || 0,
+      activeUsers: activeUsersCount,
     }
 
     return NextResponse.json(stats)

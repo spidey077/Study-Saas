@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect, useCallback } from 'react'
 import { toast } from 'sonner'
 import { format, subDays, parseISO } from 'date-fns'

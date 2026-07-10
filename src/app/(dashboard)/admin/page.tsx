@@ -1,5 +1,7 @@
 'use client'
 
+export const dynamic = 'force-dynamic'
+
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -51,23 +53,6 @@ export default function AdminPage() {
   useEffect(() => {
     fetchAdminData()
   }, [fetchAdminData])
-
-  async function toggleUserRole(userId: string, currentRole: string) {
-    const newRole = currentRole === 'admin' ? 'user' : 'admin'
-    try {
-      const res = await fetch('/api/admin/users', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userId, role: newRole }),
-      })
-      if (!res.ok) throw new Error('Failed to update role')
-      
-      setUsers(users.map(u => u.id === userId ? { ...u, role: newRole as 'user' | 'admin' } : u))
-      toast.success(`User role updated to ${newRole}`)
-    } catch {
-      toast.error('Failed to update user role')
-    }
-  }
 
   const filteredUsers = users.filter(user => 
     user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -174,7 +159,6 @@ export default function AdminPage() {
                 <th className="text-left p-4 text-sm font-semibold text-slate-900 dark:text-white">Role</th>
                 <th className="text-left p-4 text-sm font-semibold text-slate-900 dark:text-white">Plan</th>
                 <th className="text-left p-4 text-sm font-semibold text-slate-900 dark:text-white">Joined</th>
-                <th className="text-left p-4 text-sm font-semibold text-slate-900 dark:text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -201,14 +185,6 @@ export default function AdminPage() {
                   <td className="p-4 text-sm text-slate-600 dark:text-slate-400 capitalize">{user.subscription_tier}</td>
                   <td className="p-4 text-sm text-slate-600 dark:text-slate-400">
                     {new Date(user.created_at).toLocaleDateString()}
-                  </td>
-                  <td className="p-4">
-                    <button
-                      onClick={() => toggleUserRole(user.id, user.role)}
-                      className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
-                    >
-                      {user.role === 'admin' ? 'Make User' : 'Make Admin'}
-                    </button>
                   </td>
                 </tr>
               ))}
