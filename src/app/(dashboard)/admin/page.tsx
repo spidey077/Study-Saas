@@ -1,12 +1,14 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Users, BookOpen, TrendingUp, Shield, Search } from 'lucide-react'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
 import { User as UserType } from '@/types'
 
 export default function AdminPage() {
+  const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState<UserType[]>([])
   const [stats, setStats] = useState({
@@ -27,6 +29,12 @@ export default function AdminPage() {
         fetch('/api/admin/users'),
         fetch('/api/admin/stats'),
       ])
+
+      if (usersRes.status === 401 || usersRes.status === 403 || statsRes.status === 401 || statsRes.status === 403) {
+        toast.error('Access denied. Only the approved admin account can view this page.')
+        router.replace('/dashboard')
+        return
+      }
       
       if (usersRes.ok) {
         const usersData = await usersRes.json()

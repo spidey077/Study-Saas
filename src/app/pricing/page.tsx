@@ -59,7 +59,7 @@ export default function PricingPage() {
           </div>
 
           {/* Tier 1 - Pakistani */}
-          <div className="rounded-3xl border-2 border-amber-400/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-8 shadow-xl shadow-amber-500/10 hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300 relative animate-slide-up stagger-2">
+          <div className="rounded-3xl border-2 border-amber-400/60 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-xl shadow-amber-500/10 hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300 relative animate-slide-up stagger-2">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2">
               <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
                 POPULAR IN PAKISTAN
@@ -109,7 +109,7 @@ export default function PricingPage() {
           </div>
 
           {/* Tier 2 - International */}
-          <div className="rounded-3xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-50 to-indigo-50 p-8 shadow-xl shadow-purple-500/10 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 relative animate-slide-up stagger-3">
+          <div className="rounded-3xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-xl shadow-purple-500/10 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 relative animate-slide-up stagger-3">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2">
               <span className="bg-gradient-to-r from-purple-400 to-purple-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
                 INTERNATIONAL
@@ -165,20 +165,20 @@ export default function PricingPage() {
             Frequently Asked Questions
           </h2>
           <div className="space-y-4">
-            <div className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white dark:bg-slate-800 p-6">
+            <div className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/90 p-6 shadow-sm">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">What&apos;s the difference between Tier 1 and Tier 2?</h3>
               <p className="text-sm sm:text-[15px] leading-7 text-slate-600 dark:text-slate-300">
                 Tier 1 is optimized for Pakistani exams (NTS, NET, FAST, ECAT) with pricing in PKR. 
                 Tier 2 is for international exams (SAT, GRE, IELTS, GMAT) with pricing in USD and additional features.
               </p>
             </div>
-            <div className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white dark:bg-slate-800 p-6">
+            <div className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/90 p-6 shadow-sm">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Can I switch between tiers?</h3>
               <p className="text-sm sm:text-[15px] leading-7 text-slate-600 dark:text-slate-300">
                 Yes, you can upgrade or downgrade your plan at any time. Changes will be prorated.
               </p>
             </div>
-            <div className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white dark:bg-slate-800 p-6">
+            <div className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/90 p-6 shadow-sm">
               <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Is Urdu language available in all plans?</h3>
               <p className="text-sm sm:text-[15px] leading-7 text-slate-600 dark:text-slate-300">
                 Yes, Urdu language support is available in Tier 1 and Tier 2 plans. The free plan includes English only.
