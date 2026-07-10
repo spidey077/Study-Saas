@@ -1,7 +1,18 @@
+import 'server-only'
+
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { Language } from '@/types'
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!)
+function getGeminiModel() {
+  const apiKey = process.env.GEMINI_API_KEY
+
+  if (!apiKey) {
+    throw new Error('GEMINI_API_KEY is required.')
+  }
+
+  const genAI = new GoogleGenerativeAI(apiKey)
+  return genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
+}
 
 export async function generateStudyPlan(
   subjectName: string,
@@ -46,7 +57,7 @@ Rules:
 - Make topics specific and actionable
 ${isUrdu ? '- All topic names and descriptions must be in Urdu' : ''}`
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
+  const model = getGeminiModel()
 
   const result = await model.generateContent(prompt)
   const response = await result.response
@@ -117,7 +128,7 @@ Rules:
 ${isUrdu ? '- All text except technical terms should be in Urdu' : ''}
 ${isPakistani ? '- Include at least 1 numerical/calculation question if applicable to the topic' : '- Include at least 1 critical thinking/analytical question'}`
 
-  const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
+  const model = getGeminiModel()
 
   const result = await model.generateContent(prompt)
   const response = await result.response

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { Users, BookOpen, TrendingUp, Shield, Search } from 'lucide-react'
@@ -19,11 +19,7 @@ export default function AdminPage() {
   })
   const [searchQuery, setSearchQuery] = useState('')
 
-  useEffect(() => {
-    fetchAdminData()
-  }, [])
-
-  async function fetchAdminData() {
+  const fetchAdminData = useCallback(async () => {
     try {
       const [usersRes, statsRes] = await Promise.all([
         fetch('/api/admin/users'),
@@ -50,7 +46,11 @@ export default function AdminPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [router])
+
+  useEffect(() => {
+    fetchAdminData()
+  }, [fetchAdminData])
 
   async function toggleUserRole(userId: string, currentRole: string) {
     const newRole = currentRole === 'admin' ? 'user' : 'admin'

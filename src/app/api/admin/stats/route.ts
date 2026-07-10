@@ -1,7 +1,7 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { isAdminUser } from '@/lib/admin'
+import { getAdminUsers, isAdminUser } from '@/lib/admin'
 
 // GET — fetch platform statistics (admin only)
 export async function GET() {
@@ -13,6 +13,7 @@ export async function GET() {
   }
 
   try {
+    const adminUsers = await getAdminUsers()
     const [usersCount, subjectsCount, plansCount] = await Promise.all([
       supabaseAdmin.from('users').select('*', { count: 'exact', head: true }),
       supabaseAdmin.from('subjects').select('*', { count: 'exact', head: true }),
@@ -29,7 +30,7 @@ export async function GET() {
       .gte('plan_date', thirtyDaysAgo.toISOString())
 
     const stats = {
-      totalUsers: usersCount.count || 0,
+      totalUsers: adminUsers.length || usersCount.count || 0,
       totalSubjects: subjectsCount.count || 0,
       totalPlans: plansCount.count || 0,
       activeUsers: activeUsersCount || 0,

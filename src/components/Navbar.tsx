@@ -2,11 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { UserButton } from '@clerk/nextjs'
-import { BookOpen, BarChart2, Calendar, LayoutDashboard, Moon, Sun, Settings, Menu, X } from 'lucide-react'
+import { UserButton, useUser } from '@clerk/nextjs'
+import { BookOpen, BarChart2, Calendar, LayoutDashboard, Moon, Sun, Settings, Menu, X, Shield } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useState } from 'react'
+import { ADMIN_EMAIL } from '@/lib/admin-constants'
 
 // Drop in the clean SVG Logo Mark
 function StudyFlowLogoMark({ className = '', size = 40 }: { className?: string; size?: number }) {
@@ -73,6 +74,8 @@ export default function Navbar() {
   const pathname = usePathname()
   const { theme, toggleTheme } = useTheme()
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const { user } = useUser()
+  const isAdmin = user?.primaryEmailAddress?.emailAddress?.trim().toLowerCase() === ADMIN_EMAIL
 
   return (
     <nav className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-6 py-4 sticky top-0 z-50 shadow-sm dark:shadow-slate-900/20">
@@ -113,6 +116,20 @@ export default function Navbar() {
                 </Link>
               )
             })}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className={cn(
+                  'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+                  pathname === '/admin'
+                    ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 ring-1 ring-purple-500/10 dark:ring-purple-500/30'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                )}
+              >
+                <Shield className={cn('w-4 h-4', pathname === '/admin' ? 'text-purple-600 dark:text-purple-400' : 'text-slate-500 dark:text-slate-400')} />
+                Admin
+              </Link>
+            )}
           </div>
         </div>
 
@@ -170,6 +187,21 @@ export default function Navbar() {
                 </Link>
               )
             })}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={() => setMobileMenuOpen(false)}
+                className={cn(
+                  'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200',
+                  pathname === '/admin'
+                    ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                )}
+              >
+                <Shield className="w-5 h-5" />
+                Admin
+              </Link>
+            )}
           </div>
         </div>
       )}

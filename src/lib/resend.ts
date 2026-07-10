@@ -1,13 +1,28 @@
+import 'server-only'
+
 import { Resend } from 'resend'
 
-const resendFromEmail = process.env.RESEND_FROM_EMAIL?.trim()
-if (!resendFromEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(resendFromEmail)) {
-  throw new Error(
-    'Invalid RESEND_FROM_EMAIL: set a valid verified sending address in your environment variables.'
-  )
+function getResendClient() {
+  const apiKey = process.env.RESEND_API_KEY
+
+  if (!apiKey) {
+    throw new Error('RESEND_API_KEY is required.')
+  }
+
+  return new Resend(apiKey)
 }
 
-export const resend = new Resend(process.env.RESEND_API_KEY!)
+function getFromEmail() {
+  const resendFromEmail = process.env.RESEND_FROM_EMAIL?.trim()
+
+  if (!resendFromEmail || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(resendFromEmail)) {
+    throw new Error(
+      'Invalid RESEND_FROM_EMAIL: set a valid verified sending address in your environment variables.'
+    )
+  }
+
+  return resendFromEmail
+}
 
 export async function sendDailyReminder(
   email: string,
@@ -16,8 +31,10 @@ export async function sendDailyReminder(
 ) {
   const totalHours = todayTasks.reduce((sum, t) => sum + t.hours, 0)
 
+  const resend = getResendClient()
+
   await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL!,
+    from: getFromEmail(),
     to: email,
     subject: `Your Study Plan for Today — ${todayTasks.length} tasks`,
     html: `
@@ -61,8 +78,10 @@ export async function sendWeeklySummary(
   const completedHours = completedTasks.reduce((sum, t) => sum + t.hours, 0)
   const upcomingHours = upcomingTasks.reduce((sum, t) => sum + t.hours, 0)
 
+  const resend = getResendClient()
+
   await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL!,
+    from: getFromEmail(),
     to: email,
     subject: `Weekly Study Summary — ${weekRange}`,
     html: `
@@ -132,8 +151,10 @@ export async function sendProgressSummary(
   const completedHours = completedTasks.reduce((sum, t) => sum + t.hours, 0)
   const upcomingHours = upcomingTasks.reduce((sum, t) => sum + t.hours, 0)
 
+  const resend = getResendClient()
+
   await resend.emails.send({
-    from: process.env.RESEND_FROM_EMAIL!,
+    from: getFromEmail(),
     to: email,
     subject: `📊 Study Summary — ${summaryRange}`,
     html: `

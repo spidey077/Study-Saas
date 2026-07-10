@@ -1,7 +1,8 @@
+import 'server-only'
+
 import { clerkClient } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
-
-export const ADMIN_EMAIL = 'imdadullahchishti@gmail.com'
+import { ADMIN_EMAIL } from '@/lib/admin-constants'
 
 function normalizeEmail(email?: string | null) {
   return email?.trim().toLowerCase() || ''
@@ -57,7 +58,7 @@ export async function getAdminUsers() {
       language: 'english',
       subscription_tier: 'free',
       role: email === ADMIN_EMAIL ? 'admin' : 'user',
-      created_at: clerkUser.createdAt?.toISOString() || new Date().toISOString(),
+      created_at: clerkUser.createdAt ? new Date(clerkUser.createdAt).toISOString() : new Date().toISOString(),
     })
   }
 
