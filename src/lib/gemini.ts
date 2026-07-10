@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { GoogleGenerativeAI } from '@google/generative-ai'
 import { Language } from '@/types'
 

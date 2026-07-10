@@ -1,5 +1,3 @@
-import 'server-only'
-
 import { clerkClient } from '@clerk/nextjs/server'
 import { supabaseAdmin } from '@/lib/supabase'
 import { ADMIN_EMAIL } from '@/lib/admin-constants'
