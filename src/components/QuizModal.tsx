@@ -93,20 +93,20 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
   if (!open) return null
 
   return (
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/10 p-4">
-        <Card className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] overflow-hidden shadow-xl border border-[#f5e3a2] bg-white">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
+        <Card className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] overflow-hidden shadow-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
         <CardHeader className="flex flex-col gap-2">
           <div className="flex items-start justify-between gap-4">
             <div>
               <CardTitle>Quick quiz for &quot;{task.topic}&quot;</CardTitle>
-              <p className="text-sm text-slate-700">
+              <p className="text-sm text-slate-700 dark:text-slate-200">
                 Answer at least 50% correctly to complete this task automatically.
               </p>
             </div>
             <button
               type="button"
               onClick={onClose}
-              className="text-sm text-slate-700 hover:text-slate-950"
+              className="text-sm text-slate-700 dark:text-slate-200 hover:text-slate-950 dark:hover:text-white"
             >
               Close
             </button>
@@ -115,13 +115,13 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
 
         <div className="space-y-4 overflow-y-auto px-4 pb-4 sm:px-6 max-h-[70vh]">
           {loading && (
-            <div className="rounded-xl bg-[#fff9d1] p-6 text-center text-sm text-slate-700">
+            <div className="rounded-xl bg-amber-900/20 dark:bg-slate-800 p-6 text-center text-sm text-slate-200">
               Generating quiz questions...
             </div>
           )}
 
           {error && (
-            <div className="rounded-xl bg-[#fee2e2] border border-[#fecaca] p-4 text-sm text-slate-950">
+            <div className="rounded-xl bg-rose-950/70 border border-rose-700 p-4 text-sm text-rose-100">
               {error}
             </div>
           )}
@@ -129,22 +129,22 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
           {!loading && !error && questions.length > 0 && (
             <div className="space-y-6">
               {questions.map((question, questionIndex) => (
-                <div key={questionIndex} className="rounded-xl border border-[#f5e3a2] bg-[#fff9d1] p-4">
-                  <p className="font-medium text-sm text-slate-950">{questionIndex + 1}. {question.question}</p>
+                <div key={questionIndex} className="rounded-xl border border-amber-400/30 bg-amber-50/80 dark:bg-slate-800 dark:border-slate-700 p-4">
+                  <p className="font-medium text-sm text-slate-950 dark:text-slate-100">{questionIndex + 1}. {question.question}</p>
                   <div className="mt-3 space-y-2">
                     {question.options.map((option, optionIndex) => (
                       <label
                         key={optionIndex}
-                        className="flex items-center gap-3 rounded-lg border border-[#f5e3a2] px-3 py-2 cursor-pointer transition-colors hover:border-[#f7d46a]"
+                        className="flex items-center gap-3 rounded-lg border border-amber-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 cursor-pointer transition-colors hover:border-amber-400 dark:hover:border-slate-600"
                       >
                         <input
                           type="radio"
                           name={`quiz-${task.id}-${questionIndex}`}
                           checked={selectedAnswers[questionIndex] === optionIndex}
                           onChange={() => updateAnswer(questionIndex, optionIndex)}
-                          className="h-4 w-4 text-slate-950"
+                          className="h-4 w-4 text-slate-950 dark:text-slate-200"
                         />
-                        <span className="text-sm text-slate-950">{option}</span>
+                        <span className="text-sm text-slate-950 dark:text-slate-200">{option}</span>
                       </label>
                     ))}
                   </div>

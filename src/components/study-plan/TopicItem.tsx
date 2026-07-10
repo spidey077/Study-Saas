@@ -65,8 +65,8 @@ export default function TopicItem({ task, onToggle }: TopicItemProps) {
       className={cn(
         'flex items-start gap-3 p-4 rounded-xl border transition-all duration-200',
         task.is_completed
-          ? 'bg-[#fff4b0] border border-[#f7d46a]'
-          : 'bg-white border border-[#f5e3a2] hover:border-[#f7d46a] hover:bg-[#fff9d1]'
+          ? 'bg-[#fff4b0] dark:bg-amber-900/30 border border-[#f7d46a] dark:border-amber-600'
+          : 'bg-white dark:bg-slate-900 border border-[#f5e3a2] dark:border-slate-700 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700'
       )}
     >
       <button
@@ -75,9 +75,9 @@ export default function TopicItem({ task, onToggle }: TopicItemProps) {
         className="mt-0.5 flex-shrink-0 transition-all duration-200 hover:scale-110 disabled:opacity-50"
       >
         {task.is_completed ? (
-          <CheckCircle2 className="w-5 h-5 text-slate-950" />
+          <CheckCircle2 className="w-5 h-5 text-slate-950 dark:text-white" />
         ) : (
-          <Circle className="w-5 h-5 text-slate-800 hover:text-slate-950" />
+          <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white" />
         )}
       </button>
 
@@ -86,12 +86,12 @@ export default function TopicItem({ task, onToggle }: TopicItemProps) {
           <p
             className={cn(
               'text-sm font-medium',
-              task.is_completed ? 'line-through text-slate-600' : 'text-slate-950'
+              task.is_completed ? 'line-through text-slate-600 dark:text-slate-400' : 'text-slate-950 dark:text-white'
             )}
           >
             {task.topic}
           </p>
-          <div className="flex items-center gap-1 text-xs text-slate-600 flex-shrink-0">
+          <div className="flex items-center gap-1 text-xs text-slate-600 dark:text-slate-400 flex-shrink-0">
             <Clock className="w-3 h-3" />
             <span>{task.estimated_hours}h</span>
           </div>
@@ -103,14 +103,14 @@ export default function TopicItem({ task, onToggle }: TopicItemProps) {
               className="w-2 h-2 rounded-full flex-shrink-0"
               style={{ backgroundColor: task.subject.color }}
             />
-            <span className="text-xs font-medium text-slate-700">
+            <span className="text-xs font-medium text-slate-700 dark:text-slate-300">
               {task.subject.name}
             </span>
           </div>
         )}
 
         {task.description && (
-          <p className="text-xs mt-1.5 text-slate-600">
+          <p className="text-xs mt-1.5 text-slate-600 dark:text-slate-400">
             {task.description}
           </p>
         )}

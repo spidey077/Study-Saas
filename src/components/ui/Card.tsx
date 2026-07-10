@@ -25,13 +25,13 @@ export const CardHeader = ({ className, children, ...props }: HTMLAttributes<HTM
 )
 
 export const CardTitle = ({ className, children, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
-  <h3 className={cn('text-xl font-bold text-slate-900 tracking-tight', className)} {...props}>
+  <h3 className={cn('text-xl font-bold text-slate-900 dark:text-white tracking-tight', className)} {...props}>
     {children}
   </h3>
 )
 
 export const CardContent = ({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) => (
-  <div className={cn('text-slate-600 leading-relaxed', className)} {...props}>
+  <div className={cn('text-slate-600 dark:text-slate-300 leading-relaxed', className)} {...props}>
     {children}
   </div>
 )

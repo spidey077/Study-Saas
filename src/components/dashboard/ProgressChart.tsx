@@ -22,10 +22,10 @@ export default function ProgressChart({ data }: ProgressChartProps) {
   }))
 
   return (
-    <Card className="border-2 border-slate-200/60 bg-gradient-to-br from-white to-slate-50">
+    <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
       <CardHeader>
         <CardTitle>7-Day Progress</CardTitle>
-        <p className="text-sm text-slate-500 mt-1">Topics completed over the last 7 days</p>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Topics completed over the last 7 days</p>
       </CardHeader>
       <div className="h-56">
         <ResponsiveContainer width="100%" height="100%">
@@ -36,29 +36,29 @@ export default function ProgressChart({ data }: ProgressChartProps) {
                 <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" />
             <XAxis
               dataKey="label"
-              tick={{ fontSize: 11, fill: '#64748b' }}
+              tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
               axisLine={false}
               tickLine={false}
             />
             <YAxis
-              tick={{ fontSize: 11, fill: '#64748b' }}
+              tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
               axisLine={false}
               tickLine={false}
               allowDecimals={false}
             />
             <Tooltip
               contentStyle={{
-                background: 'white',
+                background: 'var(--chart-tooltip-background)',
                 border: '1px solid #e2e8f0',
                 borderRadius: '12px',
                 fontSize: '12px',
-                color: '#0f172a',
+                color: 'var(--chart-tooltip-color)',
                 boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
               }}
-              labelStyle={{ color: '#0f172a', fontWeight: '600' }}
+              labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600' }}
             />
             <Area
               type="monotone"

@@ -14,6 +14,10 @@
     --border: rgba(247, 212, 106, 0.35);
     --text-muted: #6b7280;
     --text-soft: #4b5563;
+    --chart-tooltip-background: #ffffff;
+    --chart-tooltip-color: #0f172a;
+    --chart-grid-stroke: #e2e8f0;
+    --chart-axis-tick: #64748b;
   }
 
   .dark {
@@ -27,30 +31,10 @@
     --border: rgba(148, 163, 184, 0.2);
     --text-muted: #94a3b8;
     --text-soft: #cbd5e1;
-  }
-
-  .dark * {
-    color: #f8fafc !important;
-  }
-
-  .dark [class*="bg-"] {
-    background-color: #111827 !important;
-    background-image: none !important;
-  }
-
-  .dark [class*="border-"] {
-    border-color: rgba(148, 163, 184, 0.2) !important;
-  }
-
-  .dark svg path,
-  .dark svg rect,
-  .dark svg circle,
-  .dark svg ellipse,
-  .dark svg polygon,
-  .dark svg polyline,
-  .dark svg line {
-    fill: #f8fafc !important;
-    stroke: #f8fafc !important;
+    --chart-tooltip-background: #111827;
+    --chart-tooltip-color: #f8fafc;
+    --chart-grid-stroke: #334155;
+    --chart-axis-tick: #cbd5e1;
   }
 
   * {

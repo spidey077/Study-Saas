@@ -81,7 +81,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
   }
 
   return (
-    <Card className="relative overflow-hidden border-2 border-slate-200/60 bg-gradient-to-br from-white to-slate-50 hover:border-amber-300/60 hover:shadow-xl hover:shadow-amber-500/10 transition-all duration-300 group">
+    <Card className="relative overflow-hidden border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 hover:border-amber-300/60 dark:hover:border-slate-600 hover:shadow-xl dark:hover:shadow-slate-900/50 transition-all duration-300 group">
       {/* Color accent bar */}
       <div
         className="absolute top-0 left-0 right-0 h-1.5 rounded-t-xl"
@@ -97,14 +97,14 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
             <BookOpen className="w-6 h-6" style={{ color: subject.color }} />
           </div>
           <div>
-            <h3 className="font-bold text-slate-900 text-lg">{subject.name}</h3>
+            <h3 className="font-bold text-slate-900 dark:text-white text-lg">{subject.name}</h3>
             <div className="flex items-center gap-2 mt-1 flex-wrap">
               <Badge variant={difficultyVariant[subject.difficulty]}>
                 {subject.difficulty}
               </Badge>
-              <span className="text-xs text-slate-500 font-medium">{subject.total_topics} topics</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{subject.total_topics} topics</span>
               {subject.exam_type && (
-                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">
+                <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-200">
                   {examTypeConfig[subject.exam_type]?.icon} {examTypeConfig[subject.exam_type]?.label}
                 </span>
               )}
@@ -114,7 +114,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50"
+          className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30"
         >
           <Trash2 className="w-4 h-4" />
         </button>
@@ -122,23 +122,29 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
 
       {/* Exam countdown */}
       <div className="mt-4 flex items-center gap-2 text-sm">
-        <Calendar className="w-4 h-4 text-slate-500" />
-        <span className="text-slate-600 font-medium">{format(parseISO(subject.exam_date), 'MMM d, yyyy')}</span>
-        <span className={cn(
-          'ml-auto font-bold px-2 py-1 rounded-lg text-xs',
-          daysLeft <= 7 ? 'bg-red-100 text-red-600' : daysLeft <= 14 ? 'bg-amber-100 text-amber-600' : 'bg-green-100 text-green-600'
-        )}>
+        <Calendar className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+        <span className="text-slate-600 dark:text-slate-400 font-medium">{format(parseISO(subject.exam_date), 'MMM d, yyyy')}</span>
+        <span
+          className={cn(
+            'ml-auto font-bold px-2 py-1 rounded-lg text-xs',
+            daysLeft <= 7
+              ? 'bg-red-100 text-red-600 dark:bg-red-950/60 dark:text-red-300'
+              : daysLeft <= 14
+              ? 'bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-300'
+              : 'bg-green-100 text-green-600 dark:bg-emerald-950/60 dark:text-emerald-300'
+          )}
+        >
           {daysLeft > 0 ? `${daysLeft}d left` : daysLeft === 0 ? 'Today!' : 'Past'}
         </span>
       </div>
 
       {/* Progress bar */}
       <div className="mt-4">
-        <div className="flex justify-between text-xs text-slate-500 mb-2 font-medium">
+        <div className="flex justify-between text-xs text-slate-500 dark:text-slate-400 mb-2 font-medium">
           <span>{completedTopics}/{subject.total_topics} topics</span>
-          <span className="font-bold">{progressPct}%</span>
+          <span className="font-bold text-slate-900 dark:text-white">{progressPct}%</span>
         </div>
-        <div className="h-2.5 bg-slate-200 rounded-full overflow-hidden">
+        <div className="h-2.5 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
           <div
             className="h-full rounded-full transition-all duration-700 shadow-sm"
             style={{
@@ -150,9 +156,9 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
       </div>
 
       {/* Generate plan section */}
-      <div className="mt-5 pt-5 border-t border-slate-200/60">
+      <div className="mt-5 pt-5 border-t border-slate-200/60 dark:border-slate-700/60">
         <div className="flex items-center gap-3 mb-4">
-          <label className="text-xs text-slate-600 font-semibold uppercase tracking-wider">Hours/day:</label>
+          <label className="text-xs text-slate-600 dark:text-slate-400 font-semibold uppercase tracking-wider">Hours/day:</label>
           <input
             type="number"
             min={0.5}
@@ -160,7 +166,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
             step={0.5}
             value={hoursPerDay}
             onChange={(e) => setHoursPerDay(Number(e.target.value))}
-            className="w-20 rounded-xl border-2 border-slate-200/60 bg-white px-3 py-2 text-sm text-center text-slate-900 font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500/50 focus:border-amber-300/60 transition-all"
+            className="w-20 rounded-xl border-2 border-slate-200/60 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-center text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500/50 dark:focus:ring-blue-500/50 focus:border-amber-300/60 transition-all"
           />
         </div>
         <Button

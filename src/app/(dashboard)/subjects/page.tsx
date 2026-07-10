@@ -67,8 +67,8 @@ export default function SubjectsPage() {
     <div className="space-y-8 animate-fade-in">
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 tracking-tight">Subjects</h1>
-          <p className="text-slate-500 mt-2 text-base sm:text-lg leading-8">Manage your subjects and generate AI study plans</p>
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Subjects</h1>
+          <p className="text-slate-500 dark:text-slate-400 mt-2 text-base sm:text-lg leading-8">Manage your subjects and generate AI study plans</p>
         </div>
         <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
           <Plus className="w-4 h-4" />
@@ -77,8 +77,8 @@ export default function SubjectsPage() {
       </div>
 
       {showForm && (
-        <Card className="border-2 border-slate-200/60 bg-gradient-to-br from-white to-slate-50 animate-slide-up">
-          <h2 className="text-xl font-bold text-slate-900 mb-5">Add New Subject</h2>
+        <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 animate-slide-up">
+          <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-5">Add New Subject</h2>
           <SubjectForm
             onSuccess={handleSubjectAdded}
             onCancel={() => setShowForm(false)}
@@ -99,12 +99,12 @@ export default function SubjectsPage() {
           ))}
         </div>
       ) : (
-        <Card className="text-center py-16 border-2 border-dashed border-slate-200 bg-gradient-to-br from-slate-50 to-white animate-slide-up">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-100 to-amber-100 text-amber-600 mb-6 shadow-lg">
+        <Card className="text-center py-16 border-2 border-dashed border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 animate-slide-up">
+          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-100 to-amber-100 text-amber-600 mb-6 shadow-lg dark:bg-amber-900/30 dark:text-amber-300">
             <BookOpen className="w-8 h-8" />
           </div>
-          <h3 className="text-2xl font-bold text-slate-900 mb-3">No subjects yet</h3>
-          <p className="text-slate-600 mb-8 max-w-sm mx-auto text-base sm:text-lg leading-8">
+          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No subjects yet</h3>
+          <p className="text-slate-600 dark:text-slate-400 mb-8 max-w-sm mx-auto text-base sm:text-lg leading-8">
             Add a subject to get started. AI will build your personalized study plan.
           </p>
           <Button onClick={() => setShowForm(true)} size="lg">

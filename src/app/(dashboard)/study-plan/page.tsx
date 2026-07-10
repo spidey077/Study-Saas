@@ -66,8 +66,8 @@ export default function StudyPlanPage() {
       {/* Header */}
       <div className="flex items-center justify-between flex-wrap gap-4">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-950">Study Plan</h1>
-          <p className="text-slate-600 mt-2 text-base leading-7">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">Study Plan</h1>
+          <p className="text-slate-600 dark:text-slate-400 mt-2 text-base leading-7">
             {totalPlans > 0
               ? `${totalCompleted}/${totalPlans} topics completed (${pct}%)`
               : 'No study plan yet. Add subjects and generate a plan.'}
@@ -76,7 +76,7 @@ export default function StudyPlanPage() {
 
         {subjects.length > 0 && (
           <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-slate-700" />
+            <Filter className="w-4 h-4 text-slate-700 dark:text-slate-300" />
             <Select
               id="subject-filter"
               value={selectedSubject}
@@ -94,12 +94,12 @@ export default function StudyPlanPage() {
 
       {/* Overall progress bar */}
       {totalPlans > 0 && (
-        <div className="rounded-xl border border-[#f5e3a2] bg-[#fff9d1] p-4">
-          <div className="flex justify-between text-sm text-slate-600 mb-2">
+        <div className="rounded-xl border border-[#f5e3a2] dark:border-amber-600 bg-[#fff9d1] dark:bg-slate-900 p-4">
+          <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400 mb-2">
             <span>Overall Progress</span>
-            <span className="font-semibold text-slate-950">{pct}%</span>
+            <span className="font-semibold text-slate-950 dark:text-white">{pct}%</span>
           </div>
-          <div className="h-3 bg-[#fff4b0] rounded-full overflow-hidden">
+          <div className="h-3 bg-[#fff4b0] dark:bg-amber-900/30 rounded-full overflow-hidden">
             <div
               className="h-full bg-gradient-to-r from-[#f7d46a] to-[#f4c64c] rounded-full transition-all duration-700"
               style={{ width: `${pct}%` }}
@@ -121,10 +121,10 @@ export default function StudyPlanPage() {
           ))}
         </div>
       ) : (
-        <div className="text-center py-20 rounded-xl border border-[#f5e3a2] bg-white">
-          <Calendar className="w-12 h-12 text-yellow-600 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-slate-950 mb-2">No study plan yet</h3>
-          <p className="text-slate-600">
+        <div className="text-center py-20 rounded-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
+          <Calendar className="w-12 h-12 text-yellow-600 dark:text-yellow-300 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-slate-950 dark:text-white mb-2">No study plan yet</h3>
+          <p className="text-slate-600 dark:text-slate-400">
             Go to <strong>Subjects</strong> and click &quot;Generate AI Study Plan&quot; on a subject.
           </p>
         </div>

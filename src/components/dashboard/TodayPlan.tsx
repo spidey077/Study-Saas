@@ -74,7 +74,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle }: TodayP
             {upcomingTasks.map((task) => (
               <div
                 key={task.id}
-                className="flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border bg-white dark:bg-slate-800 border-[#f5e3a2] dark:border-slate-600 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700"
+                className="flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border bg-white dark:bg-slate-900 border-[#f5e3a2] dark:border-slate-700 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700"
               >
                 <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 mt-0.5 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
@@ -139,7 +139,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle }: TodayP
               'flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border',
               task.is_completed
                 ? 'bg-[#fff4b0] dark:bg-amber-900/30 border border-[#f7d46a] dark:border-amber-600'
-                : 'bg-white dark:bg-slate-800 border border-[#f5e3a2] dark:border-slate-600 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700'
+                : 'bg-white dark:bg-slate-900 border border-[#f5e3a2] dark:border-slate-700 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700'
             )}
           >
             <button
@@ -150,7 +150,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle }: TodayP
               {task.is_completed ? (
                 <CheckCircle2 className="w-5 h-5 text-slate-950 dark:text-white" />
               ) : (
-                <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300" />
+                <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white" />
               )}
             </button>
             <div className="flex-1 min-w-0">
