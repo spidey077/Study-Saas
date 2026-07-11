@@ -69,7 +69,7 @@ export async function GET() {
   try {
     const data = await getOrCreateUser(userId)
     return NextResponse.json(data)
-  } catch (error: unknown) {
+  } catch {
     return NextResponse.json(
       {
         language: 'english',

@@ -6,7 +6,7 @@ import { getStripe } from '@/lib/stripe'
 
 export const runtime = 'nodejs'
 
-async function upsertUserSubscription(clerkId: string, subscriptionTier: 'free' | 'tier1' | 'tier2', email?: string | null, name?: string | null) {
+async function upsertUserSubscription(clerkId: string, subscriptionTier: 'free' | 'tier1' | 'tier2') {
   const payload = {
     clerk_id: clerkId,
     email: `${clerkId}@stripe.local`,
@@ -49,17 +49,6 @@ async function upsertUserSubscription(clerkId: string, subscriptionTier: 'free' 
   })
 }
 
-async function getClerkProfile(clerkId: string) {
-  try {
-    const clerkUser = await clerkClient.users.getUser(clerkId)
-    return {
-      email: clerkUser.emailAddresses?.[0]?.emailAddress || null,
-      name: clerkUser.firstName || clerkUser.username || null,
-    }
-  } catch {
-    return { email: null, name: null }
-  }
-}
 
 function resolveTierFromSubscription(subscription: Stripe.Subscription): 'free' | 'tier1' | 'tier2' {
   const metadataTier = subscription.metadata?.tier

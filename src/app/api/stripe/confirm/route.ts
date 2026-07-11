@@ -7,17 +7,6 @@ import { getStripe } from '@/lib/stripe'
 
 export const runtime = 'nodejs'
 
-async function getClerkProfile(clerkId: string) {
-  try {
-    const clerkUser = await clerkClient.users.getUser(clerkId)
-    return {
-      email: clerkUser.emailAddresses?.[0]?.emailAddress || null,
-      name: clerkUser.firstName || clerkUser.username || null,
-    }
-  } catch {
-    return { email: null, name: null }
-  }
-}
 
 async function syncUserTier(clerkId: string, tier: 'free' | 'tier1' | 'tier2') {
 
