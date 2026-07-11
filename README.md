@@ -39,11 +39,13 @@ StudyFlow is a personalized, AI-powered Study Planner SaaS application built on 
 
 ## 🛠️ How to run 
 
-First, pull down the repository and install all required framework architecture modules:
-
 # Clone the repository
 git clone [https://github.com/spidey077/study-flow.git](https://github.com/spidey077/study-flow.git)
-cd study-flow
 
-# Install the exact required dependency stack
-npm install
+# Installation Command
+npx create-next-app@14 study-flow --typescript --tailwind --app --src-dir
+cd study-flow
+npm install @clerk/nextjs @supabase/supabase-js openai resend recharts date-fns lucide-react sonner
+
+# Run locally
+npm run dev
