@@ -6,6 +6,14 @@ function normalizeEmail(email?: string | null) {
   return email?.trim().toLowerCase() || ''
 }
 
+function resolveRole(role: string | null | undefined, email: string) {
+  if (normalizeEmail(email) === ADMIN_EMAIL) {
+    return 'admin'
+  }
+
+  return role === 'admin' ? 'admin' : 'user'
+}
+
 export async function isAdminUser(clerkId: string) {
   const clerkUser = await clerkClient.users.getUser(clerkId).catch(() => null)
   const email = normalizeEmail(clerkUser?.emailAddresses?.[0]?.emailAddress)
@@ -54,10 +62,15 @@ export async function getAdminUsers() {
       summary_enabled: false,
       language: 'english',
       subscription_tier: 'free',
-      role: email === ADMIN_EMAIL ? 'admin' : 'user',
+      role: resolveRole('user', email),
       created_at: clerkUser.createdAt ? new Date(clerkUser.createdAt).toISOString() : new Date().toISOString(),
     })
   }
 
-  return mergedUsers.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+  return mergedUsers
+    .map((user) => ({
+      ...user,
+      role: resolveRole(user.role, user.email),
+    }))
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
 }

@@ -20,20 +20,33 @@ export async function GET() {
       supabaseAdmin.from('study_plans').select('*', { count: 'exact', head: true }),
     ])
 
-    // Calculate active users (users with study plans in last 30 days)
+    // Calculate active users from recent subjects or study plans
     const thirtyDaysAgo = new Date()
     thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30)
-    
-    const { data: activeUsers, error: activeUsersError } = await supabaseAdmin
-      .from('study_plans')
-      .select('user_id')
-      .gte('plan_date', thirtyDaysAgo.toISOString())
 
-    if (activeUsersError) {
-      throw activeUsersError
+    const [recentPlansResult, recentSubjectsResult] = await Promise.all([
+      supabaseAdmin
+        .from('study_plans')
+        .select('user_id')
+        .gte('plan_date', thirtyDaysAgo.toISOString()),
+      supabaseAdmin
+        .from('subjects')
+        .select('user_id')
+        .gte('created_at', thirtyDaysAgo.toISOString()),
+    ])
+
+    if (recentPlansResult.error) {
+      throw recentPlansResult.error
     }
 
-    const activeUsersCount = new Set((activeUsers || []).map((item) => item.user_id)).size
+    if (recentSubjectsResult.error) {
+      throw recentSubjectsResult.error
+    }
+
+    const activeUsersCount = new Set([
+      ...(recentPlansResult.data || []).map((item) => item.user_id),
+      ...(recentSubjectsResult.data || []).map((item) => item.user_id),
+    ]).size
 
     const stats = {
       totalUsers: adminUsers.length || usersCount.count || 0,
