@@ -35,7 +35,6 @@ export async function getAdminUsers() {
 
   const supabaseUsers = supabaseUsersResult.data || []
   const clerkUsers = clerkUsersResult || []
-
   const mergedUsers = [...supabaseUsers]
   const existingIds = new Set(supabaseUsers.map((user) => user.clerk_id))
 

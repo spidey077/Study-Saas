@@ -36,7 +36,7 @@ export async function GET() {
     const activeUsersCount = new Set((activeUsers || []).map((item) => item.user_id)).size
 
     const stats = {
-      totalUsers: usersCount.count || adminUsers.length || 0,
+      totalUsers: adminUsers.length || usersCount.count || 0,
       totalSubjects: subjectsCount.count || 0,
       totalPlans: plansCount.count || 0,
       activeUsers: activeUsersCount,

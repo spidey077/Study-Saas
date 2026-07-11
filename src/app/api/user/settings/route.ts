@@ -2,54 +2,63 @@ import { auth } from '@clerk/nextjs'
 import { clerkClient } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { ADMIN_EMAIL } from '@/lib/admin-constants'
+
+function resolveSubscriptionTier(publicMetadata: Record<string, unknown> | undefined) {
+  const tier = publicMetadata?.subscription_tier
+  return tier === 'tier1' || tier === 'tier2' ? tier : 'free'
+}
 
 async function getOrCreateUser(userId: string) {
   const clerkUser = await clerkClient.users.getUser(userId)
-  const email = clerkUser.emailAddresses?.[0]?.emailAddress || ''
-  const name = clerkUser.firstName || clerkUser.username || null
-  const role = email.trim().toLowerCase() === ADMIN_EMAIL ? 'admin' : 'user'
+  const subscriptionTier = resolveSubscriptionTier(clerkUser.publicMetadata)
 
-  const { data: existingUser } = await supabaseAdmin
+  const { data: existingUsers, error: readError } = await supabaseAdmin
     .from('users')
-    .select('*')
+    .select('language, reminder_enabled, reminder_time, summary_enabled, subscription_tier')
     .eq('clerk_id', userId)
-    .maybeSingle()
+    .order('created_at', { ascending: false })
+    .limit(1)
+
+  if (readError) throw readError
+
+  const existingUser = existingUsers?.[0] || null
 
   if (existingUser) {
-    const { data, error } = await supabaseAdmin
-      .from('users')
-      .update({
-        email,
-        name,
-        role,
-      })
-      .eq('clerk_id', userId)
-      .select('language, reminder_enabled, reminder_time, summary_enabled, subscription_tier')
-      .single()
-
-    if (error) throw error
-    return data
+    return existingUser
   }
 
   const { data, error } = await supabaseAdmin
     .from('users')
     .insert({
       clerk_id: userId,
-      email,
-      name,
+      email: `${userId}@clerk.local`,
+      name: null,
       language: 'english',
       reminder_enabled: true,
       reminder_time: '09:00',
       summary_enabled: true,
-      subscription_tier: 'free',
-      role,
+      subscription_tier: subscriptionTier,
+      role: 'user',
     })
     .select('language, reminder_enabled, reminder_time, summary_enabled, subscription_tier')
-    .single()
 
-  if (error) throw error
-  return data
+  if (error) {
+    return {
+      language: 'english',
+      reminder_enabled: true,
+      reminder_time: '09:00',
+      summary_enabled: true,
+      subscription_tier: subscriptionTier,
+    }
+  }
+
+  return data?.[0] || {
+    language: 'english',
+    reminder_enabled: true,
+    reminder_time: '09:00',
+    summary_enabled: true,
+    subscription_tier: subscriptionTier,
+  }
 }
 
 // GET — fetch user settings
@@ -61,7 +70,16 @@ export async function GET() {
     const data = await getOrCreateUser(userId)
     return NextResponse.json(data)
   } catch (error: unknown) {
-    return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to load settings' }, { status: 500 })
+    return NextResponse.json(
+      {
+        language: 'english',
+        reminder_enabled: true,
+        reminder_time: '09:00',
+        summary_enabled: true,
+        subscription_tier: 'free',
+      },
+      { status: 200 }
+    )
   }
 }
 
@@ -86,10 +104,11 @@ export async function PATCH(request: Request) {
       })
       .eq('clerk_id', userId)
       .select('language, reminder_enabled, reminder_time, summary_enabled, subscription_tier')
-      .single()
+      .order('created_at', { ascending: false })
+      .limit(1)
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
-    return NextResponse.json(data)
+    return NextResponse.json(data?.[0] || existing)
   } catch (error: unknown) {
     return NextResponse.json({ error: error instanceof Error ? error.message : 'Failed to save settings' }, { status: 500 })
   }

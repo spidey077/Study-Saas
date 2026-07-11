@@ -54,6 +54,14 @@ export default function AdminPage() {
     fetchAdminData()
   }, [fetchAdminData])
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchAdminData()
+    }, 15000)
+
+    return () => clearInterval(interval)
+  }, [fetchAdminData])
+
   const filteredUsers = users.filter(user => 
     user.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     user.email.toLowerCase().includes(searchQuery.toLowerCase())

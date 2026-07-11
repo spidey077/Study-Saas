@@ -1,4 +1,5 @@
 import { auth } from '@clerk/nextjs'
+import { clerkClient } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { isValidSubjectForExam, isValidSubjectForExamType } from '@/lib/examConfig'
 import { supabaseAdmin } from '@/lib/supabase'
@@ -52,13 +53,16 @@ export async function POST(request: Request) {
   }
 
   // Check user's subscription tier and subject limit
+  const clerkUser = await clerkClient.users.getUser(userId)
+  const clerkTier = clerkUser.publicMetadata?.subscription_tier
+
   const { data: userData } = await supabaseAdmin
     .from('users')
     .select('subscription_tier')
     .eq('clerk_id', userId)
-    .single()
+    .maybeSingle()
 
-  const subscriptionTier = userData?.subscription_tier || 'free'
+  const subscriptionTier = clerkTier === 'tier1' || clerkTier === 'tier2' ? clerkTier : userData?.subscription_tier || 'free'
 
   if (subscriptionTier === 'free') {
     // Count existing subjects

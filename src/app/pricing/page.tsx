@@ -1,10 +1,50 @@
 'use client'
 
+import { useState } from 'react'
 import Link from 'next/link'
+import { useUser } from '@clerk/nextjs'
 import { Check, BookOpen, Zap, Crown } from 'lucide-react'
+import { toast } from 'sonner'
 import Button from '@/components/ui/Button'
+import { SubscriptionTier } from '@/types'
 
 export default function PricingPage() {
+  const { isSignedIn } = useUser()
+  const [loadingTier, setLoadingTier] = useState<SubscriptionTier | null>(null)
+
+  async function startCheckout(tier: Exclude<SubscriptionTier, 'free'>) {
+    if (!isSignedIn) {
+      window.location.href = '/sign-in'
+      return
+    }
+
+    setLoadingTier(tier)
+
+    try {
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ tier }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to start checkout')
+      }
+
+      if (!data.url) {
+        throw new Error('Stripe checkout URL was not returned')
+      }
+
+      window.location.href = data.url
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Failed to start checkout')
+    } finally {
+      setLoadingTier(null)
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-yellow-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900/30 px-4 py-20">
       <div className="max-w-7xl mx-auto">
@@ -103,7 +143,7 @@ export default function PricingPage() {
                 <span>Priority support</span>
               </li>
             </ul>
-            <Button className="w-full">
+            <Button className="w-full" onClick={() => startCheckout('tier1')} isLoading={loadingTier === 'tier1'}>
               Upgrade Now
             </Button>
           </div>
@@ -153,7 +193,11 @@ export default function PricingPage() {
                 <span>24/7 premium support</span>
               </li>
             </ul>
-            <Button className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white border-purple-600">
+            <Button
+              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white border-purple-600"
+              onClick={() => startCheckout('tier2')}
+              isLoading={loadingTier === 'tier2'}
+            >
               Upgrade Now
             </Button>
           </div>

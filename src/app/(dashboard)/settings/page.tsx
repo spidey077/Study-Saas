@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic'
 
 import { useState, useEffect } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { useUser } from '@clerk/nextjs'
 import { toast } from 'sonner'
 import { Shield, Bell, Globe, CreditCard } from 'lucide-react'
@@ -14,6 +15,7 @@ import Link from 'next/link'
 
 export default function SettingsPage() {
   const { user } = useUser()
+  const searchParams = useSearchParams()
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
   const [userData, setUserData] = useState({
@@ -27,6 +29,51 @@ export default function SettingsPage() {
   useEffect(() => {
     fetchUserData()
   }, [])
+
+  useEffect(() => {
+    let refreshTimer: ReturnType<typeof setTimeout> | undefined
+    const billingStatus = searchParams.get('billing')
+    const sessionId = searchParams.get('session_id')
+
+    if (billingStatus === 'success') {
+      toast.success('Payment completed successfully. Your plan will update shortly.')
+      ;(async () => {
+        let confirmedTier: SubscriptionTier | null = null
+
+        if (sessionId) {
+          const response = await fetch('/api/stripe/confirm', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sessionId }),
+          })
+
+          if (response.ok) {
+            const data = await response.json()
+            if (data?.tier === 'tier1' || data?.tier === 'tier2') {
+              confirmedTier = data.tier
+              setUserData((current) => ({ ...current, subscription_tier: data.tier }))
+            }
+          }
+        }
+
+        refreshTimer = setTimeout(() => {
+          if (!confirmedTier) {
+            fetchUserData()
+          }
+        }, 500)
+      })()
+    }
+
+    if (billingStatus === 'cancelled') {
+      toast.info('Checkout was canceled before payment completed.')
+    }
+
+    return () => {
+      if (refreshTimer) {
+        clearTimeout(refreshTimer)
+      }
+    }
+  }, [searchParams])
 
   async function fetchUserData() {
     try {
