@@ -50,5 +50,5 @@ export function getAppUrl(request?: Request) {
     return new URL(request.url).origin
   }
 
-  return 'http://localhost:3000'
+  return 'https://studysmartsaas.vercel.app/'
 }
