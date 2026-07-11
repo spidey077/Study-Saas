@@ -40,7 +40,7 @@ export async function getStripePriceId(tier: 'tier1' | 'tier2') {
 }
 
 export function getAppUrl(request?: Request) {
-  const envUrl = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL
+  const envUrl = process.env.VERCEL_URL || process.env.NEXT_PUBLIC_APP_URL
 
   if (envUrl) {
     return envUrl.startsWith('http') ? envUrl : `https://${envUrl}`
@@ -50,5 +50,5 @@ export function getAppUrl(request?: Request) {
     return new URL(request.url).origin
   }
 
-  return 'https://studysmartsaas.vercel.app/'
+  return 'https://studysmartsaas.vercel.app'
 }
