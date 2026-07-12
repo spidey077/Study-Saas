@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { sendDailyReminder, sendWeeklySummary, sendProgressSummary } from '@/lib/resend'
+import { sendDailyReminder, sendWeeklySummary, sendProgressSummary } from '@/lib/email'
 import { format, addDays, isMonday, subDays } from 'date-fns'
 
 // This route is called daily by Vercel Cron

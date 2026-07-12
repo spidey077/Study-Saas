@@ -2,7 +2,7 @@ import { auth } from '@clerk/nextjs'
 import { clerkClient } from '@clerk/nextjs/server'
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
-import { sendDailyReminder, sendProgressSummary } from '@/lib/resend'
+import { sendDailyReminder, sendProgressSummary } from '@/lib/email'
 import { format } from 'date-fns'
 
 async function getOrCreateUserProfile(userId: string) {
