@@ -2,9 +2,9 @@
 
 export const dynamic = 'force-dynamic'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useMemo } from 'react'
 import { toast } from 'sonner'
-import { Calendar, Filter } from 'lucide-react'
+import { Calendar, Filter, Search } from 'lucide-react'
 import { Select } from '@/components/ui/Input'
 import DayCard from '@/components/study-plan/DayCard'
 import { StudyPlan, Subject } from '@/types'
@@ -13,6 +13,7 @@ export default function StudyPlanPage() {
   const [plans, setPlans] = useState<StudyPlan[]>([])
   const [subjects, setSubjects] = useState<Subject[]>([])
   const [selectedSubject, setSelectedSubject] = useState('')
+  const [topicSearch, setTopicSearch] = useState('')
   const [loading, setLoading] = useState(true)
 
   const fetchPlans = useCallback(async () => {
@@ -38,18 +39,33 @@ export default function StudyPlanPage() {
     fetchPlans()
   }, [fetchPlans])
 
+  useEffect(() => {
+    if (selectedSubject && !subjects.some((s) => s.id === selectedSubject)) {
+      setSelectedSubject('')
+    }
+  }, [subjects, selectedSubject])
+
   async function handleQuizComplete() {
-    setTimeout(() => {
-      fetchPlans()
-    }, 3000)
+    fetchPlans()
   }
 
   function handleTaskToggle(updated: StudyPlan) {
     setPlans((prev) => prev.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)))
   }
 
+  const filteredPlans = useMemo(() => {
+    const q = topicSearch.trim().toLowerCase()
+    if (!q) return plans
+    return plans.filter(
+      (p) =>
+        p.topic.toLowerCase().includes(q) ||
+        p.description?.toLowerCase().includes(q) ||
+        p.subject?.name.toLowerCase().includes(q)
+    )
+  }, [plans, topicSearch])
+
   // Group plans by date
-  const groupedPlans = plans.reduce((acc, plan) => {
+  const groupedPlans = filteredPlans.reduce((acc, plan) => {
     if (!acc[plan.plan_date]) acc[plan.plan_date] = []
     acc[plan.plan_date].push(plan)
     return acc
@@ -57,9 +73,10 @@ export default function StudyPlanPage() {
 
   const sortedDates = Object.keys(groupedPlans).sort()
 
-  const totalCompleted = plans.filter((p) => p.is_completed).length
-  const totalPlans = plans.length
+  const totalCompleted = filteredPlans.filter((p) => p.is_completed).length
+  const totalPlans = filteredPlans.length
   const pct = totalPlans > 0 ? Math.round((totalCompleted / totalPlans) * 100) : 0
+  const isSearching = topicSearch.trim().length > 0
 
   if (loading) {
     return (
@@ -83,19 +100,31 @@ export default function StudyPlanPage() {
         </div>
 
         {subjects.length > 0 && (
-          <div className="flex items-center gap-2">
-            <Filter className="w-4 h-4 text-slate-700 dark:text-slate-300" />
-            <Select
-              id="subject-filter"
-              value={selectedSubject}
-              onChange={(e) => setSelectedSubject(e.target.value)}
-              className="w-48"
-            >
-              <option value="">All Subjects</option>
-              {subjects.map((s) => (
-                <option key={s.id} value={s.id}>{s.name}</option>
-              ))}
-            </Select>
+          <div className="flex items-center gap-3 flex-wrap">
+            <div className="relative">
+              <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+              <input
+                type="text"
+                placeholder="Search by topic..."
+                value={topicSearch}
+                onChange={(e) => setTopicSearch(e.target.value)}
+                className="pl-10 pr-4 py-2 w-56 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+              />
+            </div>
+            <div className="flex items-center gap-2">
+              <Filter className="w-4 h-4 text-slate-700 dark:text-slate-300" />
+              <Select
+                id="subject-filter"
+                value={selectedSubject}
+                onChange={(e) => setSelectedSubject(e.target.value)}
+                className="w-48"
+              >
+                <option value="">All Subjects</option>
+                {subjects.map((s) => (
+                  <option key={s.id} value={s.id}>{s.name}</option>
+                ))}
+              </Select>
+            </div>
           </div>
         )}
       </div>
@@ -128,6 +157,14 @@ export default function StudyPlanPage() {
               onQuizComplete={handleQuizComplete}
             />
           ))}
+        </div>
+      ) : isSearching && plans.length > 0 ? (
+        <div className="text-center py-20 rounded-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
+          <Search className="w-12 h-12 text-yellow-600 dark:text-yellow-300 mx-auto mb-4" />
+          <h3 className="text-lg font-semibold text-slate-950 dark:text-white mb-2">No matching topics</h3>
+          <p className="text-slate-600 dark:text-slate-400">
+            No topics match &quot;{topicSearch.trim()}&quot;. Try a different search term.
+          </p>
         </div>
       ) : (
         <div className="text-center py-20 rounded-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">

@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
+import { usePathname } from 'next/navigation'
 import { format, parseISO, differenceInDays, subDays } from 'date-fns'
 import { BookOpen, CheckSquare, TrendingUp, Calendar } from 'lucide-react'
 import StatsCard from '@/components/dashboard/StatsCard'
@@ -20,6 +21,7 @@ import Button from '@/components/ui/Button'
 
 export default function DashboardPage() {
   const { user } = useUser()
+  const pathname = usePathname()
   const [allPlans, setAllPlans] = useState<StudyPlan[]>([])
   const [subjects, setSubjects] = useState<Subject[]>([])
   const [loading, setLoading] = useState(true)
@@ -27,6 +29,18 @@ export default function DashboardPage() {
   const today = format(new Date(), 'yyyy-MM-dd')
   const hour = new Date().getHours()
   const greeting = hour < 12 ? 'Good morning' : hour < 17 ? 'Good afternoon' : 'Good evening'
+
+  const fetchSubjects = useCallback(async () => {
+    try {
+      const res = await fetch('/api/subjects')
+      if (res.ok) {
+        const subs = await res.json()
+        setSubjects(Array.isArray(subs) ? subs : [])
+      }
+    } catch {
+      // subjects will refresh on next navigation
+    }
+  }, [])
 
   const fetchData = useCallback(async () => {
     setLoading(true)
@@ -47,6 +61,22 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchData()
   }, [fetchData])
+
+  useEffect(() => {
+    if (pathname === '/dashboard') {
+      fetchSubjects()
+    }
+  }, [pathname, fetchSubjects])
+
+  useEffect(() => {
+    function handleVisibilityChange() {
+      if (document.visibilityState === 'visible') {
+        fetchSubjects()
+      }
+    }
+    document.addEventListener('visibilitychange', handleVisibilityChange)
+    return () => document.removeEventListener('visibilitychange', handleVisibilityChange)
+  }, [fetchSubjects])
 
   // Stats
   const todayTasks = allPlans.filter((p) => p.plan_date === today)
@@ -77,18 +107,14 @@ export default function DashboardPage() {
     setAllPlans((prev) => prev.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)))
   }
 
-  async function refreshSubjects() {
-    setTimeout(async () => {
-      try {
-        const res = await fetch('/api/subjects')
-        if (res.ok) {
-          const subs = await res.json()
-          setSubjects(Array.isArray(subs) ? subs : [])
-        }
-      } catch {
-        // prediction card will update on next manual refresh
-      }
-    }, 3000)
+  function handleQuizComplete(updatedSubject?: Subject) {
+    if (updatedSubject) {
+      setSubjects((prev) =>
+        prev.map((s) => (s.id === updatedSubject.id ? updatedSubject : s))
+      )
+    } else {
+      fetchSubjects()
+    }
   }
 
   if (loading) {
@@ -174,7 +200,7 @@ export default function DashboardPage() {
                 tasks={todayTasks}
                 upcomingTasks={upcomingTasks}
                 onTaskToggle={handleTaskToggle}
-                onQuizComplete={refreshSubjects}
+                onQuizComplete={handleQuizComplete}
               />
             </div>
 

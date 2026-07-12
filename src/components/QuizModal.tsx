@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 import Button from '@/components/ui/Button'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
-import { StudyPlan } from '@/types'
+import { StudyPlan, Subject } from '@/types'
 import { addQuizScore } from '@/lib/quizScoreStorage'
 
 interface QuizQuestion {
@@ -18,7 +18,7 @@ interface QuizModalProps {
   task: StudyPlan
   onClose: () => void
   onPassed: (task: StudyPlan, percentage: number, quizScores: number[]) => Promise<void>
-  onQuizComplete?: () => void
+  onQuizComplete?: (updatedSubject?: Subject) => void
 }
 
 export default function QuizModal({ open, task, onClose, onPassed, onQuizComplete }: QuizModalProps) {
@@ -74,12 +74,15 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
 
   async function triggerPrediction(studyPlanId: string, quizScores: number[]) {
     try {
-      await fetch('/api/quiz-result', {
+      const res = await fetch('/api/quiz-result', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ studyPlanId, quizScore: quizScores[quizScores.length - 1], quizScores }),
       })
-      onQuizComplete?.()
+      if (res.ok) {
+        const data = await res.json()
+        onQuizComplete?.(data.subject ?? undefined)
+      }
     } catch (err) {
       console.error('Failed to trigger prediction:', err)
     }

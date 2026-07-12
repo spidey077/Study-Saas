@@ -1,12 +1,12 @@
 import { format, parseISO } from 'date-fns'
-import { StudyPlan } from '@/types'
+import { StudyPlan, Subject } from '@/types'
 import TopicItem from './TopicItem'
 
 interface DayCardProps {
   date: string
   tasks: StudyPlan[]
   onTaskToggle: (updated: StudyPlan) => void
-  onQuizComplete?: () => void
+  onQuizComplete?: (updatedSubject?: Subject) => void
 }
 
 export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete }: DayCardProps) {

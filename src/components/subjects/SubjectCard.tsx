@@ -9,6 +9,7 @@ import Button from '@/components/ui/Button'
 import Badge from '@/components/ui/Badge'
 import { Subject, Difficulty, ExamType } from '@/types'
 import { cn } from '@/lib/utils'
+import { removeQuizScores } from '@/lib/quizScoreStorage'
 
 interface SubjectCardProps {
   subject: Subject
@@ -71,6 +72,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
     try {
       const res = await fetch(`/api/subjects?id=${subject.id}`, { method: 'DELETE' })
       if (!res.ok) throw new Error('Failed to delete')
+      removeQuizScores(subject.id)
       toast.success(`"${subject.name}" deleted`)
       onDelete(subject.id)
     } catch {

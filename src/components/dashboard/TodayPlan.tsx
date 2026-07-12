@@ -5,14 +5,14 @@ import { toast } from 'sonner'
 import { CheckCircle2, Circle, Clock, BookOpen } from 'lucide-react'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
 import QuizModal from '@/components/QuizModal'
-import { StudyPlan } from '@/types'
+import { StudyPlan, Subject } from '@/types'
 import { cn } from '@/lib/utils'
 
 interface TodayPlanProps {
   tasks: StudyPlan[]
   upcomingTasks?: StudyPlan[]
   onTaskToggle?: (updatedTask: StudyPlan) => void
-  onQuizComplete?: () => void
+  onQuizComplete?: (updatedSubject?: Subject) => void
 }
 
 export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizComplete }: TodayPlanProps) {
@@ -56,8 +56,8 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
   async function handleQuizPassed(task: StudyPlan, _percentage: number, quizScores: number[]) {
     setUpdating(task.id)
     try {
-      await updateProgress(task, true, quizScores)
-      onQuizComplete?.()
+      const updated = await updateProgress(task, true, quizScores)
+      onQuizComplete?.(updated.subject ?? undefined)
     } catch {
       toast.error('Failed to update progress')
       throw new Error('Failed to update progress')

@@ -47,11 +47,10 @@ export async function PATCH(request: Request) {
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
 
+  let subject = null
   if (Array.isArray(quizScores) && quizScores.length > 0 && data?.subject_id) {
-    triggerPrediction(data.subject_id, userId, quizScores).catch((err) => {
-      console.error('Failed to generate score prediction:', err)
-    })
+    subject = await triggerPrediction(data.subject_id, userId, quizScores)
   }
 
-  return NextResponse.json(data)
+  return NextResponse.json({ ...data, subject })
 }

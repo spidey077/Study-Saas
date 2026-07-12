@@ -3,14 +3,14 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
 import { CheckCircle2, Circle, Clock } from 'lucide-react'
-import { StudyPlan } from '@/types'
+import { StudyPlan, Subject } from '@/types'
 import QuizModal from '@/components/QuizModal'
 import { cn } from '@/lib/utils'
 
 interface TopicItemProps {
   task: StudyPlan
   onToggle: (updated: StudyPlan) => void
-  onQuizComplete?: () => void
+  onQuizComplete?: (updatedSubject?: Subject) => void
 }
 
 export default function TopicItem({ task, onToggle, onQuizComplete }: TopicItemProps) {
@@ -55,7 +55,7 @@ export default function TopicItem({ task, onToggle, onQuizComplete }: TopicItemP
       }
       const updated = await res.json()
       onToggle({ ...passedTask, ...updated, is_completed: true })
-      onQuizComplete?.()
+      onQuizComplete?.(updated.subject ?? undefined)
       toast.success('Topic marked complete!')
     } catch {
       toast.error('Failed to update progress')

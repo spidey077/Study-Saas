@@ -29,7 +29,7 @@ export async function POST(request: Request) {
     ? quizScores
     : [quizScore]
 
-  await triggerPrediction(plan.subject_id, userId, scores)
+  const subject = await triggerPrediction(plan.subject_id, userId, scores)
 
-  return NextResponse.json({ success: true })
+  return NextResponse.json({ success: true, subject })
 }

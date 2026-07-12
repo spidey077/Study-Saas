@@ -26,3 +26,10 @@ export function addQuizScore(subjectId: string, score: number): number[] {
   writeAll(all)
   return scores
 }
+
+export function removeQuizScores(subjectId: string): void {
+  const all = readAll()
+  if (!(subjectId in all)) return
+  delete all[subjectId]
+  writeAll(all)
+}
