@@ -1,6 +1,7 @@
 import { auth } from '@clerk/nextjs'
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase'
+import { triggerPrediction } from '@/lib/triggerPrediction'
 
 // GET — fetch study plan with optional date filter
 export async function GET(request: Request) {
@@ -31,7 +32,7 @@ export async function PATCH(request: Request) {
   if (!userId) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
 
   const body = await request.json()
-  const { id, is_completed } = body
+  const { id, is_completed, quizScores } = body
 
   const { data, error } = await supabaseAdmin
     .from('study_plans')
@@ -45,5 +46,12 @@ export async function PATCH(request: Request) {
     .single()
 
   if (error) return NextResponse.json({ error: error.message }, { status: 500 })
+
+  if (Array.isArray(quizScores) && quizScores.length > 0 && data?.subject_id) {
+    triggerPrediction(data.subject_id, userId, quizScores).catch((err) => {
+      console.error('Failed to generate score prediction:', err)
+    })
+  }
+
   return NextResponse.json(data)
 }

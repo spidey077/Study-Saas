@@ -12,6 +12,8 @@ function getGeminiModel() {
   return genAI.getGenerativeModel({ model: 'gemini-2.5-flash' })
 }
 
+export { getGeminiModel }
+
 export async function generateStudyPlan(
   subjectName: string,
   examDate: string,

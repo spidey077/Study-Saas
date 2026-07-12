@@ -6,9 +6,10 @@ interface DayCardProps {
   date: string
   tasks: StudyPlan[]
   onTaskToggle: (updated: StudyPlan) => void
+  onQuizComplete?: () => void
 }
 
-export default function DayCard({ date, tasks, onTaskToggle }: DayCardProps) {
+export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete }: DayCardProps) {
   const parsedDate = parseISO(date)
   const isToday = format(new Date(), 'yyyy-MM-dd') === date
   const isPast = parsedDate < new Date() && !isToday
@@ -50,7 +51,7 @@ export default function DayCard({ date, tasks, onTaskToggle }: DayCardProps) {
       {/* Topic items */}
       <div className="space-y-2 ml-15">
         {tasks.map((task) => (
-          <TopicItem key={task.id} task={task} onToggle={onTaskToggle} />
+          <TopicItem key={task.id} task={task} onToggle={onTaskToggle} onQuizComplete={onQuizComplete} />
         ))}
       </div>
     </div>

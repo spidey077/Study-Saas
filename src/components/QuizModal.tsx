@@ -5,6 +5,7 @@ import { toast } from 'sonner'
 import Button from '@/components/ui/Button'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
 import { StudyPlan } from '@/types'
+import { addQuizScore } from '@/lib/quizScoreStorage'
 
 interface QuizQuestion {
   question: string
@@ -16,10 +17,11 @@ interface QuizModalProps {
   open: boolean
   task: StudyPlan
   onClose: () => void
-  onPassed: (task: StudyPlan) => void
+  onPassed: (task: StudyPlan, percentage: number, quizScores: number[]) => Promise<void>
+  onQuizComplete?: () => void
 }
 
-export default function QuizModal({ open, task, onClose, onPassed }: QuizModalProps) {
+export default function QuizModal({ open, task, onClose, onPassed, onQuizComplete }: QuizModalProps) {
   const [questions, setQuestions] = useState<QuizQuestion[]>([])
   const [selectedAnswers, setSelectedAnswers] = useState<number[]>([])
   const [loading, setLoading] = useState(false)
@@ -41,6 +43,7 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
         topic: task.topic,
         description: task.description,
         subjectName: task.subject?.name,
+        subjectId: task.subject_id || task.subject?.id,
       }),
     })
       .then(async (res) => {
@@ -69,6 +72,19 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
     })
   }
 
+  async function triggerPrediction(studyPlanId: string, quizScores: number[]) {
+    try {
+      await fetch('/api/quiz-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ studyPlanId, quizScore: quizScores[quizScores.length - 1], quizScores }),
+      })
+      onQuizComplete?.()
+    } catch (err) {
+      console.error('Failed to trigger prediction:', err)
+    }
+  }
+
   async function handleSubmit() {
     if (questions.length === 0) return
 
@@ -78,16 +94,24 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
     }, 0)
     const percentage = Math.round((score / questions.length) * 100)
 
-    if (percentage >= 50) {
-      toast.success(`Great job! You scored ${percentage}% and the task is marked complete.`)
-      onPassed(task)
-      onClose()
-    } else {
-      toast.error(`You scored ${percentage}%. The task remains incomplete.`)
-      onClose()
-    }
+    const subjectId = task.subject_id || task.subject?.id
+    const quizScores = subjectId ? addQuizScore(subjectId, percentage) : [percentage]
 
-    setSubmitting(false)
+    try {
+      if (percentage >= 50) {
+        await onPassed(task, percentage, quizScores)
+        toast.success(`Great job! You scored ${percentage}% and the task is marked complete.`)
+        onClose()
+      } else {
+        toast.error(`You scored ${percentage}%. The task remains incomplete.`)
+        await triggerPrediction(task.id, quizScores)
+        onClose()
+      }
+    } catch {
+      toast.error('Failed to update progress. Please try again.')
+    } finally {
+      setSubmitting(false)
+    }
   }
 
   if (!open) return null
@@ -161,7 +185,7 @@ export default function QuizModal({ open, task, onClose, onPassed }: QuizModalPr
               onClick={handleSubmit}
               disabled={loading || submitting || questions.length === 0 || selectedAnswers.some((answer) => answer === -1)}
             >
-              Submit answers
+              {submitting ? 'Saving...' : 'Submit answers'}
             </Button>
           </div>
         </div>

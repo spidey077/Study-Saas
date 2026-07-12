@@ -95,12 +95,22 @@ export default function SettingsPage() {
       const res = await fetch('/api/user/settings', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(userData),
+        body: JSON.stringify({
+          language: userData.language,
+          reminder_enabled: userData.reminder_enabled,
+          reminder_time: userData.reminder_time,
+          summary_enabled: userData.summary_enabled,
+        }),
       })
-      if (!res.ok) throw new Error('Failed to save')
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(body?.error || 'Failed to save')
+      }
+      const data = await res.json()
+      setUserData((current) => ({ ...current, ...data }))
       toast.success('Settings saved successfully')
-    } catch {
-      toast.error('Failed to save settings')
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : 'Failed to save settings')
     } finally {
       setSaving(false)
     }

@@ -38,6 +38,12 @@ export default function StudyPlanPage() {
     fetchPlans()
   }, [fetchPlans])
 
+  async function handleQuizComplete() {
+    setTimeout(() => {
+      fetchPlans()
+    }, 3000)
+  }
+
   function handleTaskToggle(updated: StudyPlan) {
     setPlans((prev) => prev.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)))
   }
@@ -119,6 +125,7 @@ export default function StudyPlanPage() {
               date={date}
               tasks={groupedPlans[date]}
               onTaskToggle={handleTaskToggle}
+              onQuizComplete={handleQuizComplete}
             />
           ))}
         </div>

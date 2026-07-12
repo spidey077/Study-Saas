@@ -12,22 +12,26 @@ interface TodayPlanProps {
   tasks: StudyPlan[]
   upcomingTasks?: StudyPlan[]
   onTaskToggle?: (updatedTask: StudyPlan) => void
+  onQuizComplete?: () => void
 }
 
-export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle }: TodayPlanProps) {
+export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizComplete }: TodayPlanProps) {
   const [updating, setUpdating] = useState<string | null>(null)
   const [quizTask, setQuizTask] = useState<StudyPlan | null>(null)
   const [quizOpen, setQuizOpen] = useState(false)
 
-  async function updateProgress(task: StudyPlan, is_completed: boolean) {
+  async function updateProgress(task: StudyPlan, is_completed: boolean, quizScores?: number[]) {
     const res = await fetch('/api/progress', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: task.id, is_completed }),
+      body: JSON.stringify({ id: task.id, is_completed, quizScores }),
     })
-    if (!res.ok) throw new Error('Failed to update')
+    if (!res.ok) {
+      const body = await res.json().catch(() => null)
+      throw new Error(body?.error || 'Failed to update')
+    }
     const updated = await res.json()
-    onTaskToggle?.(updated)
+    onTaskToggle?.({ ...task, ...updated, is_completed: updated.is_completed ?? is_completed })
     return updated
   }
 
@@ -49,12 +53,14 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle }: TodayP
     }
   }
 
-  async function handleQuizPassed(task: StudyPlan) {
+  async function handleQuizPassed(task: StudyPlan, _percentage: number, quizScores: number[]) {
     setUpdating(task.id)
     try {
-      await updateProgress(task, true)
+      await updateProgress(task, true, quizScores)
+      onQuizComplete?.()
     } catch {
       toast.error('Failed to update progress')
+      throw new Error('Failed to update progress')
     } finally {
       setUpdating(null)
       setQuizOpen(false)
@@ -179,6 +185,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle }: TodayP
           setQuizTask(null)
         }}
         onPassed={handleQuizPassed}
+        onQuizComplete={onQuizComplete}
       />
     </Card>
   )

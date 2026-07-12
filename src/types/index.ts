@@ -38,6 +38,8 @@ export interface User {
   created_at: string
 }
 
+export type PredictionStatus = 'on_track' | 'behind' | 'critical'
+
 export interface Subject {
   id: string
   user_id: string
@@ -49,6 +51,10 @@ export interface Subject {
   specific_exam?: SpecificExam
   color: string
   created_at: string
+  predicted_score?: number | null
+  prediction_status?: PredictionStatus | null
+  prediction_action?: string | null
+  prediction_updated_at?: string | null
 }
 
 export interface StudyPlan {

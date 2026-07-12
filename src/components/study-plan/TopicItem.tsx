@@ -10,9 +10,10 @@ import { cn } from '@/lib/utils'
 interface TopicItemProps {
   task: StudyPlan
   onToggle: (updated: StudyPlan) => void
+  onQuizComplete?: () => void
 }
 
-export default function TopicItem({ task, onToggle }: TopicItemProps) {
+export default function TopicItem({ task, onToggle, onQuizComplete }: TopicItemProps) {
   const [updating, setUpdating] = useState(false)
   const [quizOpen, setQuizOpen] = useState(false)
 
@@ -40,19 +41,25 @@ export default function TopicItem({ task, onToggle }: TopicItemProps) {
     }
   }
 
-  async function handleQuizPassed(task: StudyPlan) {
+  async function handleQuizPassed(passedTask: StudyPlan, _percentage: number, quizScores: number[]) {
     setUpdating(true)
     try {
       const res = await fetch('/api/progress', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: task.id, is_completed: true }),
+        body: JSON.stringify({ id: passedTask.id, is_completed: true, quizScores }),
       })
-      if (!res.ok) throw new Error('Failed to update')
+      if (!res.ok) {
+        const body = await res.json().catch(() => null)
+        throw new Error(body?.error || 'Failed to update')
+      }
       const updated = await res.json()
-      onToggle(updated)
+      onToggle({ ...passedTask, ...updated, is_completed: true })
+      onQuizComplete?.()
+      toast.success('Topic marked complete!')
     } catch {
       toast.error('Failed to update progress')
+      throw new Error('Failed to update progress')
     } finally {
       setUpdating(false)
       setQuizOpen(false)
@@ -121,6 +128,7 @@ export default function TopicItem({ task, onToggle }: TopicItemProps) {
         task={task}
         onClose={() => setQuizOpen(false)}
         onPassed={handleQuizPassed}
+        onQuizComplete={onQuizComplete}
       />
     </>
   )

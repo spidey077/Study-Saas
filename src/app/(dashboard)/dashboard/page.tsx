@@ -11,6 +11,7 @@ import ProgressChart from '@/components/dashboard/ProgressChart'
 import TodayPlan from '@/components/dashboard/TodayPlan'
 import TopicsPerSubjectChart from '@/components/dashboard/TopicsPerSubjectChart'
 import CompletedVsRemainingChart from '@/components/dashboard/CompletedVsRemainingChart'
+import PredictedScoreCard from '@/components/dashboard/PredictedScoreCard'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
 import Badge from '@/components/ui/Badge'
 import { StudyPlan, Subject } from '@/types'
@@ -74,6 +75,20 @@ export default function DashboardPage() {
 
   function handleTaskToggle(updated: StudyPlan) {
     setAllPlans((prev) => prev.map((p) => (p.id === updated.id ? { ...p, ...updated } : p)))
+  }
+
+  async function refreshSubjects() {
+    setTimeout(async () => {
+      try {
+        const res = await fetch('/api/subjects')
+        if (res.ok) {
+          const subs = await res.json()
+          setSubjects(Array.isArray(subs) ? subs : [])
+        }
+      } catch {
+        // prediction card will update on next manual refresh
+      }
+    }, 3000)
   }
 
   if (loading) {
@@ -155,7 +170,12 @@ export default function DashboardPage() {
           <div className="grid lg:grid-cols-3 gap-6 animate-slide-up stagger-2">
             {/* Today's Plan (wider) */}
             <div className="lg:col-span-2 space-y-6">
-              <TodayPlan tasks={todayTasks} upcomingTasks={upcomingTasks} onTaskToggle={handleTaskToggle} />
+              <TodayPlan
+                tasks={todayTasks}
+                upcomingTasks={upcomingTasks}
+                onTaskToggle={handleTaskToggle}
+                onQuizComplete={refreshSubjects}
+              />
             </div>
 
             {/* Upcoming Exams */}
@@ -193,13 +213,20 @@ export default function DashboardPage() {
             </div>
           </div>
 
+          {/* Predicted Scores */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-slide-up stagger-3">
+            {subjects.map((subject) => (
+              <PredictedScoreCard key={subject.id} subject={subject} />
+            ))}
+          </div>
+
           {/* Progress Chart */}
-          <div className="animate-slide-up stagger-3">
+          <div className="animate-slide-up stagger-4">
             <ProgressChart data={chartData} />
           </div>
 
           {/* Additional Charts */}
-          <div className="grid lg:grid-cols-2 gap-6 animate-slide-up stagger-4">
+          <div className="grid lg:grid-cols-2 gap-6 animate-slide-up stagger-5">
             <TopicsPerSubjectChart subjects={subjects} plans={allPlans} />
             <CompletedVsRemainingChart subjects={subjects} plans={allPlans} />
           </div>
