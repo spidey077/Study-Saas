@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { toast } from 'sonner'
 import Button from '@/components/ui/Button'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
@@ -104,11 +105,12 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
       if (percentage >= 50) {
         await onPassed(task, percentage, quizScores)
         toast.success(`Great job! You scored ${percentage}% and the task is marked complete.`)
+        onClose()
       } else {
         toast.error(`You scored ${percentage}%. The task remains incomplete.`)
         await triggerPrediction(task.id, quizScores)
+        onClose()
       }
-      onClose()
     } catch {
       toast.error('Failed to update progress. Please try again.')
     } finally {
@@ -118,9 +120,9 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
 
   if (!open) return null
 
-  return (
+  return createPortal(
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-        <Card className="max-h-[90vh] w-full max-w-xl overflow-hidden border border-slate-200/80 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-950/70 sm:max-w-2xl">
+        <Card className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] overflow-hidden shadow-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
         <CardHeader className="flex flex-col gap-2">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -141,7 +143,7 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
 
         <div className="space-y-4 overflow-y-auto px-4 pb-4 sm:px-6 max-h-[70vh]">
           {loading && (
-            <div className="rounded-2xl border border-slate-200/80 bg-slate-100/90 p-6 text-center text-sm font-medium text-slate-950 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">
+            <div className="rounded-xl bg-amber-900/20 dark:bg-slate-800 p-6 text-center text-sm text-slate-200">
               Generating quiz questions...
             </div>
           )}
@@ -155,13 +157,13 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
           {!loading && !error && questions.length > 0 && (
             <div className="space-y-6">
               {questions.map((question, questionIndex) => (
-                <div key={questionIndex} className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                <div key={questionIndex} className="rounded-xl border border-amber-400/30 bg-amber-50/80 dark:bg-slate-800 dark:border-slate-700 p-4">
                   <p className="font-medium text-sm text-slate-950 dark:text-slate-100">{questionIndex + 1}. {question.question}</p>
                   <div className="mt-3 space-y-2">
                     {question.options.map((option, optionIndex) => (
                       <label
                         key={optionIndex}
-                        className="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-200/80 bg-white px-3 py-2 transition-colors hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500"
+                        className="flex items-center gap-3 rounded-lg border border-amber-300 dark:border-slate-700 bg-white dark:bg-slate-900 px-3 py-2 cursor-pointer transition-colors hover:border-amber-400 dark:hover:border-slate-600"
                       >
                         <input
                           type="radio"
@@ -186,13 +188,13 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
             <Button
               onClick={handleSubmit}
               disabled={loading || submitting || questions.length === 0 || selectedAnswers.some((answer) => answer === -1)}
-              className="px-6 py-3"
             >
               {submitting ? 'Saving...' : 'Submit answers'}
             </Button>
           </div>
         </div>
       </Card>
-    </div>
+    </div>,
+    document.body
   )
 }

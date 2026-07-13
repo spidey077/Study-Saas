@@ -70,10 +70,10 @@ export default function TopicItem({ task, onToggle, onQuizComplete }: TopicItemP
     <>
       <div
       className={cn(
-        'flex items-start gap-3 rounded-2xl border p-4 transition-colors duration-150',
+        'flex items-start gap-3 p-4 rounded-xl border transition-all duration-200',
         task.is_completed
-          ? 'border-primary-200 bg-primary-50/70 dark:border-primary-900/40 dark:bg-primary-950/20'
-          : 'border-slate-200/80 bg-white/90 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500 dark:hover:bg-slate-900'
+          ? 'bg-[#fff4b0] dark:bg-amber-900/30 border border-[#f7d46a] dark:border-amber-600'
+          : 'bg-white dark:bg-slate-900 border border-[#f5e3a2] dark:border-slate-700 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700'
       )}
     >
       <button
