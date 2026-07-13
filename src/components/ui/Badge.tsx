@@ -6,14 +6,14 @@ interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 }
 
 const variantClasses = {
-  default: 'bg-[#fff4b0] text-slate-950 ring-1 ring-[#f7d46a]/60',
-  success: 'bg-[#d7f7d0] text-[#166534] ring-1 ring-[#a3e635]/30',
-  warning: 'bg-[#fff4b0] text-[#92400e] ring-1 ring-[#facc15]/30',
-  danger: 'bg-[#fee2e2] text-[#991b1b] ring-1 ring-[#fca5a5]/40',
-  info: 'bg-[#dbeafe] text-[#1e3a8a] ring-1 ring-[#7dd3fc]/40',
-  easy: 'bg-[#dcfce7] text-[#14532d] ring-1 ring-[#86efac]/30',
-  medium: 'bg-[#fef3c7] text-[#78350f] ring-1 ring-[#fbbf24]/30',
-  hard: 'bg-[#fed7d7] text-[#7f1d1d] ring-1 ring-[#fca5a5]/30',
+  default: 'bg-slate-100 text-slate-700 ring-1 ring-slate-200 dark:bg-slate-800 dark:text-slate-200 dark:ring-slate-700',
+  success: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:ring-emerald-800',
+  warning: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:ring-blue-800',
+  danger: 'bg-rose-50 text-rose-700 ring-1 ring-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:ring-rose-800',
+  info: 'bg-primary-50 text-primary-700 ring-1 ring-primary-200 dark:bg-primary-950/40 dark:text-primary-300 dark:ring-primary-800',
+  easy: 'bg-emerald-50 text-emerald-700 ring-1 ring-emerald-200 dark:bg-emerald-950/40 dark:text-emerald-300 dark:ring-emerald-800',
+  medium: 'bg-blue-50 text-blue-700 ring-1 ring-blue-200 dark:bg-blue-950/40 dark:text-blue-300 dark:ring-blue-800',
+  hard: 'bg-rose-50 text-rose-700 ring-1 ring-rose-200 dark:bg-rose-950/40 dark:text-rose-300 dark:ring-rose-800',
 }
 
 export default function Badge({ className, variant = 'default', children, ...props }: BadgeProps) {

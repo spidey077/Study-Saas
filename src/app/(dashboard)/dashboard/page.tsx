@@ -119,11 +119,12 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
-          <p className="text-sm text-slate-600 dark:text-slate-400">Loading your dashboard...</p>
+      <div className="flex flex-col items-center justify-center h-64 space-y-4 animate-fade-in">
+        <div className="relative">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-500/30 border-t-primary-500" />
+          <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border-4 border-primary-500/20" />
         </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Loading your dashboard...</p>
       </div>
     )
   }
@@ -142,8 +143,8 @@ export default function DashboardPage() {
 
       {/* Empty State */}
       {subjects.length === 0 && (
-        <Card className="text-center py-16 border-2 border-dashed border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 text-amber-600 dark:text-amber-400 mb-6 shadow-lg">
+        <Card className="border border-dashed border-slate-200/80 bg-slate-50/70 py-16 text-center dark:border-slate-800 dark:bg-slate-950/50">
+          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-300">
             <BookOpen className="w-8 h-8" />
           </div>
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No subjects yet</h3>
@@ -164,31 +165,31 @@ export default function DashboardPage() {
               title="Total Subjects"
               value={subjects.length}
               icon={BookOpen}
-              iconColor="text-amber-600"
-              iconBg="bg-gradient-to-br from-amber-100 to-yellow-100"
+              iconColor="text-primary-600"
+              iconBg="bg-gradient-to-br from-primary-100 to-blue-50"
             />
             <StatsCard
               title="Topics Completed"
               value={completedTopics}
               subtitle={`of ${totalTopics} total`}
               icon={CheckSquare}
-              iconColor="text-amber-600"
-              iconBg="bg-gradient-to-br from-amber-100 to-yellow-100"
+              iconColor="text-primary-600"
+              iconBg="bg-gradient-to-br from-primary-100 to-blue-50"
             />
             <StatsCard
               title="Completion"
               value={`${completionPct}%`}
               icon={TrendingUp}
-              iconColor="text-amber-600"
-              iconBg="bg-gradient-to-br from-amber-100 to-yellow-100"
+              iconColor="text-primary-600"
+              iconBg="bg-gradient-to-br from-primary-100 to-blue-50"
             />
             <StatsCard
               title="Days to Next Exam"
               value={daysToNextExam !== null ? `${daysToNextExam}d` : '—'}
               subtitle={nextExam?.name || ''}
               icon={Calendar}
-              iconColor={daysToNextExam !== null && daysToNextExam <= 7 ? 'text-red-600' : 'text-amber-600'}
-              iconBg={daysToNextExam !== null && daysToNextExam <= 7 ? 'bg-gradient-to-br from-red-100 to-red-50' : 'bg-gradient-to-br from-amber-100 to-yellow-100'}
+              iconColor={daysToNextExam !== null && daysToNextExam <= 7 ? 'text-red-600' : 'text-primary-600'}
+              iconBg={daysToNextExam !== null && daysToNextExam <= 7 ? 'bg-gradient-to-br from-red-100 to-red-50' : 'bg-gradient-to-br from-primary-100 to-blue-50'}
             />
           </div>
 
@@ -206,7 +207,7 @@ export default function DashboardPage() {
 
             {/* Upcoming Exams */}
             <div>
-              <Card className="border-2 border-slate-200/60 dark:border-slate-700/60">
+              <Card className="border border-slate-200/80 dark:border-slate-800">
                 <CardHeader>
                   <CardTitle>Upcoming Exams</CardTitle>
                 </CardHeader>
@@ -214,7 +215,7 @@ export default function DashboardPage() {
                   {upcomingExams.slice(0, 5).map((subject) => {
                     const days = differenceInDays(parseISO(subject.exam_date), new Date())
                     return (
-                      <div key={subject.id} className="group flex items-center gap-3 p-4 rounded-xl border border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800 hover:border-amber-300/60 hover:shadow-md hover:shadow-amber-500/10 transition-all duration-300">
+                      <div key={subject.id} className="group flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-300 hover:border-primary-300 hover:shadow-sm dark:border-slate-700/60 dark:bg-slate-800/70 dark:hover:border-primary-500">
                         <div
                           className="w-4 h-4 rounded-full flex-shrink-0 shadow-sm"
                           style={{ backgroundColor: subject.color }}

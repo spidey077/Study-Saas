@@ -118,8 +118,12 @@ export default function SettingsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+      <div className="flex flex-col items-center justify-center h-64 space-y-4 animate-fade-in">
+        <div className="relative">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-500/30 border-t-primary-500" />
+          <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border-4 border-primary-500/20" />
+        </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Loading settings...</p>
       </div>
     )
   }
@@ -127,8 +131,8 @@ export default function SettingsPage() {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Settings</h1>
-        <p className="text-slate-600 dark:text-slate-400 mt-2">Manage your account preferences and settings</p>
+        <h1 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white">Settings</h1>
+        <p className="mt-2 text-slate-600 dark:text-slate-400">Manage your account preferences and settings</p>
       </div>
 
       {/* Profile Card */}
@@ -137,8 +141,8 @@ export default function SettingsPage() {
           <CardTitle>Profile Information</CardTitle>
         </CardHeader>
         <div className="space-y-4">
-          <div className="flex items-center gap-4 p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-white text-2xl font-bold">
+          <div className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary-600 text-2xl font-bold text-white">
               {user?.firstName?.[0] || user?.emailAddresses[0]?.emailAddress[0] || 'U'}
             </div>
             <div>
@@ -186,7 +190,7 @@ export default function SettingsPage() {
                 id="reminder_enabled"
                 checked={userData.reminder_enabled}
                 onChange={(e) => setUserData({ ...userData, reminder_enabled: e.target.checked })}
-                className="w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-amber-500 focus:ring-amber-500"
+                className="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500 dark:border-slate-600"
               />
               <input
                 type="time"
@@ -209,7 +213,7 @@ export default function SettingsPage() {
               id="summary_enabled"
               checked={userData.summary_enabled}
               onChange={(e) => setUserData({ ...userData, summary_enabled: e.target.checked })}
-              className="w-4 h-4 rounded border-slate-300 dark:border-slate-600 text-amber-500 focus:ring-amber-500"
+              className="h-4 w-4 rounded border-slate-300 text-primary-600 focus:ring-primary-500 dark:border-slate-600"
             />
           </div>
         </div>
@@ -221,7 +225,7 @@ export default function SettingsPage() {
           <CardTitle>Subscription</CardTitle>
         </CardHeader>
         <div className="space-y-4">
-          <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-800 rounded-xl">
+          <div className="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
             <div className="flex items-center gap-3">
               <CreditCard className="w-5 h-5 text-slate-600 dark:text-slate-400" />
               <div>

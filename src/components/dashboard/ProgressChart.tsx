@@ -22,7 +22,7 @@ export default function ProgressChart({ data }: ProgressChartProps) {
   }))
 
   return (
-    <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
+    <Card className="border border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/70">
       <CardHeader>
         <CardTitle>7-Day Progress</CardTitle>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Topics completed over the last 7 days</p>
@@ -32,8 +32,8 @@ export default function ProgressChart({ data }: ProgressChartProps) {
           <AreaChart data={formattedData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="completedGradient" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.4} />
-                <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.22} />
+                <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" />
@@ -63,7 +63,7 @@ export default function ProgressChart({ data }: ProgressChartProps) {
             <Area
               type="monotone"
               dataKey="completed"
-              stroke="#f59e0b"
+              stroke="#4f46e5"
               strokeWidth={3}
               fill="url(#completedGradient)"
               name="Completed"

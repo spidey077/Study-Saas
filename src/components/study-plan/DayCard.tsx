@@ -7,9 +7,10 @@ interface DayCardProps {
   tasks: StudyPlan[]
   onTaskToggle: (updated: StudyPlan) => void
   onQuizComplete?: (updatedSubject?: Subject) => void
+  className?: string
 }
 
-export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete }: DayCardProps) {
+export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete, className }: DayCardProps) {
   const parsedDate = parseISO(date)
   const isToday = format(new Date(), 'yyyy-MM-dd') === date
   const isPast = parsedDate < new Date() && !isToday
@@ -18,10 +19,10 @@ export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete }: D
   const totalHours = tasks.reduce((sum, t) => sum + t.estimated_hours, 0)
 
   return (
-    <div className="mb-6">
+    <div className={`mb-6 ${className || ''}`}>
       {/* Date header */}
       <div className="flex items-center gap-3 mb-3">
-        <div className={`flex flex-col items-center justify-center w-12 h-12 rounded-xl flex-shrink-0 ${isToday ? 'bg-amber-500 text-slate-950 dark:bg-amber-400 dark:text-slate-950' : isPast ? 'bg-amber-900/20 text-slate-950 dark:bg-amber-900/30 dark:text-slate-100' : 'bg-slate-200 text-slate-950 dark:bg-slate-800 dark:text-slate-100'}`}>
+        <div className={`flex h-12 w-12 flex-shrink-0 flex-col items-center justify-center rounded-xl ${isToday ? 'bg-primary-600 text-white' : isPast ? 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200' : 'bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-200'}`}>
           <span className="text-xs font-medium">{format(parsedDate, 'MMM')}</span>
           <span className="text-lg font-bold leading-none">{format(parsedDate, 'd')}</span>
         </div>
@@ -31,7 +32,7 @@ export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete }: D
               {isToday ? 'Today' : format(parsedDate, 'EEEE')}
             </h3>
             {isToday && (
-              <span className="text-xs bg-amber-500 text-slate-950 dark:bg-amber-400 dark:text-slate-950 px-2 py-0.5 rounded-full font-medium">Today</span>
+              <span className="rounded-full bg-primary-600 px-2 py-0.5 text-xs font-medium text-white">Today</span>
             )}
           </div>
           <p className="text-xs text-slate-600 dark:text-slate-400 mt-0.5">
@@ -39,9 +40,9 @@ export default function DayCard({ date, tasks, onTaskToggle, onQuizComplete }: D
           </p>
         </div>
         <div className="ml-auto flex-1 max-w-32">
-          <div className="h-1.5 bg-slate-800 rounded-full overflow-hidden dark:bg-slate-700">
+          <div className="h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
             <div
-              className="h-full bg-gradient-to-r from-[#f7d46a] to-[#f4c64c] rounded-full transition-all duration-500"
+              className="h-full rounded-full bg-primary-600 transition-all duration-500"
               style={{ width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%` }}
             />
           </div>

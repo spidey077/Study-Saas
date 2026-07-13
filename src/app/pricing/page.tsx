@@ -46,7 +46,7 @@ export default function PricingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-yellow-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900/30 px-4 py-20">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(79,70,229,0.08),_transparent_36%),linear-gradient(180deg,_#fafafa_0%,_#ffffff_100%)] px-4 py-20 dark:bg-[radial-gradient(circle_at_top_left,_rgba(129,140,248,0.16),_transparent_36%),linear-gradient(180deg,_#0a0a0a_0%,_#111111_100%)]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 sm:mb-16 animate-fade-in">
@@ -61,9 +61,9 @@ export default function PricingPage() {
         {/* Pricing Cards */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {/* Free Tier */}
-          <div className="rounded-3xl border-2 border-slate-200/60 dark:border-slate-700/60 bg-white dark:bg-slate-800 p-8 shadow-lg hover:shadow-xl transition-all duration-300 animate-slide-up stagger-1">
+          <div className="animate-slide-up stagger-1 rounded-3xl border border-slate-200/80 bg-white p-8 shadow-sm transition-colors duration-150 hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-600 flex items-center justify-center">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800">
                 <BookOpen className="w-6 h-6 text-slate-600 dark:text-slate-300" />
               </div>
               <div>
@@ -99,14 +99,14 @@ export default function PricingPage() {
           </div>
 
           {/* Tier 1 - Pakistani */}
-          <div className="rounded-3xl border-2 border-amber-400/60 bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-xl shadow-amber-500/10 hover:shadow-2xl hover:shadow-amber-500/20 transition-all duration-300 relative animate-slide-up stagger-2">
+          <div className="animate-slide-up stagger-2 relative rounded-3xl border border-primary-200 bg-primary-50/70 p-8 shadow-sm transition-colors duration-150 hover:border-primary-300 dark:border-primary-900/40 dark:bg-primary-950/20 dark:hover:border-primary-500">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-              <span className="bg-gradient-to-r from-amber-400 to-amber-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+              <span className="rounded-full bg-primary-600 px-4 py-1.5 text-xs font-bold text-white">
                 POPULAR IN PAKISTAN
               </span>
             </div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary-600 text-white">
                 <Zap className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -149,14 +149,14 @@ export default function PricingPage() {
           </div>
 
           {/* Tier 2 - International */}
-          <div className="rounded-3xl border-2 border-purple-400/60 bg-gradient-to-br from-purple-50 to-indigo-50 dark:from-slate-900 dark:to-slate-800 p-8 shadow-xl shadow-purple-500/10 hover:shadow-2xl hover:shadow-purple-500/20 transition-all duration-300 relative animate-slide-up stagger-3">
+          <div className="animate-slide-up stagger-3 relative rounded-3xl border border-slate-200/80 bg-white p-8 shadow-sm transition-colors duration-150 hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
             <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-              <span className="bg-gradient-to-r from-purple-400 to-purple-500 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+              <span className="rounded-full bg-slate-900 px-4 py-1.5 text-xs font-bold text-white dark:bg-slate-700">
                 INTERNATIONAL
               </span>
             </div>
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-400 to-purple-500 flex items-center justify-center shadow-lg">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-slate-900 text-white dark:bg-slate-700">
                 <Crown className="w-6 h-6 text-white" />
               </div>
               <div>
@@ -194,7 +194,7 @@ export default function PricingPage() {
               </li>
             </ul>
             <Button
-              className="w-full bg-gradient-to-r from-purple-500 to-purple-600 hover:from-purple-600 hover:to-purple-700 text-white border-purple-600"
+              className="w-full"
               onClick={() => startCheckout('tier2')}
               isLoading={loadingTier === 'tier2'}
             >

@@ -34,7 +34,7 @@ export default function TopicsPerSubjectChart({ subjects, plans }: TopicsPerSubj
 
   if (data.length === 0) {
     return (
-      <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
+      <Card className="border border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/70">
         <CardHeader>
           <CardTitle>Topics per Subject</CardTitle>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Total topics breakdown by subject</p>
@@ -92,7 +92,7 @@ export default function TopicsPerSubjectChart({ subjects, plans }: TopicsPerSubj
                 return item?.fullName || label
               }}
             />
-            <Bar dataKey="total" fill="#f59e0b" radius={[4, 4, 0, 0]} name="total" />
+            <Bar dataKey="total" fill="#4f46e5" radius={[4, 4, 0, 0]} name="total" />
           </BarChart>
         </ResponsiveContainer>
       </div>

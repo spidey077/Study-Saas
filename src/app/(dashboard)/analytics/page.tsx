@@ -79,21 +79,25 @@ export default function AnalyticsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+      <div className="flex flex-col items-center justify-center h-64 space-y-4 animate-fade-in">
+        <div className="relative">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-500/30 border-t-primary-500" />
+          <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border-4 border-primary-500/20" />
+        </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Loading analytics...</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="space-y-6 animate-fade-in">
+      <div className="animate-slide-up">
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Analytics</h1>
         <p className="text-slate-600 dark:text-slate-400 mt-2 text-base leading-7">Track your study progress and performance</p>
       </div>
 
       <div className="grid sm:grid-cols-3 gap-4">
-        <Card className="text-center sm:col-span-1 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+        <Card className="text-center sm:col-span-1 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-1">
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Overall Completion</p>
           <div className="mt-4 relative w-28 h-28 mx-auto">
             <svg className="w-28 h-28 -rotate-90" viewBox="0 0 100 100">
@@ -103,7 +107,7 @@ export default function AnalyticsPage() {
                 cy="50"
                 r="40"
                 fill="none"
-                stroke="#f59e0b"
+                stroke="#4f46e5"
                 strokeWidth="10"
                 strokeDasharray={`${overallPct * 2.51} 251`}
                 strokeLinecap="round"
@@ -119,21 +123,21 @@ export default function AnalyticsPage() {
         </Card>
 
         <div className="sm:col-span-2 grid grid-cols-2 gap-4">
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-2">
             <p className="text-sm text-slate-600 dark:text-slate-400">Total Subjects</p>
             <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{subjects.length}</p>
           </Card>
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-2">
             <p className="text-sm text-slate-600 dark:text-slate-400">Topics Completed</p>
-            <p className="text-3xl font-bold text-yellow-600 mt-2">{totalCompleted}</p>
+            <p className="mt-2 text-3xl font-bold text-primary-600">{totalCompleted}</p>
           </Card>
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-3">
             <p className="text-sm text-slate-600 dark:text-slate-400">Topics Remaining</p>
             <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{totalPlans - totalCompleted}</p>
           </Card>
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-3">
             <p className="text-sm text-slate-600 dark:text-slate-400">Study Hours Logged</p>
-            <p className="text-3xl font-bold text-yellow-600 mt-2">
+            <p className="mt-2 text-3xl font-bold text-primary-600">
               {plans.filter((p) => p.is_completed).reduce((s, p) => s + p.estimated_hours, 0).toFixed(1)}h
             </p>
           </Card>
@@ -141,7 +145,7 @@ export default function AnalyticsPage() {
       </div>
 
       {subjectData.length > 0 && (
-        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-4">
           <CardHeader>
             <CardTitle>Topics per Subject</CardTitle>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Completed vs remaining by subject</p>
@@ -156,7 +160,7 @@ export default function AnalyticsPage() {
                   contentStyle={{ background: 'var(--chart-tooltip-background)', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '12px', color: 'var(--chart-tooltip-color)' }}
                   formatter={(value, name) => [value, name === 'completed' ? 'Completed' : 'Remaining']}
                 />
-                <Bar dataKey="completed" fill="#f59e0b" radius={[4, 4, 0, 0]} name="completed" />
+                <Bar dataKey="completed" fill="#4f46e5" radius={[4, 4, 0, 0]} name="completed" />
                 <Bar dataKey="remaining" fill="#cbd5e1" radius={[4, 4, 0, 0]} name="remaining" />
               </BarChart>
             </ResponsiveContainer>
@@ -164,7 +168,7 @@ export default function AnalyticsPage() {
         </Card>
       )}
 
-      <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+      <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-5">
         <CardHeader>
           <CardTitle>Daily Study Hours</CardTitle>
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Hours of completed topics over the last 14 days</p>
@@ -174,8 +178,8 @@ export default function AnalyticsPage() {
             <AreaChart data={dailyData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
               <defs>
                 <linearGradient id="hoursGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#f59e0b" stopOpacity={0.25} />
-                  <stop offset="95%" stopColor="#f59e0b" stopOpacity={0} />
+                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.25} />
+                  <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                 </linearGradient>
               </defs>
               <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
@@ -185,14 +189,14 @@ export default function AnalyticsPage() {
                 contentStyle={{ background: 'var(--chart-tooltip-background)', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '12px', color: 'var(--chart-tooltip-color)' }}
                 formatter={(v) => [`${v}h`, 'Hours studied']}
               />
-              <Area type="monotone" dataKey="hours" stroke="#f59e0b" strokeWidth={2} fill="url(#hoursGradient)" />
+              <Area type="monotone" dataKey="hours" stroke="#4f46e5" strokeWidth={2} fill="url(#hoursGradient)" />
             </AreaChart>
           </ResponsiveContainer>
         </div>
       </Card>
 
       {subjects.length > 0 && (
-        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-6">
           <CardHeader>
             <CardTitle>Subject Summary</CardTitle>
           </CardHeader>
@@ -227,7 +231,7 @@ export default function AnalyticsPage() {
                         <Badge variant={difficultyBadge(s.difficulty)}>{s.difficulty}</Badge>
                       </td>
                       <td className="py-3 px-2 text-center text-slate-700 dark:text-slate-300">{sp.length}</td>
-                      <td className="py-3 px-2 text-center text-yellow-600 font-medium">{done}</td>
+                      <td className="py-3 px-2 text-center font-medium text-primary-600">{done}</td>
                       <td className="py-3 px-2 text-center text-slate-900 dark:text-white font-medium">{left}</td>
                       <td className="py-3 px-2 text-center text-slate-600 dark:text-slate-400">{format(parseISO(s.exam_date), 'MMM d, yyyy')}</td>
                       <td className="py-3 px-2 text-center">

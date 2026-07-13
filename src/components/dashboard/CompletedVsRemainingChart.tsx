@@ -33,7 +33,7 @@ export default function CompletedVsRemainingChart({ subjects, plans }: Completed
 
   if (data.length === 0) {
     return (
-      <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
+      <Card className="border border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/70">
         <CardHeader>
           <CardTitle>Completed vs Remaining</CardTitle>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Progress breakdown by subject</p>
@@ -89,7 +89,7 @@ export default function CompletedVsRemainingChart({ subjects, plans }: Completed
               }}
             />
             <Bar dataKey="completed" fill="#22c55e" radius={[0, 4, 4, 0]} name="completed" />
-            <Bar dataKey="remaining" fill="#f59e0b" radius={[0, 4, 4, 0]} name="remaining" />
+            <Bar dataKey="remaining" fill="#4f46e5" radius={[0, 4, 4, 0]} name="remaining" />
           </BarChart>
         </ResponsiveContainer>
       </div>

@@ -17,12 +17,12 @@ export default function StatsCard({
   value,
   subtitle,
   icon: Icon,
-  iconColor = 'text-amber-600',
-  iconBg = 'bg-gradient-to-br from-amber-100 to-yellow-100',
+  iconColor = 'text-primary-600',
+  iconBg = 'bg-gradient-to-br from-primary-100 to-blue-50',
   trend,
 }: StatsCardProps) {
   return (
-    <Card className="relative overflow-hidden border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-800 dark:to-slate-900 hover:border-amber-300/60 hover:shadow-lg hover:shadow-amber-500/10 transition-all duration-300 group">
+    <Card className="group relative overflow-hidden border border-slate-200/80 bg-white/90 transition-colors duration-150 hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
       <div className="flex items-start justify-between">
         <div className="flex-1">
           <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 uppercase tracking-wider">{title}</p>

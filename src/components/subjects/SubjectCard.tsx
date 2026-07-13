@@ -83,7 +83,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
   }
 
   return (
-    <Card className="relative overflow-hidden border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 hover:border-amber-300/60 dark:hover:border-slate-600 hover:shadow-xl dark:hover:shadow-slate-900/50 transition-all duration-300 group">
+    <Card className="group relative overflow-hidden border border-slate-200/80 bg-white/90 transition-colors duration-150 hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
       {/* Color accent bar */}
       <div
         className="absolute top-0 left-0 right-0 h-1.5 rounded-t-xl"
@@ -93,7 +93,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
       <div className="flex items-start justify-between mt-3">
         <div className="flex items-center gap-3">
           <div
-            className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 shadow-md group-hover:scale-110 transition-transform duration-300"
+            className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl shadow-sm transition-transform duration-150 group-hover:scale-105"
             style={{ backgroundColor: subject.color + '20' }}
           >
             <BookOpen className="w-6 h-6" style={{ color: subject.color }} />
@@ -128,12 +128,10 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
         <span className="text-slate-600 dark:text-slate-400 font-medium">{format(parseISO(subject.exam_date), 'MMM d, yyyy')}</span>
         <span
           className={cn(
-            'ml-auto font-bold px-2 py-1 rounded-lg text-xs',
+            'ml-auto rounded-lg px-2 py-1 text-xs font-bold',
             daysLeft <= 7
-              ? 'bg-red-100 text-red-600 dark:bg-red-950/60 dark:text-red-300'
-              : daysLeft <= 14
-              ? 'bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-300'
-              : 'bg-green-100 text-green-600 dark:bg-emerald-950/60 dark:text-emerald-300'
+              ? 'bg-red-100 text-red-700 dark:bg-red-950/60 dark:text-red-300'
+              : 'bg-green-100 text-green-700 dark:bg-emerald-950/60 dark:text-emerald-300'
           )}
         >
           {daysLeft > 0 ? `${daysLeft}d left` : daysLeft === 0 ? 'Today!' : 'Past'}
@@ -168,7 +166,7 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
             step={0.5}
             value={hoursPerDay}
             onChange={(e) => setHoursPerDay(Number(e.target.value))}
-            className="w-20 rounded-xl border-2 border-slate-200/60 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-2 text-sm text-center text-slate-900 dark:text-white font-semibold focus:outline-none focus:ring-2 focus:ring-amber-500/50 dark:focus:ring-blue-500/50 focus:border-amber-300/60 transition-all"
+            className="w-20 rounded-lg border border-slate-200 bg-white px-3 py-2 text-center text-sm font-semibold text-slate-900 transition-colors duration-150 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
           />
         </div>
         <Button

@@ -44,11 +44,11 @@ export default function LandingPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-yellow-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900/30 text-slate-900 dark:text-white">
-      <header className="border-b border-slate-200/50 dark:border-slate-700/50 px-6 py-4 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(79,70,229,0.08),_transparent_36%),linear-gradient(180deg,_#fafafa_0%,_#ffffff_100%)] text-slate-900 dark:bg-[radial-gradient(circle_at_top_left,_rgba(129,140,248,0.16),_transparent_36%),linear-gradient(180deg,_#0a0a0a_0%,_#111111_100%)] dark:text-white">
+      <header className="sticky top-0 z-50 border-b border-slate-200/80 bg-white/70 px-4 py-3 backdrop-blur dark:border-slate-800 dark:bg-slate-950/70 sm:px-6">
+        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4">
           <Link href="/" className="flex items-center gap-3 group">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center shadow-lg shadow-yellow-500/20 group-hover:shadow-yellow-500/30 transition-all duration-300">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary-600 text-white shadow-sm transition-colors duration-150">
               <BookOpen className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -71,7 +71,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/sign-up"
-              className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-yellow-400 to-amber-500 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-yellow-500/25 hover:shadow-xl hover:shadow-yellow-500/30 hover:-translate-y-0.5 transition-all duration-300"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-primary-700"
             >
               Get Started
               <ArrowRight className="w-4 h-4" />
@@ -85,15 +85,15 @@ export default function LandingPage() {
           {/* Hero Section */}
           <section className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] items-center pt-4 lg:pt-2">
             <div className="space-y-7 animate-fade-in">
-              <div className="inline-flex items-center gap-2 rounded-full border border-yellow-200/60 bg-gradient-to-r from-yellow-100 to-amber-100 px-4 py-2 text-sm font-medium text-amber-700 shadow-sm">
-                <Sparkles className="h-4 w-4 text-amber-600" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-700 dark:border-primary-900/50 dark:bg-primary-950/30 dark:text-primary-300">
+                <Sparkles className="h-4 w-4 text-primary-600" />
                 <span>Powered by GPT-4o</span>
-                <span className="bg-amber-200/50 px-2 py-0.5 rounded-full text-xs font-semibold">NEW</span>
+                <span className="rounded-full bg-primary-200/70 px-2 py-0.5 text-xs font-semibold dark:bg-primary-800/50">NEW</span>
               </div>
               <div className="space-y-5">
                 <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
                   Study smarter with{' '}
-                  <span className="bg-gradient-to-r from-yellow-500 via-amber-500 to-orange-500 bg-clip-text text-transparent">
+                  <span className="bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                     AI-powered planning
                   </span>
                 </h1>
@@ -104,14 +104,14 @@ export default function LandingPage() {
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 <Link
                   href="/sign-up"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-yellow-500/30 hover:shadow-2xl hover:shadow-yellow-500/40 hover:-translate-y-1 transition-all duration-300"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-primary-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-700"
                 >
                   Get Started
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   href="/sign-in"
-                  className="inline-flex items-center gap-2 rounded-2xl border-2 border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 px-8 py-4 text-base font-semibold text-slate-900 dark:text-white hover:border-slate-300 dark:hover:border-slate-500 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 py-4 text-base font-semibold text-slate-900 transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-primary-500 dark:hover:bg-slate-800"
                 >
                   Sign In
                 </Link>
@@ -133,18 +133,18 @@ export default function LandingPage() {
             </div>
 
             <div className="relative">
-              <div className="absolute -inset-4 bg-gradient-to-r from-yellow-400/20 to-amber-400/20 rounded-[50px] blur-3xl" />
-              <div className="relative rounded-[40px] border border-slate-200/60 dark:border-slate-700/60 bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-8 shadow-2xl shadow-slate-200/50 dark:shadow-slate-900/50">
+              <div className="absolute -inset-4 rounded-[50px] bg-primary-500/10 blur-3xl" />
+              <div className="relative rounded-[32px] border border-slate-200/80 bg-white/80 p-8 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/70">
                 <div className="grid gap-5">
                   {features.map((feature, index) => {
                     const Icon = feature.icon
                     return (
                       <div 
                         key={feature.title} 
-                        className="rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-slate-50 to-white dark:from-slate-800 dark:to-slate-800 p-6 transition-all duration-300 hover:border-yellow-300/60 hover:shadow-lg hover:shadow-yellow-500/10 hover:-translate-y-1"
+                        className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-6 transition-colors duration-150 hover:border-primary-300 hover:bg-white dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
-                        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 text-amber-600 dark:text-amber-400 shadow-md">
+                        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 shadow-sm dark:bg-primary-950/40 dark:text-primary-300">
                           <Icon className="h-6 w-6" />
                         </div>
                         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
@@ -171,9 +171,9 @@ export default function LandingPage() {
               return (
                 <div 
                   key={feature.title} 
-                  className="group rounded-2xl border border-slate-200/60 dark:border-slate-700/60 bg-white dark:bg-slate-800 p-6 shadow-sm hover:shadow-xl hover:shadow-yellow-500/10 hover:border-yellow-300/60 transition-all duration-300 hover:-translate-y-1"
+                  className="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
                 >
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-yellow-100 to-amber-100 dark:from-yellow-900/30 dark:to-amber-900/30 text-amber-600 dark:text-amber-400 shadow-md group-hover:scale-110 transition-transform duration-300">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-300">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
@@ -184,10 +184,10 @@ export default function LandingPage() {
           </section>
 
           {/* CTA Section */}
-          <section className="relative overflow-hidden rounded-[40px] border border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 dark:from-slate-800 dark:via-slate-900 dark:to-slate-800 p-12 lg:p-16 shadow-2xl">
-            <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-amber-400/10" />
-            <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-400/20 rounded-full blur-3xl" />
-            <div className="absolute bottom-0 left-0 w-96 h-96 bg-amber-400/20 rounded-full blur-3xl" />
+          <section className="relative overflow-hidden rounded-[32px] border border-slate-200/80 bg-slate-950 p-12 shadow-sm dark:border-slate-800 lg:p-16">
+            <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-400/10" />
+            <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-primary-500/10 blur-3xl" />
+            <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-primary-400/10 blur-3xl" />
             <div className="relative max-w-3xl mx-auto space-y-8 text-center">
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
                 Ready to study smarter?
@@ -198,14 +198,14 @@ export default function LandingPage() {
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/sign-up"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-gradient-to-r from-yellow-400 to-amber-500 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-yellow-500/30 hover:shadow-2xl hover:shadow-yellow-500/40 hover:-translate-y-1 transition-all duration-300"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-primary-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-700"
                 >
                   Get Started
                   <ArrowRight className="w-5 h-5" />
                 </Link>
                 <Link
                   href="/sign-in"
-                  className="inline-flex items-center gap-2 rounded-2xl border-2 border-slate-600 bg-transparent px-8 py-4 text-base font-semibold text-white hover:bg-slate-800 transition-all duration-300"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-transparent px-8 py-4 text-base font-semibold text-white transition-colors duration-150 hover:bg-slate-800"
                 >
                   Sign In
                 </Link>

@@ -80,7 +80,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
             {upcomingTasks.map((task) => (
               <div
                 key={task.id}
-                className="flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border bg-white dark:bg-slate-900 border-[#f5e3a2] dark:border-slate-700 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700"
+                className="flex items-start gap-3 rounded-3xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-200 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800"
               >
                 <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 mt-0.5 flex-shrink-0" />
                 <div className="flex-1 min-w-0">
@@ -111,7 +111,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
           <CardTitle>Today&apos;s Plan</CardTitle>
         </CardHeader>
         <div className="flex flex-col items-center justify-center py-8 text-center">
-          <BookOpen className="w-10 h-10 text-yellow-600 mb-3" />
+          <BookOpen className="mb-3 h-10 w-10 text-primary-600" />
           <p className="text-slate-950 dark:text-white text-sm">No study tasks for today.</p>
           <p className="text-slate-600 dark:text-slate-400 text-xs mt-1">Add subjects and generate a plan to get started!</p>
         </div>
@@ -130,9 +130,9 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
             {completedCount}/{tasks.length} done
           </span>
         </div>
-        <div className="mt-3 h-1.5 bg-[#fff4b0] rounded-full overflow-hidden">
+        <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
           <div
-            className="h-full bg-gradient-to-r from-[#f7d46a] to-[#f4c64c] rounded-full transition-all duration-500"
+            className="h-full rounded-full bg-primary-600 transition-all duration-500"
             style={{ width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%` }}
           />
         </div>
@@ -144,8 +144,8 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
             className={cn(
               'flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border',
               task.is_completed
-                ? 'bg-[#fff4b0] dark:bg-amber-900/30 border border-[#f7d46a] dark:border-amber-600'
-                : 'bg-white dark:bg-slate-900 border border-[#f5e3a2] dark:border-slate-700 hover:border-[#f7d46a] dark:hover:border-slate-500 hover:bg-[#fff9d1] dark:hover:bg-slate-700'
+                ? 'border-primary-200 bg-primary-50/80 dark:border-primary-900/40 dark:bg-primary-950/20'
+                : 'border-slate-200/80 bg-slate-50/90 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800'
             )}
           >
             <button

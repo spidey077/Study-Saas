@@ -28,7 +28,7 @@ export default function PredictedScoreCard({ subject }: PredictedScoreCardProps)
   const hasPrediction = subject.predicted_score != null
 
   return (
-    <Card className="border-2 border-slate-200/60 dark:border-slate-700/60">
+    <Card className="border border-slate-200/80 dark:border-slate-800">
       <CardHeader>
         <CardTitle className="text-base">Predicted Score — {subject.name}</CardTitle>
       </CardHeader>

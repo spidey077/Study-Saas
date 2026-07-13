@@ -64,10 +64,10 @@ export default function OnboardingPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-yellow-50/30 px-4 py-12">
-      <div className="mx-auto w-full max-w-lg rounded-3xl border-2 border-slate-200/60 bg-white/80 backdrop-blur-xl p-10 shadow-xl animate-fade-in">
+    <div className="min-h-screen bg-[radial-gradient(circle_at_top_left,_rgba(79,70,229,0.08),_transparent_36%),linear-gradient(180deg,_#fafafa_0%,_#ffffff_100%)] px-4 py-12 dark:bg-[radial-gradient(circle_at_top_left,_rgba(129,140,248,0.16),_transparent_36%),linear-gradient(180deg,_#0a0a0a_0%,_#111111_100%)]">
+      <div className="animate-fade-in mx-auto w-full max-w-lg rounded-[32px] border border-slate-200/80 bg-white/80 p-8 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/70 sm:p-10">
         <div className="text-center mb-8">
-          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-400 to-amber-500 text-white shadow-lg shadow-yellow-500/30">
+          <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-600 text-white shadow-sm">
             <BookOpen className="h-8 w-8" />
           </div>
           <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Welcome to StudyFlow</h1>
@@ -85,12 +85,12 @@ export default function OnboardingPage() {
             required
           />
 
-          <div className="rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-5">
-            <div className="flex items-center gap-3 text-sm font-bold text-slate-900 mb-4">
-              <Globe className="h-4 w-4 text-amber-600" />
+          <div className="rounded-2xl border border-slate-200/80 bg-slate-50/90 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <div className="mb-4 flex items-center gap-3 text-sm font-bold text-slate-900">
+              <Globe className="h-4 w-4 text-primary-600" />
               Language / زبان
             </div>
-            <label className="flex items-center gap-3 rounded-2xl border-2 border-slate-200/60 bg-white p-4 transition hover:border-amber-300/60 cursor-pointer">
+            <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 transition hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
               <div className="relative">
                 <input
                   type="radio"
@@ -100,7 +100,7 @@ export default function OnboardingPage() {
                   onChange={handleChange}
                   className="sr-only"
                 />
-                <div className={`h-6 w-6 rounded-full border-2 transition-all duration-300 ${form.language === 'english' ? 'border-amber-500 bg-amber-500' : 'border-slate-300'}`}>
+                <div className={`h-6 w-6 rounded-full border-2 transition-all duration-300 ${form.language === 'english' ? 'border-primary-500 bg-primary-500' : 'border-slate-300 dark:border-slate-600'}`}>
                   {form.language === 'english' && <div className="absolute inset-1 bg-white rounded-full" />}
                 </div>
               </div>
@@ -109,7 +109,7 @@ export default function OnboardingPage() {
                 <p className="text-xs text-slate-500">Study plans in English</p>
               </div>
             </label>
-            <label className="flex items-center gap-3 rounded-2xl border-2 border-slate-200/60 bg-white p-4 transition hover:border-amber-300/60 cursor-pointer mt-3">
+            <label className="mt-3 flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 transition hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
               <div className="relative">
                 <input
                   type="radio"
@@ -119,7 +119,7 @@ export default function OnboardingPage() {
                   onChange={handleChange}
                   className="sr-only"
                 />
-                <div className={`h-6 w-6 rounded-full border-2 transition-all duration-300 ${form.language === 'urdu' ? 'border-amber-500 bg-amber-500' : 'border-slate-300'}`}>
+                <div className={`h-6 w-6 rounded-full border-2 transition-all duration-300 ${form.language === 'urdu' ? 'border-primary-500 bg-primary-500' : 'border-slate-300 dark:border-slate-600'}`}>
                   {form.language === 'urdu' && <div className="absolute inset-1 bg-white rounded-full" />}
                 </div>
               </div>
@@ -130,12 +130,12 @@ export default function OnboardingPage() {
             </label>
           </div>
 
-          <div className="rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-5">
-            <div className="flex items-center gap-3 text-sm font-bold text-slate-900 mb-4">
-              <Bell className="h-4 w-4 text-amber-600" />
+          <div className="rounded-2xl border border-slate-200/80 bg-slate-50/90 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <div className="mb-4 flex items-center gap-3 text-sm font-bold text-slate-900">
+              <Bell className="h-4 w-4 text-primary-600" />
               Daily Reminders
             </div>
-            <label className="flex items-center gap-3 rounded-2xl border-2 border-slate-200/60 bg-white p-4 transition hover:border-amber-300/60 cursor-pointer">
+            <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 transition hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
               <div className="relative">
                 <input
                   type="checkbox"
@@ -145,7 +145,7 @@ export default function OnboardingPage() {
                   onChange={handleChange}
                   className="sr-only"
                 />
-                <div className={`h-6 w-11 rounded-full transition-all duration-300 ${form.reminder_enabled ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 'bg-slate-200'}`}>
+                <div className={`h-6 w-11 rounded-full transition-all duration-300 ${form.reminder_enabled ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-700'}`}>
                   <span
                     className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300 ${
                       form.reminder_enabled ? 'translate-x-5' : 'translate-x-0'
@@ -180,12 +180,12 @@ export default function OnboardingPage() {
             )}
           </div>
 
-          <div className="rounded-2xl border-2 border-slate-200/60 bg-gradient-to-br from-amber-50 to-yellow-50 p-5">
-            <div className="flex items-center gap-3 text-sm font-bold text-slate-900 mb-4">
-              <Bell className="h-4 w-4 text-amber-600" />
+          <div className="rounded-2xl border border-slate-200/80 bg-slate-50/90 p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900/70">
+            <div className="mb-4 flex items-center gap-3 text-sm font-bold text-slate-900">
+              <Bell className="h-4 w-4 text-primary-600" />
               Progress Summary Emails
             </div>
-            <label className="flex items-center gap-3 rounded-2xl border-2 border-slate-200/60 bg-white p-4 transition hover:border-amber-300/60 cursor-pointer">
+            <label className="flex cursor-pointer items-center gap-3 rounded-2xl border border-slate-200/80 bg-white p-4 transition hover:border-primary-300 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500">
               <div className="relative">
                 <input
                   type="checkbox"
@@ -195,7 +195,7 @@ export default function OnboardingPage() {
                   onChange={handleChange}
                   className="sr-only"
                 />
-                <div className={`h-6 w-11 rounded-full transition-all duration-300 ${form.summary_enabled ? 'bg-gradient-to-r from-yellow-400 to-amber-500' : 'bg-slate-200'}`}>
+                <div className={`h-6 w-11 rounded-full transition-all duration-300 ${form.summary_enabled ? 'bg-primary-600' : 'bg-slate-200 dark:bg-slate-700'}`}>
                   <span
                     className={`absolute top-0.5 left-0.5 h-5 w-5 rounded-full bg-white shadow-md transition-transform duration-300 ${
                       form.summary_enabled ? 'translate-x-5' : 'translate-x-0'

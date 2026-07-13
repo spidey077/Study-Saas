@@ -21,15 +21,14 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           id={id}
           className={cn(
-            'border border-[#f7e6a4] dark:border-slate-600 rounded-2xl px-3 py-2 w-full text-sm text-slate-950 dark:text-white bg-[#fffbe3] dark:bg-slate-700 placeholder-[#6b7280] dark:placeholder-slate-400',
-            'focus:outline-none focus:ring-2 focus:ring-[#f7d46a]/70 dark:focus:ring-blue-500/50 focus:border-transparent',
-            'transition-colors duration-200',
-            error && 'border-rose-500 focus:ring-rose-500',
+            'w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:placeholder:text-slate-500',
+            'transition-colors duration-150 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20',
+            error && 'border-rose-500 focus:border-rose-500 focus:ring-rose-500/20',
             className
           )}
           {...props}
         />
-        {error && <p className="mt-1 text-xs text-rose-400">{error}</p>}
+        {error && <p className="mt-1 text-xs text-rose-500">{error}</p>}
       </div>
     )
   }
@@ -55,17 +54,16 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
           ref={ref}
           id={id}
           className={cn(
-            'border border-[#f7e6a4] dark:border-slate-600 rounded-2xl px-3 py-2 w-full text-sm text-slate-950 dark:text-white bg-[#fffbe3] dark:bg-slate-700',
-            'focus:outline-none focus:ring-2 focus:ring-[#f7d46a]/70 dark:focus:ring-blue-500/50 focus:border-transparent',
-            'transition-colors duration-200',
-            error && 'border-rose-500',
+            'w-full rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100',
+            'transition-colors duration-150 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20',
+            error && 'border-rose-500 focus:border-rose-500 focus:ring-rose-500/20',
             className
           )}
           {...props}
         >
           {children}
         </select>
-        {error && <p className="mt-1 text-xs text-rose-400">{error}</p>}
+        {error && <p className="mt-1 text-xs text-rose-500">{error}</p>}
       </div>
     )
   }

@@ -69,22 +69,26 @@ export default function AdminPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+      <div className="flex flex-col items-center justify-center h-64 space-y-4 animate-fade-in">
+        <div className="relative">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-500/30 border-t-primary-500" />
+          <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border-4 border-primary-500/20" />
+        </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Loading admin data...</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
-      <div>
+    <div className="space-y-6 animate-fade-in">
+      <div className="animate-slide-up">
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Admin Panel</h1>
         <p className="text-slate-600 dark:text-slate-400 mt-2">Manage users and view platform statistics</p>
       </div>
 
       {/* Stats Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700">
+        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-1">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/20">
@@ -98,7 +102,7 @@ export default function AdminPage() {
           </div>
         </Card>
 
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700">
+        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-2">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-green-100 dark:bg-green-900/20">
@@ -112,7 +116,7 @@ export default function AdminPage() {
           </div>
         </Card>
 
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700">
+        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-3">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-purple-100 dark:bg-purple-900/20">
@@ -126,11 +130,11 @@ export default function AdminPage() {
           </div>
         </Card>
 
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700">
+        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-4">
           <div className="p-6">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-amber-100 dark:bg-amber-900/20">
-                <Shield className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+              <div className="rounded-xl bg-primary-50 p-3 dark:bg-primary-950/40">
+                <Shield className="h-6 w-6 text-primary-600 dark:text-primary-300" />
               </div>
               <div>
                 <p className="text-sm text-slate-600 dark:text-slate-400">Active Users</p>
@@ -142,7 +146,7 @@ export default function AdminPage() {
       </div>
 
       {/* Users Table */}
-      <Card className="border-2 border-slate-200/60 dark:border-slate-700">
+      <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-5">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>User Management</CardTitle>
@@ -174,7 +178,7 @@ export default function AdminPage() {
                 <tr key={user.id} className="border-b border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-800/50">
                   <td className="p-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-yellow-400 to-amber-500 flex items-center justify-center text-white text-sm font-bold">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-600 text-sm font-bold text-white">
                         {user.name?.[0] || user.email[0]}
                       </div>
                       <span className="text-sm font-medium text-slate-900 dark:text-white">{user.name || 'Unknown'}</span>

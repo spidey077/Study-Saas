@@ -78,17 +78,17 @@ export default function Navbar() {
   const isAdmin = user?.primaryEmailAddress?.emailAddress?.trim().toLowerCase() === ADMIN_EMAIL
 
   return (
-    <nav className="bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800 px-6 py-4 sticky top-0 z-50 shadow-sm dark:shadow-slate-900/20">
-      <div className="max-w-7xl mx-auto flex items-center justify-between gap-6">
+    <nav className="sticky top-0 z-50 border-b border-slate-800 bg-slate-950/95 px-4 py-3 text-white backdrop-blur sm:px-6">
+      <div className="mx-auto flex max-w-6xl items-center justify-between gap-4">
 
         {/* Brand/Logo Section */}
         <Link href="/dashboard" className="flex items-center gap-3 group select-none">
           <StudyFlowLogoMark size={38} />
           <div>
-            <p className="text-base font-bold tracking-tight text-slate-950 dark:text-white">
-              Study<span className="bg-gradient-to-r from-blue-600 to-emerald-500 bg-clip-text text-transparent">Flow</span>
+            <p className="text-base font-bold tracking-tight text-white">
+              Study<span className="bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">Flow</span>
             </p>
-            <p className="text-[11px] font-medium tracking-wide text-slate-500 dark:text-slate-400 hidden sm:block">
+            <p className="hidden text-[11px] font-medium tracking-wide text-slate-300 sm:block">
               AI-powered study planning
             </p>
           </div>
@@ -105,13 +105,13 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={cn(
-                    'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+                    'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
                     isActive
-                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/10 dark:ring-blue-500/30'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                      ? 'bg-primary-600/20 text-white'
+                      : 'text-slate-200 hover:bg-slate-900 hover:text-white'
                   )}
                 >
-                  <Icon className={cn("w-4 h-4", isActive ? "text-blue-600 dark:text-blue-400" : "text-slate-500 dark:text-slate-400")} />
+                  <Icon className={cn('h-4 w-4', isActive ? 'text-primary-600 dark:text-primary-400' : 'text-slate-500 dark:text-slate-400')} />
                   {item.label}
                 </Link>
               )
@@ -120,13 +120,13 @@ export default function Navbar() {
               <Link
                 href="/admin"
                 className={cn(
-                  'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+                  'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
                   pathname === '/admin'
-                    ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400 ring-1 ring-purple-500/10 dark:ring-purple-500/30'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                    ? 'bg-primary-600/20 text-white dark:bg-primary-950/40 dark:text-white'
+                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
                 )}
               >
-                <Shield className={cn('w-4 h-4', pathname === '/admin' ? 'text-purple-600 dark:text-purple-400' : 'text-slate-500 dark:text-slate-400')} />
+                <Shield className={cn('h-4 w-4', pathname === '/admin' ? 'text-primary-300' : 'text-slate-500 dark:text-slate-400')} />
                 Admin
               </Link>
             )}
@@ -137,13 +137,13 @@ export default function Navbar() {
         <div className="flex items-center gap-3">
           <button
             onClick={toggleTheme}
-            className="p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-2 transition-colors hover:bg-slate-900"
             aria-label="Toggle theme"
           >
             {theme === 'light' ? (
-              <Moon className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              <Moon className="h-5 w-5 text-slate-200" />
             ) : (
-              <Sun className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              <Sun className="h-5 w-5 text-slate-200" />
             )}
           </button>
           <UserButton afterSignOutUrl="/" />
@@ -151,13 +151,13 @@ export default function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+            className="rounded-lg p-2 transition-colors hover:bg-slate-900 md:hidden"
             aria-label="Toggle menu"
           >
             {mobileMenuOpen ? (
-              <X className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              <X className="h-5 w-5 text-slate-200" />
             ) : (
-              <Menu className="w-5 h-5 text-slate-600 dark:text-slate-300" />
+              <Menu className="h-5 w-5 text-slate-200" />
             )}
           </button>
         </div>
@@ -165,7 +165,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-200 dark:border-slate-700 py-4">
+        <div className="border-t border-slate-200 py-4 dark:border-slate-700 md:hidden">
           <div className="flex flex-col gap-2">
             {navItems.map((item) => {
               const Icon = item.icon
@@ -176,10 +176,10 @@ export default function Navbar() {
                   href={item.href}
                   onClick={() => setMobileMenuOpen(false)}
                   className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200',
+                    'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-150',
                     isActive
-                      ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400'
-                      : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                      ? 'bg-primary-600/20 text-white'
+                      : 'text-slate-200 hover:bg-slate-900 hover:text-white'
                   )}
                 >
                   <Icon className="w-5 h-5" />
@@ -192,10 +192,10 @@ export default function Navbar() {
                 href="/admin"
                 onClick={() => setMobileMenuOpen(false)}
                 className={cn(
-                  'flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200',
+                  'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-150',
                   pathname === '/admin'
-                    ? 'bg-purple-50 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400'
-                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-800'
+                    ? 'bg-primary-600/20 text-white'
+                    : 'text-slate-200 hover:bg-slate-900 hover:text-white'
                 )}
               >
                 <Shield className="w-5 h-5" />

@@ -80,16 +80,20 @@ export default function StudyPlanPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+      <div className="flex flex-col items-center justify-center h-64 space-y-4 animate-fade-in">
+        <div className="relative">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-500/30 border-t-primary-500" />
+          <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border-4 border-primary-500/20" />
+        </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Loading study plan...</p>
       </div>
     )
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 animate-fade-in">
       {/* Header */}
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4 animate-slide-up">
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">Study Plan</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-2 text-base leading-7">
@@ -108,7 +112,7 @@ export default function StudyPlanPage() {
                 placeholder="Search by topic..."
                 value={topicSearch}
                 onChange={(e) => setTopicSearch(e.target.value)}
-                className="pl-10 pr-4 py-2 w-56 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/50"
+                className="w-56 rounded-lg border border-slate-300 bg-white py-2 pl-10 pr-4 text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-primary-500/40 dark:border-slate-600 dark:bg-slate-800 dark:text-white"
               />
             </div>
             <div className="flex items-center gap-2">
@@ -131,14 +135,14 @@ export default function StudyPlanPage() {
 
       {/* Overall progress bar */}
       {totalPlans > 0 && (
-        <div className="rounded-xl border border-[#f5e3a2] dark:border-amber-600 bg-[#fff9d1] dark:bg-slate-900 p-4">
+        <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-950/60 animate-slide-up stagger-1">
           <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400 mb-2">
             <span>Overall Progress</span>
             <span className="font-semibold text-slate-950 dark:text-white">{pct}%</span>
           </div>
-          <div className="h-3 bg-[#fff4b0] dark:bg-amber-900/30 rounded-full overflow-hidden">
+          <div className="h-2.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-800">
             <div
-              className="h-full bg-gradient-to-r from-[#f7d46a] to-[#f4c64c] rounded-full transition-all duration-700"
+              className="h-full rounded-full bg-primary-600 transition-all duration-700"
               style={{ width: `${pct}%` }}
             />
           </div>
@@ -148,27 +152,28 @@ export default function StudyPlanPage() {
       {/* Plan grouped by day */}
       {sortedDates.length > 0 ? (
         <div>
-          {sortedDates.map((date) => (
+          {sortedDates.map((date, index) => (
             <DayCard
               key={date}
               date={date}
               tasks={groupedPlans[date]}
               onTaskToggle={handleTaskToggle}
               onQuizComplete={handleQuizComplete}
+              className={`animate-slide-up stagger-${Math.min(index + 2, 6)}`}
             />
           ))}
         </div>
       ) : isSearching && plans.length > 0 ? (
-        <div className="text-center py-20 rounded-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
-          <Search className="w-12 h-12 text-yellow-600 dark:text-yellow-300 mx-auto mb-4" />
+        <div className="rounded-2xl border border-slate-200/80 bg-white/90 py-20 text-center dark:border-slate-800 dark:bg-slate-950/70 animate-slide-up stagger-1">
+          <Search className="mx-auto mb-4 h-12 w-12 text-primary-600 dark:text-primary-400" />
           <h3 className="text-lg font-semibold text-slate-950 dark:text-white mb-2">No matching topics</h3>
           <p className="text-slate-600 dark:text-slate-400">
             No topics match &quot;{topicSearch.trim()}&quot;. Try a different search term.
           </p>
         </div>
       ) : (
-        <div className="text-center py-20 rounded-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
-          <Calendar className="w-12 h-12 text-yellow-600 dark:text-yellow-300 mx-auto mb-4" />
+        <div className="rounded-2xl border border-slate-200/80 bg-white/90 py-20 text-center dark:border-slate-800 dark:bg-slate-950/70 animate-slide-up stagger-1">
+          <Calendar className="mx-auto mb-4 h-12 w-12 text-primary-600 dark:text-primary-400" />
           <h3 className="text-lg font-semibold text-slate-950 dark:text-white mb-2">No study plan yet</h3>
           <p className="text-slate-600 dark:text-slate-400">
             Go to <strong>Subjects</strong> and click &quot;Generate AI Study Plan&quot; on a subject.

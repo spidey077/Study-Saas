@@ -59,27 +59,31 @@ export default function SubjectsPage() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center h-64">
-        <div className="w-8 h-8 border-2 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+      <div className="flex flex-col items-center justify-center h-64 space-y-4 animate-fade-in">
+        <div className="relative">
+          <div className="h-12 w-12 animate-spin rounded-full border-4 border-primary-500/30 border-t-primary-500" />
+          <div className="absolute inset-0 h-12 w-12 animate-ping rounded-full border-4 border-primary-500/20" />
+        </div>
+        <p className="text-sm text-slate-600 dark:text-slate-400 font-medium">Loading subjects...</p>
       </div>
     )
   }
 
   return (
     <div className="space-y-8 animate-fade-in">
-      <div className="flex items-center justify-between flex-wrap gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">Subjects</h1>
           <p className="text-slate-500 dark:text-slate-400 mt-2 text-base sm:text-lg leading-8">Manage your subjects and generate AI study plans</p>
         </div>
-        <Button onClick={() => setShowForm(true)} className="flex items-center gap-2">
+        <Button onClick={() => setShowForm(true)} className="flex items-center gap-2 px-4 py-3">
           <Plus className="w-4 h-4" />
           Add Subject
         </Button>
       </div>
 
       {showForm && (
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900 animate-slide-up">
+        <Card className="animate-slide-up border border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/70">
           <h2 className="text-xl font-bold text-slate-900 dark:text-white mb-5">Add New Subject</h2>
           <SubjectForm
             onSuccess={handleSubjectAdded}
@@ -101,8 +105,8 @@ export default function SubjectsPage() {
           ))}
         </div>
       ) : (
-        <Card className="text-center py-16 border-2 border-dashed border-slate-200 dark:border-slate-700 bg-gradient-to-br from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 animate-slide-up">
-          <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-yellow-100 to-amber-100 text-amber-600 mb-6 shadow-lg dark:bg-amber-900/30 dark:text-amber-300">
+        <Card className="animate-slide-up border border-dashed border-slate-200/80 bg-slate-50/70 py-16 text-center dark:border-slate-800 dark:bg-slate-950/50">
+          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-300">
             <BookOpen className="w-8 h-8" />
           </div>
           <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No subjects yet</h3>
