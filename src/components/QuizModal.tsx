@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { AnimatePresence, motion } from 'framer-motion'
 import { toast } from 'sonner'
 import Button from '@/components/ui/Button'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
@@ -118,11 +119,28 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
     }
   }
 
-  if (!open) return null
-
   return createPortal(
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4">
-        <Card className="w-full max-w-xl sm:max-w-2xl max-h-[90vh] overflow-hidden shadow-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
+      <AnimatePresence mode="wait">
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4"
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0, y: 20 }}
+              animate={{ scale: 1, opacity: 1, y: 0 }}
+              exit={{ scale: 0.9, opacity: 0, y: 20 }}
+              transition={{
+                type: "spring",
+                stiffness: 300,
+                damping: 30,
+              }}
+              className="w-full max-w-xl sm:max-w-2xl"
+            >
+              <Card className="max-h-[90vh] overflow-hidden shadow-xl border border-[#f5e3a2] dark:border-slate-700 bg-white dark:bg-slate-900">
         <CardHeader className="flex flex-col gap-2">
           <div className="flex items-start justify-between gap-4">
             <div>
@@ -182,19 +200,23 @@ export default function QuizModal({ open, task, onClose, onPassed, onQuizComplet
           )}
 
           <div className="flex justify-end gap-3 pt-2">
-            <Button variant="secondary" onClick={onClose} disabled={loading || submitting}>
+            <Button variant="secondary" onClick={onClose} disabled={loading || submitting} className="px-6 py-2.5">
               Cancel
             </Button>
             <Button
               onClick={handleSubmit}
               disabled={loading || submitting || questions.length === 0 || selectedAnswers.some((answer) => answer === -1)}
+              className="px-6 py-2.5"
             >
               {submitting ? 'Saving...' : 'Submit answers'}
             </Button>
           </div>
         </div>
       </Card>
-    </div>,
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>,
     document.body
   )
 }
