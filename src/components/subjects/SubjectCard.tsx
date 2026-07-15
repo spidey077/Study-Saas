@@ -12,7 +12,6 @@ import AnimatedProgressRing from '@/components/ui/AnimatedProgressRing'
 import { Subject, Difficulty, ExamType } from '@/types'
 import { cn } from '@/lib/utils'
 import { removeQuizScores } from '@/lib/quizScoreStorage'
-import { motion as motionConfig } from '@/lib/motion'
 
 interface SubjectCardProps {
   subject: Subject

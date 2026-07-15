@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { motion as motionConfig, prefersReducedMotion } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion'
 
 interface AnimatedCounterProps {
   value: number
@@ -22,7 +22,6 @@ export default function AnimatedCounter({
   decimals = 0,
 }: AnimatedCounterProps) {
   const [displayValue, setDisplayValue] = useState(0)
-  const [isAnimating, setIsAnimating] = useState(false)
   const frameRef = useRef<number>()
   const startTimeRef = useRef<number>()
 
@@ -32,7 +31,6 @@ export default function AnimatedCounter({
       return
     }
 
-    setIsAnimating(true)
     startTimeRef.current = performance.now()
     const startValue = displayValue
 
@@ -48,8 +46,6 @@ export default function AnimatedCounter({
 
       if (progress < 1) {
         frameRef.current = requestAnimationFrame(animate)
-      } else {
-        setIsAnimating(false)
       }
     }
 

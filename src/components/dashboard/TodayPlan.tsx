@@ -142,7 +142,6 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
 
   const completedCount = tasks.filter((t) => t.is_completed).length
   const progressPercent = tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0
-  const isAllComplete = completedCount === tasks.length && tasks.length > 0
 
   return (
     <Card>

@@ -80,7 +80,7 @@ export function prefersReducedMotion(): boolean {
 /**
  * Get motion config with reduced motion fallback
  */
-export function getMotionConfig<T extends Record<string, any>>(
+export function getMotionConfig<T extends Record<string, unknown>>(
   normalConfig: T,
   reducedConfig: T
 ): T {

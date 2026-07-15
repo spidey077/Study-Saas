@@ -12,7 +12,6 @@ import Card from '@/components/ui/Card'
 import { Subject, StudyPlan } from '@/types'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
-import { motion as motionConfig } from '@/lib/motion'
 
 export default function SubjectsPage() {
   const router = useRouter()
@@ -127,7 +126,7 @@ export default function SubjectsPage() {
           initial="hidden"
           animate="visible"
         >
-          {subjects.map((subject, index) => (
+          {subjects.map((subject) => (
             <motion.div
               key={subject.id}
               variants={{

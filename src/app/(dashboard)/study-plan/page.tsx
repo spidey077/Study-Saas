@@ -172,7 +172,7 @@ export default function StudyPlanPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.2 }}
         >
-          {sortedDates.map((date, index) => (
+          {sortedDates.map((date) => (
             <DayCard
               key={date}
               date={date}

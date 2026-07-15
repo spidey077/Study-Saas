@@ -1,7 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { motion as motionConfig, prefersReducedMotion } from '@/lib/motion'
+import { prefersReducedMotion } from '@/lib/motion'
 
 interface AnimatedProgressRingProps {
   progress: number // 0-100

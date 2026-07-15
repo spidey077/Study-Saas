@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { motion as motionConfig } from '@/lib/motion'
 
 interface ToggleSwitchProps {
   checked: boolean

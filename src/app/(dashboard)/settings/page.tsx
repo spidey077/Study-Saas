@@ -14,7 +14,6 @@ import ToggleSwitch from '@/components/ui/ToggleSwitch'
 import { Language, SubscriptionTier } from '@/types'
 import Link from 'next/link'
 import { cn } from '@/lib/utils'
-import { motion as motionConfig } from '@/lib/motion'
 
 export default function SettingsPage() {
   const { user } = useUser()
@@ -37,7 +36,7 @@ export default function SettingsPage() {
     { id: 'subscription' as const, label: 'Subscription', icon: CreditCard },
   ]
 
-  const handleUserDataChange = (key: string, value: any) => {
+  const handleUserDataChange = (key: string, value: string | boolean) => {
     setUserData({ ...userData, [key]: value })
     setHasChanges(true)
   }
