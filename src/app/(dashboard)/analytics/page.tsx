@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useCallback } from 'react'
+import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { format, subDays, parseISO } from 'date-fns'
 import {
@@ -90,14 +91,28 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="animate-slide-up">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
+      >
         <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white">Analytics</h1>
         <p className="text-slate-600 dark:text-slate-400 mt-2 text-base leading-7">Track your study progress and performance</p>
-      </div>
+      </motion.div>
 
-      <div className="grid sm:grid-cols-3 gap-4">
-        <Card className="text-center sm:col-span-1 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-1">
+      <motion.div
+        className="grid sm:grid-cols-3 gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <Card className="text-center sm:col-span-1 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Overall Completion</p>
           <div className="mt-4 relative w-28 h-28 mx-auto">
             <svg className="w-28 h-28 -rotate-90" viewBox="0 0 100 100">
@@ -123,29 +138,58 @@ export default function AnalyticsPage() {
         </Card>
 
         <div className="sm:col-span-2 grid grid-cols-2 gap-4">
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-2">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Total Subjects</p>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{subjects.length}</p>
-          </Card>
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-2">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Topics Completed</p>
-            <p className="mt-2 text-3xl font-bold text-primary-600">{totalCompleted}</p>
-          </Card>
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-3">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Topics Remaining</p>
-            <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{totalPlans - totalCompleted}</p>
-          </Card>
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-3">
-            <p className="text-sm text-slate-600 dark:text-slate-400">Study Hours Logged</p>
-            <p className="mt-2 text-3xl font-bold text-primary-600">
-              {plans.filter((p) => p.is_completed).reduce((s, p) => s + p.estimated_hours, 0).toFixed(1)}h
-            </p>
-          </Card>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.2 }}
+          >
+            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+              <p className="text-sm text-slate-600 dark:text-slate-400">Total Subjects</p>
+              <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{subjects.length}</p>
+            </Card>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.25 }}
+          >
+            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+              <p className="text-sm text-slate-600 dark:text-slate-400">Topics Completed</p>
+              <p className="mt-2 text-3xl font-bold text-primary-600">{totalCompleted}</p>
+            </Card>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.3 }}
+          >
+            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+              <p className="text-sm text-slate-600 dark:text-slate-400">Topics Remaining</p>
+              <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{totalPlans - totalCompleted}</p>
+            </Card>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.35 }}
+          >
+            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+              <p className="text-sm text-slate-600 dark:text-slate-400">Study Hours Logged</p>
+              <p className="mt-2 text-3xl font-bold text-primary-600">
+                {plans.filter((p) => p.is_completed).reduce((s, p) => s + p.estimated_hours, 0).toFixed(1)}h
+              </p>
+            </Card>
+          </motion.div>
         </div>
-      </div>
+      </motion.div>
 
       {subjectData.length > 0 && (
-        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.4 }}
+        >
+          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
           <CardHeader>
             <CardTitle>Topics per Subject</CardTitle>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Completed vs remaining by subject</p>
@@ -166,9 +210,15 @@ export default function AnalyticsPage() {
             </ResponsiveContainer>
           </div>
         </Card>
+        </motion.div>
       )}
 
-      <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-5">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.5 }}
+      >
+        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
         <CardHeader>
           <CardTitle>Daily Study Hours</CardTitle>
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Hours of completed topics over the last 14 days</p>
@@ -194,9 +244,15 @@ export default function AnalyticsPage() {
           </ResponsiveContainer>
         </div>
       </Card>
+      </motion.div>
 
       {subjects.length > 0 && (
-        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 animate-slide-up stagger-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.6 }}
+        >
+          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
           <CardHeader>
             <CardTitle>Subject Summary</CardTitle>
           </CardHeader>
@@ -246,7 +302,8 @@ export default function AnalyticsPage() {
             </table>
           </div>
         </Card>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   )
 }

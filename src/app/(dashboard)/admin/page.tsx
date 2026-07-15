@@ -4,6 +4,7 @@ export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
+import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { Users, BookOpen, TrendingUp, Shield, Search } from 'lucide-react'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
@@ -80,15 +81,34 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
-      <div className="animate-slide-up">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
+      >
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Admin Panel</h1>
         <p className="text-slate-600 dark:text-slate-400 mt-2">Manage users and view platform statistics</p>
-      </div>
+      </motion.div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-1">
+      <motion.div
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.2 }}
+        >
+          <Card className="border-2 border-slate-200/60 dark:border-slate-700">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-blue-100 dark:bg-blue-900/20">
@@ -101,8 +121,14 @@ export default function AdminPage() {
             </div>
           </div>
         </Card>
+        </motion.div>
 
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-2">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.25 }}
+        >
+          <Card className="border-2 border-slate-200/60 dark:border-slate-700">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-green-100 dark:bg-green-900/20">
@@ -115,8 +141,14 @@ export default function AdminPage() {
             </div>
           </div>
         </Card>
+        </motion.div>
 
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-3">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.3 }}
+        >
+          <Card className="border-2 border-slate-200/60 dark:border-slate-700">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="p-3 rounded-xl bg-purple-100 dark:bg-purple-900/20">
@@ -129,8 +161,14 @@ export default function AdminPage() {
             </div>
           </div>
         </Card>
+        </motion.div>
 
-        <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-4">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3, delay: 0.35 }}
+        >
+          <Card className="border-2 border-slate-200/60 dark:border-slate-700">
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-primary-50 p-3 dark:bg-primary-950/40">
@@ -143,10 +181,16 @@ export default function AdminPage() {
             </div>
           </div>
         </Card>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Users Table */}
-      <Card className="border-2 border-slate-200/60 dark:border-slate-700 animate-slide-up stagger-5">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.4 }}
+      >
+        <Card className="border-2 border-slate-200/60 dark:border-slate-700">
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle>User Management</CardTitle>
@@ -211,6 +255,7 @@ export default function AdminPage() {
           </table>
         </div>
       </Card>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }

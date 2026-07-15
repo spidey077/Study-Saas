@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton, useUser } from '@clerk/nextjs'
 import { BookOpen, BarChart2, Calendar, LayoutDashboard, Moon, Sun, Settings, Menu, X, Shield } from 'lucide-react'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useState } from 'react'
@@ -96,7 +97,7 @@ export default function Navbar() {
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex flex-1 justify-center">
-          <div className="flex items-center justify-center gap-2">
+          <div className="relative flex items-center justify-center gap-2 rounded-lg bg-slate-900/50 p-1">
             {navItems.map((item) => {
               const Icon = item.icon
               const isActive = pathname === item.href
@@ -104,30 +105,38 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={cn(
-                    'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
-                    isActive
-                      ? 'bg-primary-600/20 text-white'
-                      : 'text-slate-200 hover:bg-slate-900 hover:text-white'
-                  )}
+                  className="relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150"
                 >
-                  <Icon className={cn('h-4 w-4', isActive ? 'text-primary-600 dark:text-primary-400' : 'text-slate-500 dark:text-slate-400')} />
-                  {item.label}
+                  {isActive && (
+                    <motion.div
+                      layoutId="activeNav"
+                      className="absolute inset-0 rounded-lg bg-primary-600/20"
+                      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                    />
+                  )}
+                  <span className="relative z-10 flex items-center gap-2">
+                    <Icon className={cn('h-4 w-4', isActive ? 'text-primary-400' : 'text-slate-500')} />
+                    <span className={cn(isActive ? 'text-white' : 'text-slate-300')}>{item.label}</span>
+                  </span>
                 </Link>
               )
             })}
             {isAdmin && (
               <Link
                 href="/admin"
-                className={cn(
-                  'flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150',
-                  pathname === '/admin'
-                    ? 'bg-primary-600/20 text-white dark:bg-primary-950/40 dark:text-white'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white'
-                )}
+                className="relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium transition-colors duration-150"
               >
-                <Shield className={cn('h-4 w-4', pathname === '/admin' ? 'text-primary-300' : 'text-slate-500 dark:text-slate-400')} />
-                Admin
+                {pathname === '/admin' && (
+                  <motion.div
+                    layoutId="activeNav"
+                    className="absolute inset-0 rounded-lg bg-primary-600/20"
+                    transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+                  />
+                )}
+                <span className="relative z-10 flex items-center gap-2">
+                  <Shield className={cn('h-4 w-4', pathname === '/admin' ? 'text-primary-400' : 'text-slate-500')} />
+                  <span className={cn(pathname === '/admin' ? 'text-white' : 'text-slate-300')}>Admin</span>
+                </span>
               </Link>
             )}
           </div>
@@ -135,18 +144,35 @@ export default function Navbar() {
 
         {/* Right Actions */}
         <div className="flex items-center gap-3">
-          <button
+          <motion.button
             onClick={toggleTheme}
             className="rounded-lg p-2 transition-colors hover:bg-slate-900"
             aria-label="Toggle theme"
+            whileTap={{ scale: 0.9 }}
+            whileHover={{ scale: 1.05 }}
           >
-            {theme === 'light' ? (
-              <Moon className="h-5 w-5 text-slate-200" />
-            ) : (
-              <Sun className="h-5 w-5 text-slate-200" />
-            )}
-          </button>
-          <UserButton afterSignOutUrl="/" />
+            <motion.div
+              key={theme}
+              initial={{ rotate: -90, scale: 0.5, opacity: 0 }}
+              animate={{ rotate: 0, scale: 1, opacity: 1 }}
+              exit={{ rotate: 90, scale: 0.5, opacity: 0 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 25 }}
+            >
+              {theme === 'light' ? (
+                <Moon className="h-5 w-5 text-slate-200" />
+              ) : (
+                <Sun className="h-5 w-5 text-slate-200" />
+              )}
+            </motion.div>
+          </motion.button>
+          <motion.div
+            className="relative group"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <div className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-600 opacity-0 group-hover:opacity-30 transition-opacity" />
+            <UserButton afterSignOutUrl="/" />
+          </motion.div>
           
           {/* Mobile Menu Button */}
           <button

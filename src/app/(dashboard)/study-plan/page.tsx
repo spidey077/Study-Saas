@@ -3,6 +3,7 @@
 export const dynamic = 'force-dynamic'
 
 import { useState, useEffect, useCallback, useMemo } from 'react'
+import { motion } from 'framer-motion'
 import { toast } from 'sonner'
 import { Calendar, Filter, Search } from 'lucide-react'
 import { Select } from '@/components/ui/Input'
@@ -91,9 +92,19 @@ export default function StudyPlanPage() {
   }
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <motion.div
+      className="space-y-6"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
       {/* Header */}
-      <div className="flex flex-wrap items-center justify-between gap-4 animate-slide-up">
+      <motion.div
+        className="flex flex-wrap items-center justify-between gap-4"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
+      >
         <div>
           <h1 className="text-2xl sm:text-3xl font-bold text-slate-950 dark:text-white">Study Plan</h1>
           <p className="text-slate-600 dark:text-slate-400 mt-2 text-base leading-7">
@@ -131,11 +142,16 @@ export default function StudyPlanPage() {
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
 
       {/* Overall progress bar */}
       {totalPlans > 0 && (
-        <div className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-950/60 animate-slide-up stagger-1">
+        <motion.div
+          className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-950/60"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.3, delay: 0.1 }}
+        >
           <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400 mb-2">
             <span>Overall Progress</span>
             <span className="font-semibold text-slate-950 dark:text-white">{pct}%</span>
@@ -146,12 +162,16 @@ export default function StudyPlanPage() {
               style={{ width: `${pct}%` }}
             />
           </div>
-        </div>
+        </motion.div>
       )}
 
       {/* Plan grouped by day */}
       {sortedDates.length > 0 ? (
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
+        >
           {sortedDates.map((date, index) => (
             <DayCard
               key={date}
@@ -159,27 +179,36 @@ export default function StudyPlanPage() {
               tasks={groupedPlans[date]}
               onTaskToggle={handleTaskToggle}
               onQuizComplete={handleQuizComplete}
-              className={`animate-slide-up stagger-${Math.min(index + 2, 6)}`}
             />
           ))}
-        </div>
+        </motion.div>
       ) : isSearching && plans.length > 0 ? (
-        <div className="rounded-2xl border border-slate-200/80 bg-white/90 py-20 text-center dark:border-slate-800 dark:bg-slate-950/70 animate-slide-up stagger-1">
+        <motion.div
+          className="rounded-2xl border border-slate-200/80 bg-white/90 py-20 text-center dark:border-slate-800 dark:bg-slate-950/70"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        >
           <Search className="mx-auto mb-4 h-12 w-12 text-primary-600 dark:text-primary-400" />
           <h3 className="text-lg font-semibold text-slate-950 dark:text-white mb-2">No matching topics</h3>
           <p className="text-slate-600 dark:text-slate-400">
             No topics match &quot;{topicSearch.trim()}&quot;. Try a different search term.
           </p>
-        </div>
+        </motion.div>
       ) : (
-        <div className="rounded-2xl border border-slate-200/80 bg-white/90 py-20 text-center dark:border-slate-800 dark:bg-slate-950/70 animate-slide-up stagger-1">
+        <motion.div
+          className="rounded-2xl border border-slate-200/80 bg-white/90 py-20 text-center dark:border-slate-800 dark:bg-slate-950/70"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        >
           <Calendar className="mx-auto mb-4 h-12 w-12 text-primary-600 dark:text-primary-400" />
           <h3 className="text-lg font-semibold text-slate-950 dark:text-white mb-2">No study plan yet</h3>
           <p className="text-slate-600 dark:text-slate-400">
             Go to <strong>Subjects</strong> and click &quot;Generate AI Study Plan&quot; on a subject.
           </p>
-        </div>
+        </motion.div>
       )}
-    </div>
+    </motion.div>
   )
 }

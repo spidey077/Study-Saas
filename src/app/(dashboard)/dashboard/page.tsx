@@ -5,6 +5,7 @@ export const dynamic = 'force-dynamic'
 import { useState, useEffect, useCallback } from 'react'
 import { useUser } from '@clerk/nextjs'
 import { usePathname } from 'next/navigation'
+import { motion } from 'framer-motion'
 import { format, parseISO, differenceInDays, subDays } from 'date-fns'
 import { BookOpen, CheckSquare, TrendingUp, Calendar } from 'lucide-react'
 import StatsCard from '@/components/dashboard/StatsCard'
@@ -90,7 +91,7 @@ export default function DashboardPage() {
     differenceInDays(parseISO(a.exam_date), new Date()) - differenceInDays(parseISO(b.exam_date), new Date())
   )
   const nextExam = upcomingExams[0]
-  const daysToNextExam = nextExam ? differenceInDays(parseISO(nextExam.exam_date), new Date()) : null
+  const daysToNextExam = nextExam ? Math.max(0, differenceInDays(parseISO(nextExam.exam_date), new Date())) : null
 
   // 7-day chart data
   const chartData = Array.from({ length: 7 }, (_, i) => {
@@ -130,37 +131,76 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="space-y-8 animate-fade-in">
+    <motion.div
+      className="space-y-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+    >
       {/* Welcome Header */}
-      <div className="space-y-2">
+      <motion.div
+        className="space-y-2"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
+      >
         <h1 className="text-3xl font-bold text-slate-900 dark:text-white tracking-tight">
           {greeting}, {user?.firstName || 'Student'}!
         </h1>
         <p className="text-slate-500 dark:text-slate-400 text-base sm:text-lg leading-7">
           {format(new Date(), 'EEEE, MMMM d, yyyy')}
         </p>
-      </div>
+      </motion.div>
 
       {/* Empty State */}
       {subjects.length === 0 && (
-        <Card className="border border-dashed border-slate-200/80 bg-slate-50/70 py-16 text-center dark:border-slate-800 dark:bg-slate-950/50">
-          <div className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-300">
-            <BookOpen className="w-8 h-8" />
-          </div>
-          <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No subjects yet</h3>
-          <p className="text-slate-600 dark:text-slate-300 mb-8 max-w-sm mx-auto text-base sm:text-lg leading-8">
-            Add your first subject and let AI generate a personalized study plan for you.
-          </p>
-          <Link href="/subjects">
-            <Button size="lg">Add Your First Subject</Button>
-          </Link>
-        </Card>
+        <motion.div
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+        >
+          <Card className="border border-dashed border-slate-200/80 bg-slate-50/70 py-16 text-center dark:border-slate-800 dark:bg-slate-950/50">
+            <motion.div
+              className="mb-6 inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-300"
+              animate={{
+                y: [0, -10, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            >
+              <BookOpen className="w-8 h-8" />
+            </motion.div>
+            <h3 className="text-2xl font-bold text-slate-900 dark:text-white mb-3">No subjects yet</h3>
+            <p className="text-slate-600 dark:text-slate-300 mb-8 max-w-sm mx-auto text-base sm:text-lg leading-8">
+              Add your first subject and let AI generate a personalized study plan for you.
+            </p>
+            <Link href="/subjects">
+              <Button size="lg">Add Your First Subject</Button>
+            </Link>
+          </Card>
+        </motion.div>
       )}
 
       {subjects.length > 0 && (
         <>
           {/* Stats Row */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-slide-up stagger-1">
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"
+            variants={{
+              hidden: { opacity: 0 },
+              visible: {
+                opacity: 1,
+                transition: {
+                  staggerChildren: 0.1,
+                },
+              },
+            }}
+            initial="hidden"
+            animate="visible"
+          >
             <StatsCard
               title="Total Subjects"
               value={subjects.length}
@@ -185,16 +225,21 @@ export default function DashboardPage() {
             />
             <StatsCard
               title="Days to Next Exam"
-              value={daysToNextExam !== null ? `${daysToNextExam}d` : '—'}
+              value={daysToNextExam !== null ? Math.max(0, daysToNextExam) : '—'}
               subtitle={nextExam?.name || ''}
               icon={Calendar}
               iconColor={daysToNextExam !== null && daysToNextExam <= 7 ? 'text-red-600' : 'text-primary-600'}
               iconBg={daysToNextExam !== null && daysToNextExam <= 7 ? 'bg-gradient-to-br from-red-100 to-red-50' : 'bg-gradient-to-br from-primary-100 to-blue-50'}
             />
-          </div>
+          </motion.div>
 
           {/* Main Content */}
-          <div className="grid lg:grid-cols-3 gap-6 animate-slide-up stagger-2">
+          <motion.div
+            className="grid lg:grid-cols-3 gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.3 }}
+          >
             {/* Today's Plan (wider) */}
             <div className="lg:col-span-2 space-y-6">
               <TodayPlan
@@ -206,16 +251,27 @@ export default function DashboardPage() {
             </div>
 
             {/* Upcoming Exams */}
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+            >
               <Card className="border border-slate-200/80 dark:border-slate-800">
                 <CardHeader>
                   <CardTitle>Upcoming Exams</CardTitle>
                 </CardHeader>
                 <div className="space-y-3">
-                  {upcomingExams.slice(0, 5).map((subject) => {
+                  {upcomingExams.slice(0, 5).map((subject, index) => {
                     const days = differenceInDays(parseISO(subject.exam_date), new Date())
                     return (
-                      <div key={subject.id} className="group flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-300 hover:border-primary-300 hover:shadow-sm dark:border-slate-700/60 dark:bg-slate-800/70 dark:hover:border-primary-500">
+                      <motion.div
+                        key={subject.id}
+                        initial={{ opacity: 0, x: -20 }}
+                        animate={{ opacity: 1, x: 0 }}
+                        transition={{ delay: 0.5 + index * 0.05 }}
+                        whileHover={{ x: 4 }}
+                        className="group flex items-center gap-3 rounded-xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-300 hover:border-primary-300 hover:shadow-sm dark:border-slate-700/60 dark:bg-slate-800/70 dark:hover:border-primary-500"
+                      >
                         <div
                           className="w-4 h-4 rounded-full flex-shrink-0 shadow-sm"
                           style={{ backgroundColor: subject.color }}
@@ -229,7 +285,7 @@ export default function DashboardPage() {
                         >
                           {days}d
                         </Badge>
-                      </div>
+                      </motion.div>
                     )
                   })}
                   {upcomingExams.length === 0 && (
@@ -237,28 +293,42 @@ export default function DashboardPage() {
                   )}
                 </div>
               </Card>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Predicted Scores */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 animate-slide-up stagger-3">
+          <motion.div
+            className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.5 }}
+          >
             {subjects.map((subject) => (
               <PredictedScoreCard key={subject.id} subject={subject} />
             ))}
-          </div>
+          </motion.div>
 
           {/* Progress Chart */}
-          <div className="animate-slide-up stagger-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.6 }}
+          >
             <ProgressChart data={chartData} />
-          </div>
+          </motion.div>
 
           {/* Additional Charts */}
-          <div className="grid lg:grid-cols-2 gap-6 animate-slide-up stagger-5">
+          <motion.div
+            className="grid lg:grid-cols-2 gap-6"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.4, delay: 0.7 }}
+          >
             <TopicsPerSubjectChart subjects={subjects} plans={allPlans} />
             <CompletedVsRemainingChart subjects={subjects} plans={allPlans} />
-          </div>
+          </motion.div>
         </>
       )}
-    </div>
+    </motion.div>
   )
 }

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
 import { toast } from 'sonner'
 import { CheckCircle2, Circle, Clock, BookOpen } from 'lucide-react'
 import Card, { CardHeader, CardTitle } from '@/components/ui/Card'
@@ -77,12 +78,32 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">No tasks for today. Here are your next upcoming tasks:</p>
           </CardHeader>
           <div className="space-y-3">
-            {upcomingTasks.map((task) => (
-              <div
+            {upcomingTasks.map((task, index) => (
+              <motion.div
                 key={task.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 30,
+                  delay: index * 0.05,
+                }}
+                whileHover={{ x: 4 }}
                 className="flex items-start gap-3 rounded-3xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-200 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800"
               >
-                <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 mt-0.5 flex-shrink-0" />
+                <motion.div
+                  animate={{
+                    scale: [1, 1.1, 1],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: 'easeInOut',
+                  }}
+                >
+                  <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 mt-0.5 flex-shrink-0" />
+                </motion.div>
                 <div className="flex-1 min-w-0">
                   <p className="text-sm font-semibold text-slate-950 dark:text-white">{task.topic}</p>
                   {task.subject && (
@@ -99,7 +120,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
                   <Clock className="w-3 h-3" />
                   <span>{task.estimated_hours}h</span>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </Card>
@@ -120,63 +141,110 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
   }
 
   const completedCount = tasks.filter((t) => t.is_completed).length
+  const progressPercent = tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0
+  const isAllComplete = completedCount === tasks.length && tasks.length > 0
 
   return (
     <Card>
       <CardHeader>
         <div className="flex items-center justify-between gap-4">
           <CardTitle>Today&apos;s Plan</CardTitle>
-          <span className="text-sm text-slate-600 dark:text-slate-400">
+          <motion.span
+            key={completedCount}
+            initial={{ scale: 1.2 }}
+            animate={{ scale: 1 }}
+            className="text-sm text-slate-600 dark:text-slate-400 font-semibold"
+          >
             {completedCount}/{tasks.length} done
-          </span>
+          </motion.span>
         </div>
         <div className="mt-3 h-1.5 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700">
-          <div
-            className="h-full rounded-full bg-primary-600 transition-all duration-500"
-            style={{ width: `${tasks.length > 0 ? (completedCount / tasks.length) * 100 : 0}%` }}
+          <motion.div
+            className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-purple-600"
+            initial={{ width: 0 }}
+            animate={{ width: `${progressPercent}%` }}
+            transition={{ duration: 0.6, ease: [0, 0, 0.2, 1] }}
           />
         </div>
       </CardHeader>
-      <div className="space-y-3">
-        {tasks.map((task) => (
-          <div
-            key={task.id}
-            className={cn(
-              'flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border',
-              task.is_completed
-                ? 'border-primary-200 bg-primary-50/80 dark:border-primary-900/40 dark:bg-primary-950/20'
-                : 'border-slate-200/80 bg-slate-50/90 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800'
-            )}
-          >
-            <button
-              onClick={() => toggleComplete(task)}
-              disabled={updating === task.id}
-              className="mt-0.5 flex-shrink-0 transition-transform duration-200 hover:scale-110"
+      <AnimatePresence mode="popLayout">
+        <div className="space-y-3">
+          {tasks.map((task, index) => (
+            <motion.div
+              key={task.id}
+              layout
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: 20 }}
+              transition={{
+                type: 'spring',
+                stiffness: 300,
+                damping: 30,
+                delay: index * 0.05,
+              }}
+              className={cn(
+                'flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border',
+                task.is_completed
+                  ? 'border-primary-200 bg-primary-50/80 dark:border-primary-900/40 dark:bg-primary-950/20'
+                  : 'border-slate-200/80 bg-slate-50/90 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800'
+              )}
             >
-              {task.is_completed ? (
-                <CheckCircle2 className="w-5 h-5 text-slate-950 dark:text-white" />
-              ) : (
-                <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white" />
-              )}
-            </button>
-            <div className="flex-1 min-w-0">
-              <p className={cn('text-sm font-semibold', task.is_completed ? 'line-through text-slate-700 dark:text-slate-400' : 'text-slate-950 dark:text-white')}>
-                {task.topic}
-              </p>
-              {task.subject && (
-                <p className="text-xs text-slate-800 dark:text-slate-300 mt-0.5">{task.subject.name}</p>
-              )}
-              {task.description && (
-                <p className="text-xs text-slate-800 dark:text-slate-300 mt-1 line-clamp-2">{task.description}</p>
-              )}
-            </div>
-            <div className="flex items-center gap-1 text-xs text-slate-700 dark:text-slate-300 flex-shrink-0">
-              <Clock className="w-3 h-3" />
-              <span>{task.estimated_hours}h</span>
-            </div>
-          </div>
-        ))}
-      </div>
+              <motion.button
+                onClick={() => toggleComplete(task)}
+                disabled={updating === task.id}
+                className="mt-0.5 flex-shrink-0"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                <AnimatePresence mode="wait">
+                  {task.is_completed ? (
+                    <motion.div
+                      key="completed"
+                      initial={{ scale: 0, rotate: -180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: 180 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      <CheckCircle2 className="w-5 h-5 text-slate-950 dark:text-white" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="incomplete"
+                      initial={{ scale: 0, rotate: 180 }}
+                      animate={{ scale: 1, rotate: 0 }}
+                      exit={{ scale: 0, rotate: -180 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 25 }}
+                    >
+                      <Circle className="w-5 h-5 text-slate-800 dark:text-slate-300 hover:text-slate-950 dark:hover:text-white" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+              <motion.div
+                className="flex-1 min-w-0"
+                animate={{
+                  opacity: task.is_completed ? 0.6 : 1,
+                }}
+                transition={{ duration: 0.2 }}
+              >
+                <p className={cn('text-sm font-semibold', task.is_completed ? 'line-through text-slate-700 dark:text-slate-400' : 'text-slate-950 dark:text-white')}>
+                  {task.topic}
+                </p>
+                {task.subject && (
+                  <p className="text-xs text-slate-800 dark:text-slate-300 mt-0.5">{task.subject.name}</p>
+                )}
+                {task.description && (
+                  <p className="text-xs text-slate-800 dark:text-slate-300 mt-1 line-clamp-2">{task.description}</p>
+                )}
+              </motion.div>
+              <div className="flex items-center gap-1 text-xs text-slate-700 dark:text-slate-300 flex-shrink-0">
+                <Clock className="w-3 h-3" />
+                <span>{task.estimated_hours}h</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </AnimatePresence>
       <QuizModal
         open={quizOpen}
         task={quizTask ?? tasks[0]}
