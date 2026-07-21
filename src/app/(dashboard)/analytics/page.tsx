@@ -144,7 +144,7 @@ export default function AnalyticsPage() {
             transition={{ duration: 0.3, delay: 0.2 }}
           >
             <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
-              <p className="text-sm text-slate-600 dark:text-slate-400">Total Subjects</p>
+              <p className="text-sm text-slate-900 dark:text-slate-400">Total Subjects</p>
               <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{subjects.length}</p>
             </Card>
           </motion.div>
@@ -154,8 +154,8 @@ export default function AnalyticsPage() {
             transition={{ duration: 0.3, delay: 0.25 }}
           >
             <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
-              <p className="text-sm text-slate-600 dark:text-slate-400">Topics Completed</p>
-              <p className="mt-2 text-3xl font-bold text-primary-600">{totalCompleted}</p>
+              <p className="text-sm text-slate-900 dark:text-slate-400">Topics Completed</p>
+              <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">{totalCompleted}</p>
             </Card>
           </motion.div>
           <motion.div
@@ -164,7 +164,7 @@ export default function AnalyticsPage() {
             transition={{ duration: 0.3, delay: 0.3 }}
           >
             <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
-              <p className="text-sm text-slate-600 dark:text-slate-400">Topics Remaining</p>
+              <p className="text-sm text-slate-900 dark:text-slate-400">Topics Remaining</p>
               <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{totalPlans - totalCompleted}</p>
             </Card>
           </motion.div>
@@ -174,8 +174,8 @@ export default function AnalyticsPage() {
             transition={{ duration: 0.3, delay: 0.35 }}
           >
             <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
-              <p className="text-sm text-slate-600 dark:text-slate-400">Study Hours Logged</p>
-              <p className="mt-2 text-3xl font-bold text-primary-600">
+              <p className="text-sm text-slate-900 dark:text-slate-400">Study Hours Logged</p>
+              <p className="mt-2 text-3xl font-bold text-slate-900 dark:text-white">
                 {plans.filter((p) => p.is_completed).reduce((s, p) => s + p.estimated_hours, 0).toFixed(1)}h
               </p>
             </Card>

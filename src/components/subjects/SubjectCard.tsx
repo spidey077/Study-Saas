@@ -35,8 +35,8 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
   }
 
   const examTypeConfig: Record<ExamType, { label: string; icon: string }> = {
-    pakistani: { label: '🇵🇰 Pakistani', icon: '🇵🇰' },
-    international: { label: '🌍 International', icon: '🌍' },
+    pakistani: { label: 'Pakistani', icon: '🇵🇰' },
+    international: { label: 'International', icon: '🌍' },
   }
 
   // Generate gradient based on subject color
@@ -142,29 +142,19 @@ export default function SubjectCard({ subject, completedTopics, onDelete, onPlan
               <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">{subject.total_topics} topics</span>
               {subject.exam_type && (
                 <span className="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-200">
-                  {examTypeConfig[subject.exam_type]?.icon} {examTypeConfig[subject.exam_type]?.label}
+                  {examTypeConfig[subject.exam_type]?.icon}
                 </span>
               )}
             </div>
           </div>
         </div>
-        <div className="flex items-center gap-2">
-          {/* Circular progress ring */}
-          <AnimatedProgressRing
-            progress={progressPct}
-            size={48}
-            strokeWidth={3}
-            color={subject.color}
-            bgColor="rgba(255, 255, 255, 0.2)"
-          />
-          <button
-            onClick={handleDelete}
-            disabled={deleting}
-            className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30"
-          >
-            <Trash2 className="w-4 h-4" />
-          </button>
-        </div>
+        <button
+          onClick={handleDelete}
+          disabled={deleting}
+          className="text-slate-400 hover:text-red-500 transition-colors p-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-950/30"
+        >
+          <Trash2 className="w-4 h-4" />
+        </button>
       </div>
 
       {/* Exam countdown */}
