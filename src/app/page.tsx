@@ -85,8 +85,8 @@ export default function LandingPage() {
           {/* Hero Section */}
           <section className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] items-center pt-4 lg:pt-2">
             <div className="space-y-7 animate-fade-in">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-primary-700 dark:border-primary-900/50 dark:bg-primary-950/30 dark:text-primary-300">
-                <Sparkles className="h-4 w-4 text-primary-600" />
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-slate-900 dark:border-primary-900/50 dark:bg-primary-950/30">
+                <Sparkles className="h-4 w-4 text-slate-900" />
                 <span>Powered by GPT-4o</span>
                 <span className="rounded-full bg-primary-200/70 px-2 py-0.5 text-xs font-semibold dark:bg-primary-800/50">NEW</span>
               </div>
@@ -144,7 +144,7 @@ export default function LandingPage() {
                         className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-6 transition-colors duration-150 hover:border-primary-300 hover:bg-white dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
-                        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 shadow-sm dark:bg-primary-950/40 dark:text-primary-300">
+                        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-slate-900 shadow-sm dark:bg-primary-950/40">
                           <Icon className="h-6 w-6" />
                         </div>
                         <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
@@ -173,7 +173,7 @@ export default function LandingPage() {
                   key={feature.title} 
                   className="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
                 >
-                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-primary-600 dark:bg-primary-950/40 dark:text-primary-300">
+                  <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-slate-900 dark:bg-primary-950/40">
                     <Icon className="h-6 w-6" />
                   </div>
                   <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
