@@ -34,53 +34,59 @@ export default function ProgressChart({ data }: ProgressChartProps) {
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Topics completed over the last 7 days</p>
         </CardHeader>
         <motion.div
-          className="h-56"
+          className="h-64"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={formattedData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+            <AreaChart data={formattedData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
               <defs>
                 <linearGradient id="completedGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.22} />
+                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" vertical={false} />
               <XAxis
                 dataKey="label"
-                tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
+                tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }}
                 axisLine={false}
                 tickLine={false}
+                dy={5}
               />
               <YAxis
-                tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
+                tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }}
                 axisLine={false}
                 tickLine={false}
                 allowDecimals={false}
+                domain={[0, 'auto']}
               />
               <Tooltip
                 contentStyle={{
                   background: 'var(--chart-tooltip-background)',
-                  border: '1px solid #e2e8f0',
-                  borderRadius: '12px',
-                  fontSize: '12px',
+                  border: '1px solid var(--chart-grid-stroke)',
+                  borderRadius: '8px',
+                  fontSize: '13px',
                   color: 'var(--chart-tooltip-color)',
-                  boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                  boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                  padding: '12px',
                 }}
-                labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600' }}
+                labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600', marginBottom: '4px' }}
                 animationDuration={200}
+                formatter={(value: any) => [value, 'Completed']}
               />
               <Area
                 type="monotone"
                 dataKey="completed"
                 stroke="#4f46e5"
-                strokeWidth={3}
+                strokeWidth={2.5}
                 fill="url(#completedGradient)"
                 name="Completed"
-                animationDuration={800}
+                animationDuration={1000}
                 animationEasing="ease-out"
+                dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4 }}
+                activeDot={{ r: 6, stroke: '#4f46e5', strokeWidth: 2 }}
               />
             </AreaChart>
           </ResponsiveContainer>

@@ -31,17 +31,21 @@ export default function AnimatedCounter({
       return
     }
 
+    // Reset to 0 before starting animation
+    setDisplayValue(0)
+    
     startTimeRef.current = performance.now()
-    const startValue = displayValue
+    const startValue = 0
+    
+    // Adjust duration based on value to ensure each number is visible
+    const adjustedDuration = Math.max(duration, value * 50)
 
     const animate = (currentTime: number) => {
       const elapsed = currentTime - (startTimeRef.current || 0)
-      const progress = Math.min(elapsed / duration, 1)
+      const progress = Math.min(elapsed / adjustedDuration, 1)
       
-      // Ease out quart
-      const easeProgress = 1 - Math.pow(1 - progress, 4)
-      
-      const currentValue = startValue + (value - startValue) * easeProgress
+      // Linear easing for smoother counting through all numbers
+      const currentValue = startValue + (value - startValue) * progress
       setDisplayValue(currentValue)
 
       if (progress < 1) {
@@ -49,14 +53,17 @@ export default function AnimatedCounter({
       }
     }
 
-    frameRef.current = requestAnimationFrame(animate)
+    // Small delay to ensure the reset is visible
+    setTimeout(() => {
+      frameRef.current = requestAnimationFrame(animate)
+    }, 50)
 
     return () => {
       if (frameRef.current) {
         cancelAnimationFrame(frameRef.current)
       }
     }
-  }, [value, duration, displayValue])
+  }, [value, duration])
 
   const formattedValue = displayValue.toFixed(decimals)
 

@@ -26,8 +26,8 @@
     --text-soft: #475569;
     --chart-tooltip-background: #ffffff;
     --chart-tooltip-color: #0f172a;
-    --chart-grid-stroke: #e2e8f0;
-    --chart-axis-tick: #64748b;
+    --chart-grid-stroke: #cbd5e1;
+    --chart-axis-tick: #475569;
   }
 
   .dark {
@@ -50,10 +50,10 @@
     --border: rgba(255, 255, 255, 0.08);
     --text-muted: #94a3b8;
     --text-soft: #cbd5e1;
-    --chart-tooltip-background: #111827;
+    --chart-tooltip-background: #1e293b;
     --chart-tooltip-color: #f8fafc;
-    --chart-grid-stroke: #334155;
-    --chart-axis-tick: #cbd5e1;
+    --chart-grid-stroke: #475569;
+    --chart-axis-tick: #94a3b8;
   }
 
   * {

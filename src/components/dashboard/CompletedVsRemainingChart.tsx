@@ -51,35 +51,37 @@ export default function CompletedVsRemainingChart({ subjects, plans }: Completed
         <CardTitle>Completed vs Remaining</CardTitle>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Progress breakdown by subject</p>
       </CardHeader>
-      <div className="h-72">
+      <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }} layout="vertical">
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" />
+          <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }} layout="vertical">
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" horizontal={false} />
             <XAxis
               type="number"
-              tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
+              tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }}
               axisLine={false}
               tickLine={false}
               allowDecimals={false}
+              domain={[0, 'auto']}
             />
             <YAxis
               type="category"
               dataKey="name"
-              tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
+              tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }}
               axisLine={false}
               tickLine={false}
-              width={80}
+              width={90}
             />
             <Tooltip
               contentStyle={{
                 background: 'var(--chart-tooltip-background)',
-                border: '1px solid #e2e8f0',
-                borderRadius: '12px',
-                fontSize: '12px',
+                border: '1px solid var(--chart-grid-stroke)',
+                borderRadius: '8px',
+                fontSize: '13px',
                 color: 'var(--chart-tooltip-color)',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                padding: '12px',
               }}
-              labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600' }}
+              labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600', marginBottom: '4px' }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any, name: any) => [value, name === 'completed' ? 'Completed' : 'Remaining']}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -88,8 +90,8 @@ export default function CompletedVsRemainingChart({ subjects, plans }: Completed
                 return item?.fullName || label
               }}
             />
-            <Bar dataKey="completed" fill="#22c55e" radius={[0, 4, 4, 0]} name="completed" />
-            <Bar dataKey="remaining" fill="#4f46e5" radius={[0, 4, 4, 0]} name="remaining" />
+            <Bar dataKey="completed" fill="#22c55e" radius={[0, 4, 4, 0]} name="completed" maxBarSize={40} />
+            <Bar dataKey="remaining" fill="#4f46e5" radius={[0, 4, 4, 0]} name="remaining" maxBarSize={40} />
           </BarChart>
         </ResponsiveContainer>
       </div>

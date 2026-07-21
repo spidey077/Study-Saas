@@ -52,35 +52,38 @@ export default function TopicsPerSubjectChart({ subjects, plans }: TopicsPerSubj
         <CardTitle>Topics per Subject</CardTitle>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Total topics breakdown by subject</p>
       </CardHeader>
-      <div className="h-72">
+      <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 60 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" />
+            <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" vertical={false} />
             <XAxis
               dataKey="name"
-              tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
+              tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }}
               axisLine={false}
               tickLine={false}
               angle={-45}
               textAnchor="end"
               height={60}
+              dy={5}
             />
             <YAxis
-              tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }}
+              tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }}
               axisLine={false}
               tickLine={false}
               allowDecimals={false}
+              domain={[0, 'auto']}
             />
             <Tooltip
               contentStyle={{
                 background: 'var(--chart-tooltip-background)',
                 border: '1px solid var(--chart-grid-stroke)',
-                borderRadius: '12px',
-                fontSize: '12px',
+                borderRadius: '8px',
+                fontSize: '13px',
                 color: 'var(--chart-tooltip-color)',
-                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
+                boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+                padding: '12px',
               }}
-              labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600' }}
+              labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600', marginBottom: '4px' }}
               // eslint-disable-next-line @typescript-eslint/no-explicit-any
               formatter={(value: any, name: any) => {
                 const label = name === 'total' ? 'Total Topics' : name === 'completed' ? 'Completed' : 'Remaining'
@@ -92,7 +95,7 @@ export default function TopicsPerSubjectChart({ subjects, plans }: TopicsPerSubj
                 return item?.fullName || label
               }}
             />
-            <Bar dataKey="total" fill="#4f46e5" radius={[4, 4, 0, 0]} name="total" />
+            <Bar dataKey="total" fill="#4f46e5" radius={[4, 4, 0, 0]} name="total" maxBarSize={60} />
           </BarChart>
         </ResponsiveContainer>
       </div>
