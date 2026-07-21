@@ -29,12 +29,6 @@ export default function ToggleSwitch({
     lg: 'w-6 h-6',
   }
 
-  const thumbTranslate = {
-    sm: checked ? 'translateX(16px)' : 'translateX(2px)',
-    md: checked ? 'translateX(20px)' : 'translateX(2px)',
-    lg: checked ? 'translateX(24px)' : 'translateX(2px)',
-  }
-
   return (
     <button
       type="button"
