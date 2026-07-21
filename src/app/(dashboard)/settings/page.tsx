@@ -177,7 +177,7 @@ export default function SettingsPage() {
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3, delay: 0.1 }}
-        className="relative inline-flex rounded-xl bg-slate-100/80 p-1 dark:bg-slate-800/80"
+        className="relative inline-flex w-full sm:w-auto rounded-xl bg-slate-100/80 p-1 dark:bg-slate-800/80 overflow-x-auto"
       >
         {tabs.map((tab) => {
           const Icon = tab.icon
@@ -186,7 +186,7 @@ export default function SettingsPage() {
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                'relative flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition-colors',
+                'relative flex-1 sm:flex-none items-center justify-center gap-2 px-3 sm:px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap',
                 activeTab === tab.id
                   ? 'text-slate-900 dark:text-white'
                   : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
@@ -201,7 +201,8 @@ export default function SettingsPage() {
               )}
               <span className="relative z-10 flex items-center gap-2">
                 <Icon className="w-4 h-4" />
-                {tab.label}
+                <span className="hidden sm:inline">{tab.label}</span>
+                <span className="sm:hidden">{tab.label}</span>
               </span>
             </button>
           )
@@ -223,7 +224,7 @@ export default function SettingsPage() {
                 <CardTitle>Profile Information</CardTitle>
               </CardHeader>
               <div className="space-y-4">
-                <div className="flex items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
                   <motion.div
                     className="relative group cursor-pointer"
                     whileHover={{ scale: 1.05 }}
@@ -237,11 +238,11 @@ export default function SettingsPage() {
                       <Camera className="w-5 h-5 text-white" />
                     </div>
                   </motion.div>
-                  <div>
+                  <div className="flex-1">
                     <p className="font-semibold text-slate-900 dark:text-white">
                       {user?.firstName} {user?.lastName}
                     </p>
-                    <p className="text-sm text-slate-600 dark:text-slate-400">{user?.emailAddresses[0]?.emailAddress}</p>
+                    <p className="text-sm text-slate-600 dark:text-slate-400 break-all">{user?.emailAddresses[0]?.emailAddress}</p>
                     <motion.p
                       className="text-xs text-slate-500 dark:text-slate-400 mt-1"
                       initial={{ opacity: 0 }}
@@ -302,7 +303,7 @@ export default function SettingsPage() {
                     <Bell className="w-4 h-4" />
                     Daily Reminder
                   </label>
-                  <div className="flex items-center gap-4">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
                     <ToggleSwitch
                       checked={userData.reminder_enabled}
                       onChange={(checked) => handleUserDataChange('reminder_enabled', checked)}
@@ -314,7 +315,7 @@ export default function SettingsPage() {
                       onChange={(e) => handleUserDataChange('reminder_time', e.target.value)}
                       disabled={!userData.reminder_enabled}
                       className={cn(
-                        'px-3 py-2 border rounded-lg bg-white text-slate-900 dark:bg-slate-800 dark:text-white transition-all',
+                        'w-full sm:w-auto px-3 py-2 border rounded-lg bg-white text-slate-900 dark:bg-slate-800 dark:text-white transition-all',
                         userData.reminder_enabled
                           ? 'border-slate-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 dark:border-slate-600'
                           : 'border-slate-200 opacity-50 cursor-not-allowed dark:border-slate-700'
@@ -354,8 +355,8 @@ export default function SettingsPage() {
                 <CardTitle>Subscription</CardTitle>
               </CardHeader>
               <div className="space-y-4">
-                <div className="flex items-center justify-between rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
-                  <div className="flex items-center gap-3">
+                <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 dark:border-slate-800 dark:bg-slate-900/70">
+                  <div className="flex items-center gap-3 mb-3 sm:mb-0">
                     <div className={cn(
                       'flex h-10 w-10 items-center justify-center rounded-lg',
                       userData.subscription_tier === 'tier2'
@@ -380,7 +381,7 @@ export default function SettingsPage() {
                       </p>
                     </div>
                   </div>
-                  <Link href="/pricing">
+                  <Link href="/pricing" className="w-full sm:w-auto">
                     <motion.div
                       className="relative"
                       whileHover={{ scale: 1.05 }}
@@ -393,7 +394,7 @@ export default function SettingsPage() {
                           transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
                         />
                       )}
-                      <Button variant="secondary" size="sm">
+                      <Button variant="secondary" size="sm" className="w-full sm:w-auto">
                         Upgrade
                       </Button>
                     </motion.div>
@@ -413,7 +414,7 @@ export default function SettingsPage() {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="fixed bottom-6 right-6 z-50"
+            className="fixed bottom-4 sm:bottom-6 right-4 sm:right-6 z-50"
           >
             <Button
               onClick={saveSettings}

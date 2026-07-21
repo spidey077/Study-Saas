@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { UserButton, useUser } from '@clerk/nextjs'
 import { BookOpen, BarChart2, Calendar, LayoutDashboard, Moon, Sun, Settings, Menu, X, Shield } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { useTheme } from '@/contexts/ThemeContext'
 import { useState } from 'react'
@@ -190,47 +190,75 @@ export default function Navbar() {
       </div>
 
       {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <div className="border-t border-slate-200 py-4 dark:border-slate-700 md:hidden">
-          <div className="flex flex-col gap-2">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              const isActive = pathname === item.href
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={cn(
-                    'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-150',
-                    isActive
-                      ? 'bg-primary-600/20 text-white'
-                      : 'text-slate-200 hover:bg-slate-900 hover:text-white'
-                  )}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3, ease: [0, 0, 0.2, 1] }}
+            className="border-t border-slate-200 py-4 dark:border-slate-700 md:hidden overflow-hidden"
+          >
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2, delay: 0.1 }}
+              className="flex flex-col gap-2"
+            >
+              {navItems.map((item, index) => {
+                const Icon = item.icon
+                const isActive = pathname === item.href
+                return (
+                  <motion.div
+                    key={item.href}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -20 }}
+                    transition={{ duration: 0.2, delay: 0.1 + index * 0.05 }}
+                  >
+                    <Link
+                      href={item.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={cn(
+                        'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-150',
+                        isActive
+                          ? 'bg-primary-600/20 text-white'
+                          : 'text-slate-200 hover:bg-slate-900 hover:text-white'
+                      )}
+                    >
+                      <Icon className="w-5 h-5" />
+                      {item.label}
+                    </Link>
+                  </motion.div>
+                )
+              })}
+              {isAdmin && (
+                <motion.div
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  transition={{ duration: 0.2, delay: 0.1 + navItems.length * 0.05 }}
                 >
-                  <Icon className="w-5 h-5" />
-                  {item.label}
-                </Link>
-              )
-            })}
-            {isAdmin && (
-              <Link
-                href="/admin"
-                onClick={() => setMobileMenuOpen(false)}
-                className={cn(
-                  'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-150',
-                  pathname === '/admin'
-                    ? 'bg-primary-600/20 text-white'
-                    : 'text-slate-200 hover:bg-slate-900 hover:text-white'
-                )}
-              >
-                <Shield className="w-5 h-5" />
-                Admin
-              </Link>
-            )}
-          </div>
-        </div>
-      )}
+                  <Link
+                    href="/admin"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={cn(
+                      'flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors duration-150',
+                      pathname === '/admin'
+                        ? 'bg-primary-600/20 text-white'
+                        : 'text-slate-200 hover:bg-slate-900 hover:text-white'
+                    )}
+                  >
+                    <Shield className="w-5 h-5" />
+                    Admin
+                  </Link>
+                </motion.div>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   )
 }

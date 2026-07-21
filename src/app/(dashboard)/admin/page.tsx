@@ -172,7 +172,7 @@ export default function AdminPage() {
           <div className="p-6">
             <div className="flex items-center gap-3">
               <div className="rounded-xl bg-primary-50 p-3 dark:bg-primary-950/40">
-                <Shield className="h-6 w-6 text-primary-600 dark:text-primary-300" />
+                <Shield className="h-6 w-6 text-slate-900" />
               </div>
               <div>
                 <p className="text-sm text-slate-600 dark:text-slate-400">Active Users</p>
@@ -192,16 +192,16 @@ export default function AdminPage() {
       >
         <Card className="border-2 border-slate-200/60 dark:border-slate-700">
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
             <CardTitle>User Management</CardTitle>
-            <div className="relative">
+            <div className="relative w-full sm:w-auto">
               <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
               <input
                 type="text"
                 placeholder="Search users..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
+                className="w-full pl-10 pr-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-sm"
               />
             </div>
           </div>

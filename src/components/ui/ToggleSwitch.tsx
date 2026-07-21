@@ -40,11 +40,12 @@ export default function ToggleSwitch({
       type="button"
       onClick={() => !disabled && onChange(!checked)}
       disabled={disabled}
-      className={`relative inline-flex flex-shrink-0 cursor-pointer rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClasses[size]} ${className}`}
+      className={`relative inline-flex flex-shrink-0 cursor-pointer items-center rounded-full transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 ${sizeClasses[size]} ${className}`}
       style={{
         backgroundColor: checked
           ? 'linear-gradient(135deg, #6366F1, #8B5CF6)'
-          : 'rgba(255, 255, 255, 0.1)',
+          : '#8e8e91',
+        border: '1px solid #6b7280',
       }}
     >
       <motion.span
@@ -57,9 +58,6 @@ export default function ToggleSwitch({
           type: 'spring',
           stiffness: 400,
           damping: 25,
-        }}
-        style={{
-          transform: thumbTranslate[size],
         }}
       />
     </button>

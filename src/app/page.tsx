@@ -53,25 +53,25 @@ export default function LandingPage() {
             </div>
             <div>
               <p className="text-base font-bold text-slate-900 dark:text-white tracking-tight">StudyFlow</p>
-              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">AI-powered study planning</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 font-medium hidden sm:block">AI-powered study planning</p>
             </div>
           </Link>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/pricing"
-              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2"
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 sm:px-4"
             >
               Pricing
             </Link>
             <Link
               href="/sign-in"
-              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-4 py-2"
+              className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-colors px-3 py-2 sm:px-4"
             >
               Sign In
             </Link>
             <Link
               href="/sign-up"
-              className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-primary-700"
+              className="inline-flex items-center gap-2 rounded-lg bg-primary-600 px-4 py-2.5 text-sm font-semibold text-white transition-colors duration-150 hover:bg-primary-700 sm:px-5"
             >
               Get Started
               <ArrowRight className="w-4 h-4" />
@@ -80,75 +80,75 @@ export default function LandingPage() {
         </div>
       </header>
 
-      <main className="px-6 py-12 sm:py-16 lg:py-24">
+      <main className="px-4 sm:px-6 py-12 sm:py-16 lg:py-24">
         <div className="max-w-7xl mx-auto space-y-16 sm:space-y-20 lg:space-y-24">
           {/* Hero Section */}
           <section className="grid gap-10 lg:grid-cols-[1.05fr_0.95fr] items-center pt-4 lg:pt-2">
             <div className="space-y-7 animate-fade-in">
-              <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-4 py-2 text-sm font-medium text-slate-900 dark:border-primary-900/50 dark:bg-primary-950/30">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary-200 bg-primary-50 px-3 sm:px-4 py-2 text-sm font-medium text-slate-900 dark:border-primary-900/50 dark:bg-primary-950/30">
                 <Sparkles className="h-4 w-4 text-slate-900" />
                 <span>Powered by GPT-4o</span>
-                <span className="rounded-full bg-primary-200/70 px-2 py-0.5 text-xs font-semibold dark:bg-primary-800/50">NEW</span>
+                <span className="rounded-full bg-primary-200/70 px-2 py-0.5 text-xs font-semibold dark:bg-primary-800/50 hidden sm:inline">NEW</span>
               </div>
               <div className="space-y-5">
-                <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight text-slate-900 dark:text-white leading-[1.05]">
                   Study smarter with{' '}
                   <span className="bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent">
                     AI-powered planning
                   </span>
                 </h1>
-                <p className="max-w-2xl text-lg sm:text-xl leading-8 text-slate-600 dark:text-slate-300">
+                <p className="max-w-2xl text-base sm:text-lg lg:text-xl leading-7 sm:leading-8 text-slate-600 dark:text-slate-300">
                   Stop guessing what to study. Let AI build your personalized day-by-day study plan in English or Urdu. Perfect for Pakistani (NTS, NET, FAST, ECAT) and International (SAT, GRE, IELTS, GMAT) exams.
                 </p>
               </div>
               <div className="flex flex-wrap items-center gap-3 sm:gap-4">
                 <Link
                   href="/sign-up"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-primary-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-700"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-primary-600 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-xl shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-700"
                 >
                   Get Started
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
                 <Link
                   href="/sign-in"
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-8 py-4 text-base font-semibold text-slate-900 transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-primary-500 dark:hover:bg-slate-800"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-slate-900 transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:hover:border-primary-500 dark:hover:bg-slate-800"
                 >
                   Sign In
                 </Link>
               </div>
-              <div className="flex flex-wrap items-center gap-4 sm:gap-6 pt-2">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 sm:gap-6 pt-2">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">No credit card required</span>
+                  <CheckCircle2 className="w-4 sm:w-5 h-4 sm:h-5 text-green-500" />
+                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">No credit card required</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  <span className="text-sm text-slate-600 font-medium">Free to start</span>
+                  <CheckCircle2 className="w-4 sm:w-5 h-4 sm:h-5 text-green-500" />
+                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">Free to start</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-green-500" />
-                  <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">Cancel anytime</span>
+                  <CheckCircle2 className="w-4 sm:w-5 h-4 sm:h-5 text-green-500" />
+                  <span className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 font-medium">Cancel anytime</span>
                 </div>
               </div>
             </div>
 
             <div className="relative">
               <div className="absolute -inset-4 rounded-[50px] bg-primary-500/10 blur-3xl" />
-              <div className="relative rounded-[32px] border border-slate-200/80 bg-white/80 p-8 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/70">
-                <div className="grid gap-5">
+              <div className="relative rounded-[32px] border border-slate-200/80 bg-white/80 p-4 sm:p-6 lg:p-8 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-950/70">
+                <div className="grid gap-4 sm:gap-5">
                   {features.map((feature, index) => {
                     const Icon = feature.icon
                     return (
                       <div 
                         key={feature.title} 
-                        className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-6 transition-colors duration-150 hover:border-primary-300 hover:bg-white dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
+                        className="rounded-2xl border border-slate-200/80 bg-slate-50/70 p-4 sm:p-6 transition-colors duration-150 hover:border-primary-300 hover:bg-white dark:border-slate-800 dark:bg-slate-900/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
                         style={{ animationDelay: `${index * 100}ms` }}
                       >
                         <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-slate-900 shadow-sm dark:bg-primary-950/40">
                           <Icon className="h-6 w-6" />
                         </div>
-                        <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
-                        <p className="mt-2 text-sm sm:text-[15px] leading-7 text-slate-600 dark:text-slate-300">{feature.description}</p>
+                        <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
+                        <p className="mt-2 text-xs sm:text-sm sm:text-[15px] leading-6 sm:leading-7 text-slate-600 dark:text-slate-300">{feature.description}</p>
                       </div>
                     )
                   })}
@@ -158,7 +158,7 @@ export default function LandingPage() {
           </section>
 
           {/* Features Grid */}
-          <section className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <section className="grid gap-4 sm:gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
             {[
               { icon: Zap, title: 'Lightning Fast', desc: 'Generate study plans in seconds with AI' },
               { icon: Target, title: 'Goal Oriented', desc: 'Track progress towards your exam goals' },
@@ -171,46 +171,46 @@ export default function LandingPage() {
               return (
                 <div 
                   key={feature.title} 
-                  className="group rounded-2xl border border-slate-200/80 bg-white p-6 shadow-sm transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
+                  className="group rounded-2xl border border-slate-200/80 bg-white p-4 sm:p-6 shadow-sm transition-colors duration-150 hover:border-primary-300 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-950/70 dark:hover:border-primary-500 dark:hover:bg-slate-900"
                 >
                   <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-50 text-slate-900 dark:bg-primary-950/40">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
-                  <p className="mt-2 text-sm sm:text-[15px] leading-7 text-slate-600 dark:text-slate-300">{feature.desc}</p>
+                  <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white">{feature.title}</h3>
+                  <p className="mt-2 text-xs sm:text-sm sm:text-[15px] leading-6 sm:leading-7 text-slate-600 dark:text-slate-300">{feature.desc}</p>
                 </div>
               )
             })}
           </section>
 
           {/* CTA Section */}
-          <section className="relative overflow-hidden rounded-[32px] border border-slate-200/80 bg-slate-950 p-12 shadow-sm dark:border-slate-800 lg:p-16">
+          <section className="relative overflow-hidden rounded-[24px] sm:rounded-[32px] border border-slate-200/80 bg-slate-950 p-8 sm:p-12 lg:p-16 shadow-sm dark:border-slate-800">
             <div className="absolute inset-0 bg-gradient-to-r from-primary-500/10 to-primary-400/10" />
-            <div className="absolute top-0 right-0 h-96 w-96 rounded-full bg-primary-500/10 blur-3xl" />
-            <div className="absolute bottom-0 left-0 h-96 w-96 rounded-full bg-primary-400/10 blur-3xl" />
-            <div className="relative max-w-3xl mx-auto space-y-8 text-center">
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white tracking-tight">
+            <div className="absolute top-0 right-0 h-64 sm:h-96 w-64 sm:w-96 rounded-full bg-primary-500/10 blur-3xl" />
+            <div className="absolute bottom-0 left-0 h-64 sm:h-96 w-64 sm:w-96 rounded-full bg-primary-400/10 blur-3xl" />
+            <div className="relative max-w-3xl mx-auto space-y-6 sm:space-y-8 text-center">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
                 Ready to study smarter?
               </h2>
-              <p className="text-lg sm:text-xl leading-8 text-slate-300 dark:text-slate-200">
+              <p className="text-base sm:text-lg lg:text-xl leading-7 sm:leading-8 text-slate-300 dark:text-slate-200">
                 Join thousands of students using AI study planning, progress tracking, and smart reminders to stay ahead of their exams.
               </p>
-              <div className="flex flex-wrap items-center justify-center gap-4">
+              <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4">
                 <Link
                   href="/sign-up"
-                  className="inline-flex items-center gap-2 rounded-2xl bg-primary-600 px-8 py-4 text-base font-semibold text-white shadow-xl shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-700"
+                  className="inline-flex items-center gap-2 rounded-2xl bg-primary-600 px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-white shadow-xl shadow-primary-500/20 transition-all duration-300 hover:-translate-y-1 hover:bg-primary-700"
                 >
                   Get Started
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-4 sm:w-5 h-4 sm:h-5" />
                 </Link>
                 <Link
                   href="/sign-in"
-                  className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-transparent px-8 py-4 text-base font-semibold text-white transition-colors duration-150 hover:bg-slate-800"
+                  className="inline-flex items-center gap-2 rounded-xl border border-slate-700 bg-transparent px-6 sm:px-8 py-3.5 sm:py-4 text-sm sm:text-base font-semibold text-white transition-colors duration-150 hover:bg-slate-800"
                 >
                   Sign In
                 </Link>
               </div>
-              <p className="text-sm text-slate-400">No credit card required · Start in seconds</p>
+              <p className="text-xs sm:text-sm text-slate-400">No credit card required · Start in seconds</p>
             </div>
           </section>
         </div>
