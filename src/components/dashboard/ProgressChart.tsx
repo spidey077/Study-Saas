@@ -74,7 +74,6 @@ export default function ProgressChart({ data }: ProgressChartProps) {
                 }}
                 labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600', marginBottom: '4px' }}
                 animationDuration={200}
-                formatter={(value: any) => [value, 'Completed']}
               />
               <Area
                 type="monotone"
