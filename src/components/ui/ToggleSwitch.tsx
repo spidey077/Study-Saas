@@ -38,7 +38,7 @@ export default function ToggleSwitch({
       style={{
         backgroundColor: checked
           ? 'linear-gradient(135deg, #6366F1, #8B5CF6)'
-          : '#8e8e91',
+          : '#9ca3af',
         border: '1px solid #6b7280',
       }}
     >

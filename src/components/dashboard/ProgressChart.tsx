@@ -28,7 +28,7 @@ export default function ProgressChart({ data }: ProgressChartProps) {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: [0, 0, 0.2, 1] }}
     >
-      <Card className="border border-slate-200/80 bg-white/90 dark:border-slate-800 dark:bg-slate-950/70">
+      <Card className="border border-slate-300 bg-slate-100 dark:border-slate-800 dark:bg-slate-950/70">
         <CardHeader>
           <CardTitle>7-Day Progress</CardTitle>
           <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Topics completed over the last 7 days</p>

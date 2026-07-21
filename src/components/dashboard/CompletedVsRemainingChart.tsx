@@ -46,7 +46,7 @@ export default function CompletedVsRemainingChart({ subjects, plans }: Completed
   }
 
   return (
-    <Card className="border-2 border-slate-200/60 dark:border-slate-700/60 bg-gradient-to-br from-white to-slate-50 dark:from-slate-950 dark:to-slate-900">
+    <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700/60 dark:from-slate-950 dark:to-slate-900">
       <CardHeader>
         <CardTitle>Completed vs Remaining</CardTitle>
         <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">Progress breakdown by subject</p>

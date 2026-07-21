@@ -112,7 +112,7 @@ export default function AnalyticsPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.1 }}
       >
-        <Card className="text-center sm:col-span-1 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+        <Card className="text-center sm:col-span-1 border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950">
           <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Overall Completion</p>
           <div className="mt-4 relative w-28 h-28 mx-auto">
             <svg className="w-28 h-28 -rotate-90" viewBox="0 0 100 100">
@@ -143,7 +143,7 @@ export default function AnalyticsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.2 }}
           >
-            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+            <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
               <p className="text-sm text-slate-600 dark:text-slate-400">Total Subjects</p>
               <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{subjects.length}</p>
             </Card>
@@ -153,7 +153,7 @@ export default function AnalyticsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.25 }}
           >
-            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+            <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
               <p className="text-sm text-slate-600 dark:text-slate-400">Topics Completed</p>
               <p className="mt-2 text-3xl font-bold text-primary-600">{totalCompleted}</p>
             </Card>
@@ -163,7 +163,7 @@ export default function AnalyticsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.3 }}
           >
-            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+            <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
               <p className="text-sm text-slate-600 dark:text-slate-400">Topics Remaining</p>
               <p className="text-3xl font-bold text-slate-900 dark:text-white mt-2">{totalPlans - totalCompleted}</p>
             </Card>
@@ -173,7 +173,7 @@ export default function AnalyticsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: 0.35 }}
           >
-            <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950 h-full">
+            <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950 h-full">
               <p className="text-sm text-slate-600 dark:text-slate-400">Study Hours Logged</p>
               <p className="mt-2 text-3xl font-bold text-primary-600">
                 {plans.filter((p) => p.is_completed).reduce((s, p) => s + p.estimated_hours, 0).toFixed(1)}h
@@ -189,7 +189,7 @@ export default function AnalyticsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.4 }}
         >
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+          <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950">
           <CardHeader>
             <CardTitle>Topics per Subject</CardTitle>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Completed vs remaining by subject</p>
@@ -197,15 +197,16 @@ export default function AnalyticsPage() {
           <div className="h-64">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={subjectData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-                <XAxis dataKey="name" tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)' }} axisLine={false} tickLine={false} allowDecimals={false} />
+                <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" vertical={false} />
+                <XAxis dataKey="name" tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)', fontWeight: 500 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 11, fill: 'var(--chart-axis-tick)', fontWeight: 500 }} axisLine={false} tickLine={false} allowDecimals={false} domain={[0, 'auto']} />
                 <Tooltip
-                  contentStyle={{ background: 'var(--chart-tooltip-background)', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '12px', color: 'var(--chart-tooltip-color)' }}
+                  contentStyle={{ background: 'var(--chart-tooltip-background)', border: '1px solid var(--chart-grid-stroke)', borderRadius: '8px', fontSize: '13px', color: 'var(--chart-tooltip-color)', padding: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
+                  labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600', marginBottom: '4px' }}
                   formatter={(value, name) => [value, name === 'completed' ? 'Completed' : 'Remaining']}
                 />
-                <Bar dataKey="completed" fill="#4f46e5" radius={[4, 4, 0, 0]} name="completed" />
-                <Bar dataKey="remaining" fill="#cbd5e1" radius={[4, 4, 0, 0]} name="remaining" />
+                <Bar dataKey="completed" fill="#4f46e5" radius={[4, 4, 0, 0]} name="completed" maxBarSize={60} />
+                <Bar dataKey="remaining" fill="#cbd5e1" radius={[4, 4, 0, 0]} name="remaining" maxBarSize={60} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -218,28 +219,29 @@ export default function AnalyticsPage() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.4, delay: 0.5 }}
       >
-        <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+        <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950">
         <CardHeader>
           <CardTitle>Daily Study Hours</CardTitle>
           <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Hours of completed topics over the last 14 days</p>
         </CardHeader>
         <div className="h-48">
           <ResponsiveContainer width="100%" height="100%">
-            <AreaChart data={dailyData} margin={{ top: 5, right: 5, left: -20, bottom: 0 }}>
+            <AreaChart data={dailyData} margin={{ top: 10, right: 10, left: 0, bottom: 5 }}>
               <defs>
                 <linearGradient id="hoursGradient" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.25} />
+                  <stop offset="5%" stopColor="#4f46e5" stopOpacity={0.3} />
                   <stop offset="95%" stopColor="#4f46e5" stopOpacity={0} />
                 </linearGradient>
               </defs>
-              <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-              <XAxis dataKey="label" tick={{ fontSize: 10, fill: 'var(--chart-axis-tick)' }} axisLine={false} tickLine={false} />
-              <YAxis tick={{ fontSize: 10, fill: 'var(--chart-axis-tick)' }} axisLine={false} tickLine={false} />
+              <CartesianGrid strokeDasharray="3 3" stroke="var(--chart-grid-stroke)" vertical={false} />
+              <XAxis dataKey="label" tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }} axisLine={false} tickLine={false} dy={5} />
+              <YAxis tick={{ fontSize: 12, fill: 'var(--chart-axis-tick)', fontWeight: 500 }} axisLine={false} tickLine={false} />
               <Tooltip
-                contentStyle={{ background: 'var(--chart-tooltip-background)', border: '1px solid #e2e8f0', borderRadius: '8px', fontSize: '12px', color: 'var(--chart-tooltip-color)' }}
+                contentStyle={{ background: 'var(--chart-tooltip-background)', border: '1px solid var(--chart-grid-stroke)', borderRadius: '8px', fontSize: '13px', color: 'var(--chart-tooltip-color)', padding: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)' }}
+                labelStyle={{ color: 'var(--chart-tooltip-color)', fontWeight: '600', marginBottom: '4px' }}
                 formatter={(v) => [`${v}h`, 'Hours studied']}
               />
-              <Area type="monotone" dataKey="hours" stroke="#4f46e5" strokeWidth={2} fill="url(#hoursGradient)" />
+              <Area type="monotone" dataKey="hours" stroke="#4f46e5" strokeWidth={2.5} fill="url(#hoursGradient)" dot={{ fill: '#4f46e5', strokeWidth: 2, r: 4 }} activeDot={{ r: 6, stroke: '#4f46e5', strokeWidth: 2 }} />
             </AreaChart>
           </ResponsiveContainer>
         </div>
@@ -252,7 +254,7 @@ export default function AnalyticsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.6 }}
         >
-          <Card className="border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-950">
+          <Card className="border border-slate-300 bg-slate-100 dark:border-slate-700 dark:bg-slate-950">
           <CardHeader>
             <CardTitle>Subject Summary</CardTitle>
           </CardHeader>
@@ -276,7 +278,7 @@ export default function AnalyticsPage() {
                   const left = sp.length - done
                   const pct2 = sp.length > 0 ? Math.round((done / sp.length) * 100) : 0
                   return (
-                    <tr key={s.id} className="border-b border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-800">
+                    <tr key={s.id} className="border-b border-slate-200 dark:border-slate-700 dark:hover:bg-slate-800">
                       <td className="py-3 px-2">
                         <div className="flex items-center gap-2">
                           <div className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: s.color }} />

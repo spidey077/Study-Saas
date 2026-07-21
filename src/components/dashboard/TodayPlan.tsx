@@ -90,7 +90,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
                   delay: index * 0.05,
                 }}
                 whileHover={{ x: 4 }}
-                className="flex items-start gap-3 rounded-3xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-200 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800"
+                className="flex items-start gap-3 rounded-3xl border border-slate-200/80 bg-slate-50/90 p-4 transition-all duration-200 hover:border-primary-300 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500"
               >
                 <motion.div
                   animate={{
@@ -185,7 +185,7 @@ export default function TodayPlan({ tasks, upcomingTasks, onTaskToggle, onQuizCo
                 'flex items-start gap-3 p-4 rounded-3xl transition-all duration-200 border',
                 task.is_completed
                   ? 'border-primary-200 bg-primary-50/80 dark:border-primary-900/40 dark:bg-primary-950/20'
-                  : 'border-slate-200/80 bg-slate-50/90 hover:border-primary-300 hover:bg-white dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500 dark:hover:bg-slate-800'
+                  : 'border-slate-200/80 bg-slate-50/90 hover:border-primary-300 dark:border-slate-700 dark:bg-slate-900 dark:hover:border-primary-500'
               )}
             >
               <motion.button
